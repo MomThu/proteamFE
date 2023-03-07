@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Apercu Pro', 'Helvetica', 'Calibri', 'Roboto', 'Arial',
+        'sans-serif';
+    font-size: 16px;
+}
+
+:root {
+    --color-primary: #1890ff;
+
+    --color-white: #ffffff;
+
+    --color-gray-40: #535f78;
+    --color-gray-90: #e1e4ea;
+    --color-gray-95: #f0f1f5;
+
+    --color-green-20: #0a5c1f;
+    --color-green-80: #a3f5b8;
+    --color-green-90: #d1fadb;
+}

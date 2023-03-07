@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "~hooks": ["src/plugins/redux-toolkit/hooks"],
+            "~common/*": ["src/common/*"],
+            "~components/*": ["src/components/*"],
+            "~components": ["src/components/index"],
+            "~plugins/*": ["src/plugins/*"],
+            "~layouts/*": ["src/layouts/*"],
+            "~features/*": ["src/features/*"],
+            "~assets/*": ["src/assets/*"],
+            "~config/*": ["src/config/*"],
+            "~test/*": ["src/test/*"]
+        }
+    }
+}
