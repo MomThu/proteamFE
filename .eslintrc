@@ -1,0 +1,31 @@
+{
+  "extends": [
+    "react-app",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "no-console": "warn",
+    "prefer-const": "error",
+    "import/newline-after-import": "error",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "import/imports-first": [
+      "error",
+      "absolute-first"
+    ]
+    // "@typescript-eslint/explicit-function-return-type": "error",
+  }
+}

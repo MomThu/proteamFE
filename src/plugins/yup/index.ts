@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { Regex } from '~common/constants'
+import { Regex } from 'common/constants'
 
 yup.addMethod(yup.string, 'isPhone', function () {
     return this.test({
