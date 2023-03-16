@@ -35,7 +35,7 @@ const PrivateLayout: React.FC = () => {
       <AppSidebar />
       <Layout className="bg-[#EAF0F5]">
         <AppHeader />
-        <Content className="px-6 py-3">
+        <Content className="px-6 py-5">
           <Waiter>
             <React.Suspense fallback={<Loading />}>
               <Outlet />

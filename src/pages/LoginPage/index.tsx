@@ -1,8 +1,10 @@
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, Typography, Image } from 'antd';
 import routesMap from 'layouts/routesMap';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { notificationError } from 'utils/notifications';
+import imageLogin from 'assets/image/login_background.png';
+import imageGoogle from 'assets/image/Google.png';
 
 const { Title } = Typography;
 
@@ -12,7 +14,7 @@ interface FormLogin {
 }
 
 const LoginPage: React.FC = () => {
-  const natigate = useNavigate();
+  const navigate = useNavigate();
 
   const [form] = Form.useForm<FormLogin>();
 
@@ -27,25 +29,39 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = async (data: FormLogin) => {
     if (data.username === 'admin' && data.password === '123456') {
-      natigate(routesMap.HOME);
+      navigate(routesMap.HOME);
     } else {
       notificationError('Tên người dùng hoặc mật khẩu không chính xác');
     }
   };
 
   return (
-    <div className="min-h-screen p-5">
+    <div
+      className="min-h-screen p-5"
+      style={{
+        backgroundImage: `url(${imageLogin})`,
+      }}
+    >
       <div className="flex justify-center items-center flex-col">
         <div className="h-[10vh]"></div>
         <div className="bg-white p-8 rounded-xl shadow-xl w-[450px]">
           <Title level={3} className="text-center">
             Đăng nhập
           </Title>
+          {/* <div
+            className="p-5"
+            style={{
+              backgroundImage: `url(${imageGoogle})`,
+
+            }}
+          >
+
+          </div> */}
           <Form form={form}>
             <Form.Item
               name={'username'}
-              labelCol={{ md: 24 }}
-              wrapperCol={{ md: 24 }}
+              // labelCol={{ md: 24 }}
+              // wrapperCol={{ md: 24 }}
               label="Tài khoản"
               labelAlign="left"
               required
@@ -55,8 +71,8 @@ const LoginPage: React.FC = () => {
             </Form.Item>
             <Form.Item
               name={'password'}
-              labelCol={{ md: 24 }}
-              wrapperCol={{ md: 24 }}
+              // labelCol={{ md: 24 }}
+              // wrapperCol={{ md: 24 }}
               label="Mật khẩu"
               labelAlign="left"
               required

@@ -9,6 +9,11 @@ const navs: Array<NavLinkItem> = [
     key: routesMap.HOME,
     icon: FiHome,
   },
+  {
+    name: 'Profile',
+    key: routesMap.PROFILE,
+    icon: FiUsers,
+  },
 ];
 
 export function useNavs() {
