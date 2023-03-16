@@ -1,19 +1,10 @@
-import React from 'react'
-import { ConfigProvider } from 'antd'
-import ReactDOM from 'react-dom/client'
-import { Provider } from 'react-redux'
-import store from './plugins/redux-toolkit/store'
-import RootRouter from './router'
-import './theme/global.css'
-import App from './App'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
-  // <Provider store={store}>
-  //   <ConfigProvider autoInsertSpaceInButton={false}>
-  //     <RootRouter />
-  //   </ConfigProvider>
-  // </Provider>
   <React.Fragment>
     <App />
   </React.Fragment>

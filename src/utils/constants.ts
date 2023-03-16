@@ -10,3 +10,17 @@ export const regexNonSpecial2 = /^[^:;'"<>\\/?~`+=_\-@#$%^&*{}[\]|]*$/;
 export const regexNonSpecial3 = /^[^:;'"<>\\/?~`+=@#$%^&*{}[\]|]*$/;
 export const regexPhone =
   /^(1900|1800)[0-9]{4}$|(05|03|04|07|08|09|024|028)[0-9]{8}$|(\84)[0-9]{9}$|(021[012345689]|023[23456789]|020[3456789]|022[0123456789]|029[01234679]|025[123456789]|026[01239]|027[01234567])[0-9]{7}$/;
+  
+export const Regex = {
+  PHONE: /^[0-9]{1,255}$/,
+  INT_PATTERN: `^\\d+$`,
+  FLOAT_PATTERN: `^\\d+\\.\\d{0,2}$`,
+  ALPHA_NUMERIC: /^[a-zA-Z0-9]+$/,
+  GENERAL_SPECIAL_CHARACTERS: /[$&+:;=?#|'<>,().^*!%]+/,
+  TAX_SPECIAL_CHARACTERS: /[$&+:;=?#|'<>^*!]+/,
+  MEMO_SPECIAL_CHARACTERS: /[$&+:;=?#|'<>^*!]+/,
+  WEBSITE_SPECIAL_CHARACTERS: /[$&+:;=?#|'<>^*!]+/,
+  EMAIL_SPECIAL_CHARACTERS: /[$&:;=?#|'<>,()^*!%]+/,
+  CHILDREN_TYPE_SPECIAL_CHARACTERS: /[$&+:;=?#|'<>,().^*!%@/\\~`"]+/,
+  NAME_SPECIAL_CHARACTERS: /[$&+:;=?#|'<>,().^*!%@/\\~`"]+/,
+}

@@ -34,9 +34,7 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div
-      className="min-h-screen p-5"
-    >
+    <div className="min-h-screen p-5">
       <div className="flex justify-center items-center flex-col">
         <div className="h-[10vh]"></div>
         <div className="bg-white p-8 rounded-xl shadow-xl w-[450px]">

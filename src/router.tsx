@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import GuestLayout from './layouts/GuestLayout/GuestLayout'
-import { RedirectHomeIfLoggedIn } from './AuthProvider'
 
 function RootRouter() {
   return (
@@ -9,12 +8,10 @@ function RootRouter() {
       <Routes>
         <Route
           element={
-            <RedirectHomeIfLoggedIn>
               <Route
                 path='/login'
                 element={<>Login page here</>}
               />
-            </RedirectHomeIfLoggedIn>
           }
         />
         <Route path='*' element={<>Not found here</>} />
