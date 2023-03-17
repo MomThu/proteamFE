@@ -3,6 +3,7 @@ import { Dropdown, MenuProps, Modal, Typography } from 'antd';
 import routesMap from 'layouts/routesMap';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { actionAuthLogout } from 'redux/auth/actions';
 
 const { Text } = Typography;
 type MenuItem = Required<MenuProps>['items'][number];
@@ -36,7 +37,11 @@ const InfoSystem: React.FC = () => {
       okText: 'Đồng ý',
       autoFocusButton: null,
       content: 'Bạn có chắc muốn đăng xuất ?',
-      onOk: () => {
+      onOk: async () => {
+        const userInfo = {
+          full_name: 'Nguyen Van Dev',
+        }
+        await actionAuthLogout({user: userInfo.full_name});
         natigate(routesMap.LOGIN);
       },
     });

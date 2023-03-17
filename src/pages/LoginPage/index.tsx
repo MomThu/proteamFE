@@ -5,17 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import { notificationError } from 'utils/notifications';
 import imageLogin from 'assets/image/login_background.png';
 import imageGoogle from 'assets/image/Google.png';
-import LoginGoogle from 'components/LoginGoogle';
+import { actionAuthLogin } from 'redux/auth/actions';
+import { useAppDispatch } from 'app/hooks';
 
 const { Title } = Typography;
 
 interface FormLogin {
-  username: string;
+  email: string;
   password: string;
 }
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [form] = Form.useForm<FormLogin>();
 
@@ -29,9 +31,15 @@ const LoginPage: React.FC = () => {
   };
 
   const handleLogin = async (data: FormLogin) => {
-    if (data.username === 'admin' && data.password === '123456') {
+    // if (data.username === 'admin' && data.password === '123456') {
+    //   navigate(routesMap.HOME);
+    // } else {
+    //   notificationError('Tên người dùng hoặc mật khẩu không chính xác');
+    // }
+    try {
+      await dispatch(actionAuthLogin(data)).unwrap();
       navigate(routesMap.HOME);
-    } else {
+    } catch (error) {
       notificationError('Tên người dùng hoặc mật khẩu không chính xác');
     }
   };
@@ -51,13 +59,13 @@ const LoginPage: React.FC = () => {
           </Title>
           <Form form={form}>
             <Form.Item
-              name={'username'}
+              name={'email'}
               // labelCol={{ md: 24 }}
               // wrapperCol={{ md: 24 }}
               label="Tài khoản"
               labelAlign="left"
               required
-              rules={[{ required: true, message: 'Please input your username!' }]}
+              rules={[{ required: true, message: 'Please input your email!' }]}
             >
               <Input placeholder="Nhập tài khoản" />
             </Form.Item>
@@ -85,3 +93,4 @@ const LoginPage: React.FC = () => {
 };
 
 export default LoginPage;
+
