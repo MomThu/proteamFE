@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { notificationError } from 'utils/notifications';
 import imageLogin from 'assets/image/login_background.png';
 import imageGoogle from 'assets/image/Google.png';
+import LoginGoogle from 'components/LoginGoogle';
 
 const { Title } = Typography;
 
@@ -48,15 +49,6 @@ const LoginPage: React.FC = () => {
           <Title level={3} className="text-center">
             Đăng nhập
           </Title>
-          {/* <div
-            className="p-5"
-            style={{
-              backgroundImage: `url(${imageGoogle})`,
-
-            }}
-          >
-
-          </div> */}
           <Form form={form}>
             <Form.Item
               name={'username'}
