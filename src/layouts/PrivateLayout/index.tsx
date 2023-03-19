@@ -4,14 +4,12 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Waiter } from 'react-wait';
 import AppHeader from './AppHeader';
-import AppSidebar from './AppSidebar';
 
 const { Content } = Layout;
 
 const PrivateLayout: React.FC = () => {
   return (
     <Layout className="min-h-screen">
-      <AppSidebar />
       <Layout className="bg-[#EAF0F5]">
         <AppHeader />
         <Content className="px-6 py-5">

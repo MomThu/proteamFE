@@ -1,12 +1,17 @@
-import { Image, Menu, MenuProps } from 'antd';
+import { Image, Layout, Menu, MenuProps, Typography } from 'antd';
 import { getRealPath } from 'layouts/helper';
 import routesMap from 'layouts/routesMap';
 import { isEmpty, map } from 'lodash';
 import logo from 'assets/image/PROTEAM_2.png';
 import React, { useEffect, useMemo, useState } from 'react';
+import { AiOutlineMenuUnfold } from 'react-icons/ai';
+import { FiArrowLeft } from 'react-icons/fi';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavs } from '../useNavs';
 import { useRoutes } from '../useRoutes';
+
+const { Sider } = Layout;
+const { Text } = Typography;
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -25,6 +30,7 @@ const AppSidebar: React.FC = () => {
   const routes = useRoutes();
   const location = useLocation();
 
+  const [collapsed, setCollapsed] = useState<boolean>(false);
   const [selectedKeys, setSelectedKeys] = useState<string[] | undefined>();
   const [openKeys, setOpenKeys] = useState<string[] | undefined>();
 
@@ -68,25 +74,34 @@ const AppSidebar: React.FC = () => {
     return items;
   }, [navs]);
 
+  const handleToggle = (): void => {
+    setCollapsed(!collapsed);
+  };
+
   const renderLogo = (): JSX.Element => {
-    return (
-      <div className="sidebar-logo justify-evenly p-3">
-        {/* <Text className="flex-1 text-center text-white mb-0 text-base font-semibold"> */}
-        <Image src={logo} alt="ghtm" preview={false} width={100} rootClassName="mr-3" />
-        {/* </Text> */}
+    return collapsed ? (
+      <div className="sidebar-logo justify-evenly cursor-pointer">
+        <AiOutlineMenuUnfold size={25} className="text-white" onClick={handleToggle} />
       </div>
-    )
+    ) : (
+      <div className="sidebar-logo justify-evenly p-3">
+        <FiArrowLeft size={25} className="text-white cursor-pointer flex-shrink-0" onClick={handleToggle} />
+        <Text className="flex-1 text-center text-white mb-0 text-base font-semibold">
+          <Image src={logo} alt="ghtm" preview={false} width={100} rootClassName="mr-3" />
+        </Text>
+      </div>
+    );
   };
 
   const renderMenu = (): JSX.Element => {
     return (
       <Menu
-        mode="horizontal"
-        // theme="dark"
+        mode="inline"
+        theme="dark"
         items={items}
         openKeys={openKeys}
         selectedKeys={selectedKeys}
-        className="font-medium select-none"
+        className="mt-1 font-medium select-none"
         onSelect={(info): void => setSelectedKeys(info.selectedKeys)}
         onOpenChange={(keys): void => setOpenKeys(keys)}
       />
@@ -94,34 +109,22 @@ const AppSidebar: React.FC = () => {
   };
 
   return (
-    // <Sider
-    //   width={230}
-    //   theme="dark"
-    //   breakpoint={'xl'}
-    //   className="menu-sidebar"
-    //   collapsedWidth={55}
-    //   trigger={null}
-    //   collapsible
-    //   collapsed={collapsed}
-    //   onBreakpoint={(broken): void => {
-    //     setCollapsed(broken);
-    //   }}
-    // >
-    //   {renderLogo()}
-    //   {renderMenu()}
-    // </Sider>
-    <div className='flex flex-row w-[100%] h-[100%]'>
-      <div>
-        {renderLogo()}
-      </div>
-      <div className='w-[100%]'>
-      <div className='object-contain'>
-        {renderMenu()}
-      </div>
-      </div>
-      
-
-    </div>
+    <Sider
+      width={230}
+      theme="dark"
+      breakpoint={'xl'}
+      className="menu-sidebar"
+      collapsedWidth={55}
+      trigger={null}
+      collapsible
+      collapsed={collapsed}
+      onBreakpoint={(broken): void => {
+        setCollapsed(broken);
+      }}
+    >
+      {renderLogo()}
+      {renderMenu()}
+    </Sider>
   );
 };
 

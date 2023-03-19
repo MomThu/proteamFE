@@ -1,17 +1,17 @@
-import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import merge from 'lodash/merge';
 import QueryString from 'qs';
-import { REACT_APP_API_VERSION, REACT_APP_BASE_URL } from 'utils/env';
+import { REACT_APP_BASE_URL } from 'utils/env';
 import { getDataStorage, STORAGE_KEY } from 'utils/storage';
 
 axios.defaults.timeout = 60000;
 axios.defaults.timeoutErrorMessage = 'Mất kết nối đến máy chủ. Vui lòng thử lại sau';
 axios.defaults.paramsSerializer = { serialize: (params) => QueryString.stringify(params, { indices: false }) };
 
-const STATUS_ERROR = [400, 401, 403, 404, 422, 500];
-
+const STATUS_ERROR = [400, 402, 401, 403, 404, 422, 500];
+const token = getDataStorage(STORAGE_KEY.ACCESS_TOKEN);
 const configure = (config: AxiosRequestConfig): any => {
-  const token = getDataStorage(STORAGE_KEY.ACCESS_TOKEN);
   const targetConfig: AxiosRequestConfig = {
     headers: { Authorization: `Bearer ${token}` },
     // params: { version: REACT_APP_API_VERSION },
@@ -20,13 +20,26 @@ const configure = (config: AxiosRequestConfig): any => {
   return merge(config, targetConfig);
 };
 
-const configureErr = (error: AxiosError<BaseResponse>) => {
+const configureErr = async (error: AxiosError<BaseResponse>) => {
   const status = error.response?.status;
   const data = error.response?.data;
 
   if (data && STATUS_ERROR.includes(status as number)) {
     return { ...data, client: status === 400 };
   }
+
+  // if (status === 401) {
+  //   try {
+  //     const refresh = await api.post("/auth/refresh-token", {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     });
+
+  //     const { accessToken } = refresh.data;
+      
+  //   } catch (err) {
+  //     return Promise.reject(err);
+  //   }
+  // }
 
   return error;
 };

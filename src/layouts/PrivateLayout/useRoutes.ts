@@ -18,7 +18,7 @@ const routes: AppRouteType[] = [
     component: ProfilePage,
     rule: -1,
     openKey: [],
-    activeKey: [],
+    activeKey: [routesMap.PROFILE],
   },
 ];
 

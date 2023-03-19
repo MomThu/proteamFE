@@ -1,7 +1,7 @@
 import { NavLinkItem } from 'layouts/helper';
 import routesMap from 'layouts/routesMap';
 import { useMemo } from 'react';
-import { FiArchive, FiHome, FiList, FiSettings, FiTool, FiTruck, FiUsers, FiBook } from 'react-icons/fi';
+import { FiHome, FiUsers } from 'react-icons/fi';
 
 const navs: Array<NavLinkItem> = [
   {
