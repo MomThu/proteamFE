@@ -10,10 +10,10 @@ axios.defaults.paramsSerializer = { serialize: (params) => QueryString.stringify
 
 const STATUS_ERROR = [400, 401, 403, 404, 422, 500];
 
-const configure = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+const configure = (config: AxiosRequestConfig): any => {
   const token = getDataStorage(STORAGE_KEY.ACCESS_TOKEN);
   const targetConfig: AxiosRequestConfig = {
-    headers: { Authorization: token },
+    headers: { Authorization: `Bearer ${token}` },
     // params: { version: REACT_APP_API_VERSION },
   };
 

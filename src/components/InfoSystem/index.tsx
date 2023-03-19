@@ -1,11 +1,12 @@
 import { CaretDownOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Dropdown, MenuProps, Modal, Typography } from 'antd';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import routesMap from 'layouts/routesMap';
+import { isEmpty } from 'lodash';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { actionAuthLogout } from 'redux/auth/actions';
-import { getDataStorage, STORAGE_KEY } from 'utils/storage';
+import { selectorUserInfo } from 'redux/auth/selectors';
 
 const { Text } = Typography;
 type MenuItem = Required<MenuProps>['items'][number];
@@ -23,15 +24,17 @@ const getItem = (
 const InfoSystem: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const userInfo = useAppSelector(selectorUserInfo);
 
-  const [user, setUser] = useState<{full_name: string}>({full_name: ''});
+  const [user, setUser] = useState<UserInfo>({});
 
   useEffect(() => {
-    const userInfo = {
-      full_name: 'Nguyen Van Dev',
+    if (!isEmpty(userInfo)) {
+      setUser(userInfo);
+    } else {
+      setUser({});
     }
-    setUser(userInfo);
-  }, []);
+  }, [userInfo]);
 
   const handleLogout = useCallback((): void => {
     Modal.confirm({
@@ -39,16 +42,8 @@ const InfoSystem: React.FC = () => {
       okText: 'Đồng ý',
       autoFocusButton: null,
       content: 'Bạn có chắc muốn đăng xuất ?',
-      onOk: () => {
-        const token = getDataStorage(STORAGE_KEY.ACCESS_TOKEN);
-        const config = {
-          headers: {
-            'Authorization': 'Bearer ' + token
-          } 
-        };
-        setTimeout(() => {
-          dispatch(actionAuthLogout(config));
-        }, 200);
+      onOk: async () => {
+        await dispatch(actionAuthLogout()).unwrap();
         navigate(routesMap.LOGIN);
       },
     });
@@ -71,7 +66,7 @@ const InfoSystem: React.FC = () => {
     <Dropdown menu={{ items }} placement="bottomRight">
       {/* <Avatar size={40} icon={<UserOutlined />} className="mr-3 cursor-pointer" src={'https://i.pravatar.cc/100'} /> */}
       <Text className="text-sm cursor-pointer">
-        {user?.full_name}
+        {`${user?.firstName} ${user?.lastName}`}
         <CaretDownOutlined className="ml-2" />
       </Text>
     </Dropdown>

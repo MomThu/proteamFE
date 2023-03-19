@@ -1,10 +1,9 @@
-import { Button, Form, Input, Typography, Image } from 'antd';
+import { Button, Form, Input, Typography } from 'antd';
 import routesMap from 'layouts/routesMap';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { notificationError } from 'utils/notifications';
 import imageLogin from 'assets/image/login_background.png';
-import imageGoogle from 'assets/image/Google.png';
 import { actionAuthLogin } from 'redux/auth/actions';
 import { useAppDispatch } from 'app/hooks';
 import { trim } from 'lodash';
@@ -24,7 +23,7 @@ const LoginPage: React.FC = () => {
   const [form] = Form.useForm<FormLogin>();
 
   useEffect(() => {
-    if (trim(getDataStorage(STORAGE_KEY.ACCESS_TOKEN))) {
+    if (trim(getDataStorage(STORAGE_KEY.ACCESS_TOKEN))) {      
       navigate(routesMap.HOME);
     }
   }, [navigate]);
@@ -39,11 +38,6 @@ const LoginPage: React.FC = () => {
   };
 
   const handleLogin = async (data: FormLogin) => {
-    // if (data.username === 'admin' && data.password === '123456') {
-    //   navigate(routesMap.HOME);
-    // } else {
-    //   notificationError('Tên người dùng hoặc mật khẩu không chính xác');
-    // }
     try {
       await dispatch(actionAuthLogin(data)).unwrap();
       navigate(routesMap.HOME);

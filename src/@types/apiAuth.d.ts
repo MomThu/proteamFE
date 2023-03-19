@@ -1,20 +1,37 @@
-interface UserInfo {
-  token?: string;
-  data?: {
-    id: number;
-    source: number;
-    exp: number;
-    iat: number;
-    token: string;
-    phone: string;
-    org: 1;
-    title: null;
-    username: string;
-    postCode: string;
-    full_name: string;
+interface UserResponse {
+  accessToken?: {
+    token?: string,
+    expiresIn?: number
   };
-  refresh_token?: string;
+  refreshToken?: {
+    token?: string,
+    expiresIn?: number
+  };
+  information?: {
+    id?: number;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    ldapUsername?: string;
+    password?: string;
+    permissions?: any;
+    role?: string;
+    status?: string;
+  };
   errors?: any;
   message?: string;
+  code?: number;
+  version?: string;
 }
 
+interface UserInfo {
+  id?: number;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  ldapUsername?: string;
+  password?: string;
+  permissions?: any;
+  role?: string;
+  status?: string;
+}

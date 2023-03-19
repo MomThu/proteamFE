@@ -1,9 +1,12 @@
+import { useAppDispatch } from 'app/hooks';
 import Loading from 'components/Loading';
 import { AppRouteType, delayLazyLoad } from 'layouts/helper';
 import PrivateLayout, { useRoutes as usePrivateRoutes } from 'layouts/PrivateLayout';
 import PublicLayout, { useRoutes as usePublicRoutes } from 'layouts/PublicLayout';
-import React, { lazy } from 'react';
+import React, { lazy, useEffect } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
+import { actionAuthSetAccessToken, actionAuthSetInfoUser } from 'redux/auth/actions';
+import { getDataStorage, STORAGE_KEY } from 'utils/storage';
 
 const Page404 = lazy(() => delayLazyLoad(import('components/Page404')));
 
@@ -15,9 +18,17 @@ const makeRoutes = (routes: AppRouteType[]): JSX.Element[] => {
 };
 
 const AppContainer: React.FC = () => {
+  const dispatch = useAppDispatch();
   const routePrivate = usePrivateRoutes();
   const routePublic = usePublicRoutes();
 
+  useEffect(() => {
+    const userInfo = getDataStorage(STORAGE_KEY.USER_INFO);
+    const accessToken = getDataStorage(STORAGE_KEY.ACCESS_TOKEN);
+    dispatch(actionAuthSetInfoUser(userInfo));
+    dispatch(actionAuthSetAccessToken(accessToken));
+  }, [dispatch]);
+  
   return (
     <React.Suspense fallback={<Loading />}>
       <Routes>
