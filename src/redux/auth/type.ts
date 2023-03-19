@@ -4,5 +4,5 @@ export interface AuthLogin {
 }
 
 export interface AuthLogout {
-  user: string;
+  headers: any;
 }

@@ -1,12 +1,14 @@
 import { Button, Form, Input, Typography, Image } from 'antd';
 import routesMap from 'layouts/routesMap';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { notificationError } from 'utils/notifications';
 import imageLogin from 'assets/image/login_background.png';
 import imageGoogle from 'assets/image/Google.png';
 import { actionAuthLogin } from 'redux/auth/actions';
 import { useAppDispatch } from 'app/hooks';
+import { trim } from 'lodash';
+import { getDataStorage, STORAGE_KEY } from 'utils/storage';
 
 const { Title } = Typography;
 
@@ -20,6 +22,12 @@ const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const [form] = Form.useForm<FormLogin>();
+
+  useEffect(() => {
+    if (trim(getDataStorage(STORAGE_KEY.ACCESS_TOKEN))) {
+      navigate(routesMap.HOME);
+    }
+  }, [navigate]);
 
   const handleSubmit = async () => {
     try {
@@ -60,8 +68,6 @@ const LoginPage: React.FC = () => {
           <Form form={form}>
             <Form.Item
               name={'email'}
-              // labelCol={{ md: 24 }}
-              // wrapperCol={{ md: 24 }}
               label="Tài khoản"
               labelAlign="left"
               required
@@ -71,8 +77,6 @@ const LoginPage: React.FC = () => {
             </Form.Item>
             <Form.Item
               name={'password'}
-              // labelCol={{ md: 24 }}
-              // wrapperCol={{ md: 24 }}
               label="Mật khẩu"
               labelAlign="left"
               required

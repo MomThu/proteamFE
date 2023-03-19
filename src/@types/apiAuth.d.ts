@@ -14,5 +14,7 @@ interface UserInfo {
     full_name: string;
   };
   refresh_token?: string;
+  errors?: any;
+  message?: string;
 }
 
