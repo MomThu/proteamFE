@@ -6,6 +6,7 @@ const _prefix = 'APP_';
 export enum STORAGE_KEY {
   ACCESS_TOKEN = 'AccessToken',
   USER_INFO = 'UserInfo',
+  REFRESH_TOKEN = 'RefreshToken',
 }
 
 const getRealKey = (key: string, noPrefix = false): string => {
