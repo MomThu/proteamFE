@@ -1,4 +1,4 @@
-import { Image, Layout, Menu, MenuProps, Typography } from 'antd';
+import { Layout, Menu, MenuProps, Typography } from 'antd';
 import { getRealPath } from 'layouts/helper';
 import routesMap from 'layouts/routesMap';
 import { isEmpty, map } from 'lodash';

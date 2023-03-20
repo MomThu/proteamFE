@@ -1,8 +1,11 @@
 import { CaretDownOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Dropdown, MenuProps, Modal, Typography } from 'antd';
+import { useAppDispatch } from 'app/hooks';
 import routesMap from 'layouts/routesMap';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { actionAuthLogout } from 'redux/auth/actions';
+import { getDataStorage, STORAGE_KEY } from 'utils/storage';
 
 const { Text } = Typography;
 type MenuItem = Required<MenuProps>['items'][number];
@@ -18,8 +21,8 @@ const getItem = (
 };
 
 const InfoSystem: React.FC = () => {
-  const natigate = useNavigate();
-
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [user, setUser] = useState<{full_name: string}>({full_name: ''});
 
@@ -37,10 +40,19 @@ const InfoSystem: React.FC = () => {
       autoFocusButton: null,
       content: 'Bạn có chắc muốn đăng xuất ?',
       onOk: () => {
-        natigate(routesMap.LOGIN);
+        const token = getDataStorage(STORAGE_KEY.ACCESS_TOKEN);
+        const config = {
+          headers: {
+            'Authorization': 'Bearer ' + token
+          } 
+        };
+        setTimeout(() => {
+          dispatch(actionAuthLogout(config));
+        }, 200);
+        navigate(routesMap.LOGIN);
       },
     });
-  }, [natigate]);
+  }, [navigate, dispatch]);
 
   const items = useMemo(
     (): MenuItem[] => [
