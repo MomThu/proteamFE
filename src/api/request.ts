@@ -57,4 +57,3 @@ api.interceptors.response.use(
   (response) => Promise.resolve(response),
   (error) => Promise.reject(configureErr(error))
 );
-

@@ -21,7 +21,7 @@ const PrivateLayout: React.FC = () => {
         </Content>
       </Layout>
     </Layout>
-  )
+  );
 };
 
 export default PrivateLayout;

@@ -1,4 +1,4 @@
-import { Button, Image } from 'antd';
+import { Button } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import Img404 from 'assets/image/page-404.jpeg';
 import InfoSystem from 'components/InfoSystem';
