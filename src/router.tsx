@@ -9,7 +9,6 @@ function RootRouter() {
         <Route path="*" element={<>Not found here</>} />
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<>Home page here</>}></Route>
-        <Route path="/google-login" element={<GoogleLoginPage />} />
       </Routes>
     </BrowserRouter>
   );
