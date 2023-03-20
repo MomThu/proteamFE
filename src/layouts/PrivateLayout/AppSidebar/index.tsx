@@ -115,11 +115,11 @@ const AppSidebar: React.FC = () => {
         {renderLogo()}
       </div>
       <div className='w-[100%]'>
-      <div className='object-contain'>
-        {renderMenu()}
+        <div className='object-contain'>
+          {renderMenu()}
+        </div>
       </div>
-      </div>
-      
+
 
     </div>
   );
