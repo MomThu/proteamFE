@@ -1,6 +1,5 @@
 import { Button } from 'antd';
 import Title from 'antd/lib/typography/Title';
-import Img404 from 'assets/image/page-404.jpeg';
 import InfoSystem from 'components/InfoSystem';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +18,7 @@ const Page404: React.FC = () => {
       </div>
       <div className="h-[5%]"></div>
       <div style={{ textAlign: 'center' }}>
-        <Image width={200} src={Img404} preview={false} className="rounded-md" />
+        {/* <Image width={200} src={Img404} preview={false} className="rounded-md" /> */}
         <Title level={4}>Trang không tồn tại hoặc bạn không có quyền truy cập !!!</Title>
         <br />
         <br />
