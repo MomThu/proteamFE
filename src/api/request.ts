@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
 import merge from 'lodash/merge';
 import QueryString from 'qs';
-import { REACT_APP_API_VERSION, REACT_APP_BASE_URL } from 'utils/env';
+import { REACT_APP_BASE_URL } from 'utils/env';
 import { getDataStorage, STORAGE_KEY } from 'utils/storage';
 
 axios.defaults.timeout = 60000;
@@ -44,4 +44,3 @@ api.interceptors.response.use(
   (response) => Promise.resolve(response),
   (error) => Promise.reject(configureErr(error))
 );
-

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormRule } from 'antd';
 import { get } from 'lodash';
-import * as yup from 'yup';
 import { MESSAGE_ERR } from './constants';
 
 export const schemaRules = (schema: any): FormRule[] => {

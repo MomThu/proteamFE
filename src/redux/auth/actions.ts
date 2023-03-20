@@ -11,10 +11,8 @@ export const actionAuthLogin = createAsyncThunk(
     try {
       const { data } = await api.post<BaseResponse<UserInfo>>(url.login, payload);
       if (data.ref) throw rejectWithValue(data);
-      console.log('voa day 1');
       return data.data;
     } catch (error: any) {
-      console.log(error, 'vao day 2')
       if (error?.ref) throw rejectWithValue(error);
       throw new Error(getMessageError(error));
     }
@@ -26,13 +24,10 @@ export const actionAuthLogout = createAsyncThunk(
     try {
       const { data } = await api.post<BaseResponse<any>>(url.logout, payload);
       if (data.ref) throw rejectWithValue(data);
-      console.log('logout 1')
       return data.data;
     } catch (error: any) {
-      console.log('logout 2')
       if (error?.ref) throw rejectWithValue(error);
       throw new Error(getMessageError(error));
     }
   }
 );
-
