@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: frontend
+    container_name: frontend
+    restart: always
+    ports:
+      - '8080:80'
+# switch to public 80 on vps server
