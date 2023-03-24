@@ -1,5 +1,7 @@
 import { Button, Checkbox, Form, Input, Typography } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { api } from 'api/request';
+import url from 'api/url';
 import { useAppDispatch } from 'app/hooks';
 import imageLogin from 'assets/image/login_background.png';
 import { ReactComponent as GoogleLogo } from 'assets/image/logo-google.svg';
@@ -44,7 +46,11 @@ const LoginPage: React.FC = () => {
       await dispatch(actionAuthLogin(data)).unwrap();
       navigate(routesMap.HOME);
     } catch (error) {
+<<<<<<< HEAD
       notificationError('Username or password incorrect!');
+=======
+      notificationError('Email or password incorrect');
+>>>>>>> 02eb7edee1b8c3e21543dd322f667d08bade9eae
     }
   };
 
@@ -59,7 +65,16 @@ const LoginPage: React.FC = () => {
   };
 
   const getGoogleLoginLink = async (): Promise<void> => {
-    console.log('first');
+    try {
+      const response = await api.get<BaseResponse<{ link: string; redirectUri: string }>>(url.getGoogleLoginLink, {
+        params: {
+          redirectUri: `${window.location.origin}/google-login`,
+        },
+      });
+      window.open(response.data?.data?.link);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -69,8 +84,8 @@ const LoginPage: React.FC = () => {
         backgroundImage: `url(${imageLogin})`,
       }}
     >
-      <div className="flex justify-end mr-36">
-        <div className="bg-white flex flex-col py-8 px-20 rounded-xl shadow-xl w-[450px]">
+      <div className="flex justify-end mr-36 ">
+        <div className="bg-white flex flex-col py-8 px-20 rounded-xl shadow-xl max-w-[528px]">
           <Title className="text-center text-[40px] leading-[48px] font-bold mb-8">Login</Title>
           <div className="flex justify-center">
             <Button className="h-12 w-12 !p-2" shape="round" onClick={getGoogleLoginLink}>
