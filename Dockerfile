@@ -2,9 +2,6 @@ FROM node:16-alpine as BUILD_IMAGE
 
 # arguments variables
 
-ENV HOST=0.0.0.0
-ENV PORT=3000
-
 # parse args to env here
 
 
