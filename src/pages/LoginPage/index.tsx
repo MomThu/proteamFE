@@ -4,7 +4,7 @@ import { useAppDispatch } from 'app/hooks';
 import imageLogin from 'assets/image/login_background.png';
 import { ReactComponent as GoogleLogo } from 'assets/image/logo-google.svg';
 import routesMap from 'layouts/routesMap';
-import { trim } from 'lodash';
+import { get, trim } from 'lodash';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { actionAuthLogin } from 'redux/auth/actions';
@@ -44,7 +44,7 @@ const LoginPage: React.FC = () => {
       await dispatch(actionAuthLogin(data)).unwrap();
       navigate(routesMap.HOME);
     } catch (error) {
-      notificationError('Tên người dùng hoặc mật khẩu không chính xác');
+      notificationError('Username or password incorrect!');
     }
   };
 
@@ -69,7 +69,7 @@ const LoginPage: React.FC = () => {
         backgroundImage: `url(${imageLogin})`,
       }}
     >
-      <div className="flex justify-end mr-36 max-w-[528px]">
+      <div className="flex justify-end mr-36">
         <div className="bg-white flex flex-col py-8 px-20 rounded-xl shadow-xl w-[450px]">
           <Title className="text-center text-[40px] leading-[48px] font-bold mb-8">Login</Title>
           <div className="flex justify-center">
