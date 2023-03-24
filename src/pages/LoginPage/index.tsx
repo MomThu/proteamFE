@@ -27,7 +27,7 @@ const LoginPage: React.FC = () => {
   const [form] = Form.useForm<FormLogin>();
 
   useEffect(() => {
-    if (trim(getDataStorage(STORAGE_KEY.ACCESS_TOKEN))) {      
+    if (trim(getDataStorage(STORAGE_KEY.ACCESS_TOKEN))) {
       navigate(routesMap.HOME);
     }
   }, [navigate]);
@@ -46,11 +46,7 @@ const LoginPage: React.FC = () => {
       await dispatch(actionAuthLogin(data)).unwrap();
       navigate(routesMap.HOME);
     } catch (error) {
-<<<<<<< HEAD
       notificationError('Username or password incorrect!');
-=======
-      notificationError('Email or password incorrect');
->>>>>>> 02eb7edee1b8c3e21543dd322f667d08bade9eae
     }
   };
 
