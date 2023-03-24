@@ -1,18 +1,27 @@
-import React from 'react';
-import { Typography } from 'antd'
+import React, { useEffect } from 'react';
+import { Typography } from 'antd';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { actionGetProfile } from 'redux/profile/actions';
+import { selectorProfile } from 'redux/profile/selectors';
+
 import ProfileHeader from './ProfileHeader';
 import ProfileDetail from './ProfileDetail';
 
 const {Text, Title} = Typography
 const ProfilePage: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  const profile = useAppSelector(selectorProfile);
+
+  useEffect(() => {
+    dispatch(actionGetProfile);
+  }, [dispatch])
+
   return (
     <div>
       <div>
-        <Title>Profile</Title>
-      </div>
-      <div>
-        <ProfileHeader />
-        <ProfileDetail />
+        <ProfileHeader profile={profile} />
+        <ProfileDetail profile={profile} />
       </div>
       
     </div>
