@@ -1,11 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { actionGetProfile } from './actions';
 
-interface AuthState {
+interface UserState {
   profile: Profile;
 }
 
-const initState: AuthState = {
+const initState: UserState = {
   profile: {},
 };
 

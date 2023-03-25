@@ -4,6 +4,7 @@ const url = {
   logout: '/auth/logout',
   getGoogleLoginLink: '/auth/google-login-link',
   loginWithGoogle: '/auth/google-login',
+
   // profile
   profile: '/user/profile',
 };
