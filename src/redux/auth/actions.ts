@@ -3,7 +3,7 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from 'api/request';
 import url from 'api/url';
 import { getMessageError } from 'utils/common';
-import { AuthLogin } from './type';
+import { AuthLogin, IGoogleLoginForm, ILoginResponse, ITokenOption } from './type';
 
 // login
 export const actionAuthLogin = createAsyncThunk(
@@ -11,7 +11,7 @@ export const actionAuthLogin = createAsyncThunk(
   async (payload: AuthLogin, { rejectWithValue }) => {
     try {
       const { data } = await api.post<BaseResponse<UserResponse>>(url.login, payload);
-      if (data.ref) throw rejectWithValue(data);  
+      if (data.ref) throw rejectWithValue(data);
       return data.data;
     } catch (error: any) {
       if (error?.ref) throw rejectWithValue(error);
@@ -21,17 +21,24 @@ export const actionAuthLogin = createAsyncThunk(
 );
 
 // logout
-export const actionAuthLogout = createAsyncThunk(
-  'auth/actionAuthLogout',
-  async () => {
-    try {
-      const { data } = await api.post<BaseResponse<any>>(url.logout);
-      return data;
-    } catch (error: any) {
-      throw new Error(getMessageError(error));
-    }
+export const actionAuthLogout = createAsyncThunk('auth/actionAuthLogout', async () => {
+  try {
+    const { data } = await api.post<BaseResponse<any>>(url.logout);
+    return data;
+  } catch (error: any) {
+    throw new Error(getMessageError(error));
   }
-);
+});
+
+// login with google
+export const loginWithGoogle = createAsyncThunk('auth/loginWithGoogle', async (form: IGoogleLoginForm) => {
+  try {
+    const { data: response } = await api.post<BaseResponse<ILoginResponse>>(url.loginWithGoogle, form);
+    return response.data;
+  } catch (error) {
+    throw new Error(getMessageError(error));
+  }
+});
 
 // set info user
 export const AUTH_SET_INFO_USER = 'AUTH_SET_INFO_USER';
@@ -39,5 +46,3 @@ export const AUTH_SET_ACCESS_TOKEN = 'AUTH_SET_ACCESS_TOKEN';
 
 export const actionAuthSetInfoUser = createAction<UserInfo>(AUTH_SET_INFO_USER);
 export const actionAuthSetAccessToken = createAction<string>(AUTH_SET_ACCESS_TOKEN);
-
-

@@ -5,7 +5,7 @@ import logo from 'assets/image/page-404.jpeg';
 
 const { Title, Text } = Typography;
 
-const ProfileHeader = ({profile}) => {
+const ProfileHeader = () => {
   const profileFake = {
     name: 'Tien',
     email: 'tiencho@gmail.com',

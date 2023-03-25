@@ -1,6 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { removeAllStorage, setDataStorage, STORAGE_KEY } from 'utils/storage';
-import { actionAuthLogin, actionAuthLogout, actionAuthSetAccessToken, actionAuthSetInfoUser } from './actions';
+import {
+  actionAuthLogin,
+  actionAuthLogout,
+  actionAuthSetAccessToken,
+  actionAuthSetInfoUser,
+  loginWithGoogle,
+} from './actions';
 
 interface AuthState {
   token?: string;
@@ -31,6 +37,14 @@ const authReducer = createReducer(initState, (builder) => {
   });
   builder.addCase(actionAuthSetAccessToken, (state, action) => {
     state.token = action.payload;
+  });
+
+  builder.addCase(loginWithGoogle.fulfilled, (state, action) => {
+    state.userInfo = action.payload.profile;
+    state.token = action.payload.accessToken?.token;
+    setDataStorage(STORAGE_KEY.ACCESS_TOKEN, action.payload.accessToken?.token);
+    setDataStorage(STORAGE_KEY.REFRESH_TOKEN, action.payload.refreshToken?.token);
+    setDataStorage(STORAGE_KEY.USER_INFO, action.payload.profile);
   });
 });
 

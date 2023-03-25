@@ -7,7 +7,7 @@ import { selectorProfile } from 'redux/profile/selectors';
 import ProfileHeader from './ProfileHeader';
 import ProfileDetail from './ProfileDetail';
 
-const {Text, Title} = Typography
+const { Text, Title } = Typography;
 const ProfilePage: React.FC = () => {
   const dispatch = useAppDispatch();
 
@@ -15,17 +15,16 @@ const ProfilePage: React.FC = () => {
 
   useEffect(() => {
     dispatch(actionGetProfile);
-  }, [dispatch])
+  }, [dispatch]);
 
   return (
     <div>
       <div>
-        <ProfileHeader profile={profile} />
-        <ProfileDetail profile={profile} />
+        <ProfileHeader />
+        <ProfileDetail />
       </div>
-      
     </div>
-  )
+  );
 };
 
 export default ProfilePage;

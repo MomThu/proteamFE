@@ -1,74 +1,74 @@
 {
-    "name": "int-3315-proteam-frontend",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-        "@react-oauth/google": "^0.8.0",
-        "@reduxjs/toolkit": "^1.9.3",
-        "@testing-library/jest-dom": "^5.16.5",
-        "@testing-library/react": "^13.4.0",
-        "@testing-library/user-event": "^13.5.0",
-        "@types/jest": "^27.5.2",
-        "@types/node": "^16.18.14",
-        "@types/react": "^18.0.28",
-        "@types/react-dom": "^18.0.11",
-        "antd": "^5.3.0",
-        "axios": "^1.3.4",
-        "chart.js": "^4.2.1",
-        "dayjs": "^1.11.7",
-        "lodash": "^4.17.21",
-        "moment": "^2.29.4",
-        "react": "^18.2.0",
-        "react-chartjs-2": "^5.2.0",
-        "react-dom": "^18.2.0",
-        "react-google-login": "^5.2.2",
-        "react-icons": "^4.8.0",
-        "react-redux": "^8.0.5",
-        "react-router-dom": "^6.8.2",
-        "react-scripts": "5.0.1",
-        "react-wait": "^0.3.0",
-        "redux-saga": "^1.2.2",
-        "sass": "^1.58.3",
-        "socket.io-client": "^4.6.1",
-        "store2": "^2.14.2",
-        "tailwindcss": "^3.2.7",
-        "typescript": "^4.9.5",
-        "yup": "^1.0.2"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "devDependencies": {
-        "@types/lodash": "^4.14.191",
-        "@types/react-redux": "^7.1.25",
-        "@types/react-wait": "^0.3.2",
-        "@typescript-eslint/eslint-plugin": "^5.54.1",
-        "@typescript-eslint/parser": "^5.54.1",
-        "eslint": "^8.35.0",
-        "eslint-config-prettier": "^8.7.0",
-        "eslint-plugin-prettier": "^4.2.1",
-        "eslint-plugin-react": "^7.32.2",
-        "prettier": "^2.8.4"
-    }
+  "name": "int-3315-proteam-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@react-oauth/google": "^0.8.0",
+    "@reduxjs/toolkit": "^1.9.3",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.14",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "antd": "^5.3.0",
+    "axios": "^1.3.4",
+    "chart.js": "^4.2.1",
+    "dayjs": "^1.11.7",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-google-login": "^5.2.2",
+    "react-icons": "^4.8.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.8.2",
+    "react-scripts": "5.0.1",
+    "react-wait": "^0.3.0",
+    "redux-saga": "^1.2.2",
+    "sass": "^1.58.3",
+    "socket.io-client": "^4.6.1",
+    "store2": "^2.14.2",
+    "tailwindcss": "^3.2.7",
+    "typescript": "^4.9.5",
+    "yup": "^1.0.2"
+  },
+  "scripts": {
+    "start": "set PORT=8000 && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.191",
+    "@types/react-redux": "^7.1.25",
+    "@types/react-wait": "^0.3.2",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "prettier": "^2.8.4"
+  }
 }

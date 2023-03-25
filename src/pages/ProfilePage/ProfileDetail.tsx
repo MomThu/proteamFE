@@ -3,7 +3,7 @@ import React from 'react';
 
 const { Title } = Typography;
 
-const ProfileDetail = ({profile}) => {
+const ProfileDetail = () => {
   const profileFake = {
     name: 'Tien',
     email: 'tiencho@gmail.com',

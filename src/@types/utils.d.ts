@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 type BaseResponse<T = any> = {
+  success: boolean;
   data: T;
   message: string;
   ref: string | null;
