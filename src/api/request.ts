@@ -33,18 +33,18 @@ const configure = (config: AxiosRequestConfig): any => {
 const configureErr = async (error: AxiosError<BaseResponse>) => {
   const status = error.response?.status;
   const data = error.response?.data;
-  if (status === 401 && error.response?.data.ref === 'expired') {
-    try {
-      const { data } = await api.post("/auth/refresh-token");
-      const refreshRes = data.data;
-      setDataStorage(STORAGE_KEY.ACCESS_TOKEN, refreshRes.accessToken?.token);
-      setDataStorage(STORAGE_KEY.REFRESH_TOKEN, refreshRes.refreshToken?.token);
-      setDataStorage(STORAGE_KEY.USER_INFO, refreshRes.profile);
-      return Promise.reject({ ...data });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-  }
+  // if (status === 401 && error.response?.data.ref === 'expired') {
+  //   try {
+  //     const { data } = await api.post("/auth/refresh-token");
+  //     const refreshRes = data.data;
+  //     setDataStorage(STORAGE_KEY.ACCESS_TOKEN, refreshRes.accessToken?.token);
+  //     setDataStorage(STORAGE_KEY.REFRESH_TOKEN, refreshRes.refreshToken?.token);
+  //     setDataStorage(STORAGE_KEY.USER_INFO, refreshRes.profile);
+  //     return Promise.reject({ ...data });
+  //   } catch (err) {
+  //     return Promise.reject(err);
+  //   }
+  // }
 
   if (data && STATUS_ERROR.includes(status as number)) {
     return { ...data, client: status === 400 };
@@ -64,6 +64,6 @@ api.interceptors.request.use(
 );
 api.interceptors.response.use(
   (response) => Promise.resolve(response),
-  (error) => configureErr(error)
-  // (error) => Promise.reject(configureErr(error))
+  // (error) => configureErr(error)
+  (error) => Promise.reject(configureErr(error))
 );
