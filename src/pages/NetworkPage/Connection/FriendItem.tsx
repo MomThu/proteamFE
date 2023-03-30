@@ -8,7 +8,16 @@ const FriendItem = () => {
     <div className='p-6 m-2 bg-[#D6EAF8]'>
       <Row>
         <Col span={18}>
-          <Text>Nguyen Quang Huy</Text>
+          <Row>
+            <Col span={2}>
+              <div className='friend-img'>
+              <img src="https://d1hjkbq40fs2x4.cloudfront.net/2016-01-31/files/1045-1.jpg" alt="" />
+              </div>
+            </Col>
+            <Col span={22} className='friend-text'>
+              <Text>Nguyen Quang Huy</Text>
+            </Col>
+          </Row>
         </Col>
         <Col span={6}>
           <Button>
@@ -16,6 +25,7 @@ const FriendItem = () => {
           </Button>
         </Col>
       </Row>
+      
     </div>
   )
 };

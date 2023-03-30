@@ -5,7 +5,13 @@ import { Menu } from 'antd';
 import { FaHashtag, FaInvision } from 'react-icons/fa';
 import Connection from './Connection';
 import Invitation from './Invitation';
+import Groupss from './Groupss';
+
 import Friend from './Connection/Friend';
+import Follow from './Connection/Follow';
+import Received from './Invitation/Received';
+import Sent from './Invitation/Sent';
+import Groups from './Groupss/Groups';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -67,7 +73,15 @@ const NetworkPage: React.FC = () => {
         items={items}
         selectedKeys={[current]}
       />
-      <div className='w-full'>{current === '1' ? <Friend /> : current === '3' ? <Invitation /> : null}</div>
+      <div className='w-full'>{
+        current === '1' ? <Friend /> : 
+        current === '2' ? <Follow /> :
+        current === '3' ? <Received /> : 
+        current === '4' ? <Sent /> :
+        current === '5' ? <Groups /> :
+        null
+        }
+      </div>
     </div>
   );
 };

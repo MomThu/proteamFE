@@ -1,18 +1,18 @@
 import React from 'react';
-import FriendItem from './FriendItem';
+import FollowItem from './FollowItem';
 
-const Friend = () => {
+const Follow = () => {
   const listFriend = [1, 2, 3,4,5,6,7,8,9,10];
   return (
     <div className='bg-[#444444] w-full'>
-      {/* <div>friend</div> */}
+      {/* <div>follow</div> */}
       {listFriend.map((item) => (
         <div key={item}>
-          <FriendItem />
+          <FollowItem />
         </div>
       ))}
     </div>
   );
 };
 
-export default Friend;
+export default Follow;
