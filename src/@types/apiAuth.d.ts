@@ -7,21 +7,16 @@ interface UserResponse {
     token?: string;
     expiresIn?: number;
   };
-  information?: {
-    account_id?: number;
-    email?: string;
-    password?: string;
-    role?: number;
-  };
-  errors?: any;
-  message?: string;
-  code?: number;
-  version?: string;
+  information?: UserInfo;
 }
 
 interface UserInfo {
   account_id?: number;
   email?: string;
-  password?: string;
-  role?: number;
+  gpa?: string;
+  linkedlnLink?: string;
+  name?: string;
+  phone?: string;
+  role?: string;
+  school?: string;
 }

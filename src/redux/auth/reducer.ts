@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { convertUserInfoInterface } from 'common/hepler';
 import { removeAllStorage, setDataStorage, STORAGE_KEY } from 'utils/storage';
 import {
   actionAuthLogin,
@@ -22,29 +23,33 @@ const authReducer = createReducer(initState, (builder) => {
   builder.addCase(actionAuthLogout.fulfilled, (state) => {
     state.token = '';
     state.userInfo = {};
-
     removeAllStorage();
   });
+
   builder.addCase(actionAuthLogin.fulfilled, (state, action) => {
+    const userInfo = convertUserInfoInterface(action.payload.information);
     state.token = action.payload.accessToken?.token;
-    state.userInfo = action.payload.information || {};
+    state.userInfo = userInfo || {};
     setDataStorage(STORAGE_KEY.ACCESS_TOKEN, action.payload.accessToken?.token);
     setDataStorage(STORAGE_KEY.REFRESH_TOKEN, action.payload.refreshToken?.token);
-    setDataStorage(STORAGE_KEY.USER_INFO, action.payload.information);
+    setDataStorage(STORAGE_KEY.USER_INFO, userInfo);
   });
+
   builder.addCase(actionAuthSetInfoUser, (state, action) => {
     state.userInfo = action.payload;
   });
+
   builder.addCase(actionAuthSetAccessToken, (state, action) => {
     state.token = action.payload;
   });
 
   builder.addCase(loginWithGoogle.fulfilled, (state, action) => {
-    state.userInfo = action.payload.profile;
+    const userInfo = convertUserInfoInterface(action.payload.information);
     state.token = action.payload.accessToken?.token;
+    state.userInfo = userInfo || {};
     setDataStorage(STORAGE_KEY.ACCESS_TOKEN, action.payload.accessToken?.token);
     setDataStorage(STORAGE_KEY.REFRESH_TOKEN, action.payload.refreshToken?.token);
-    setDataStorage(STORAGE_KEY.USER_INFO, action.payload.profile);
+    setDataStorage(STORAGE_KEY.USER_INFO, userInfo);
   });
 });
 

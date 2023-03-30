@@ -58,7 +58,7 @@ const configureErr = async (error: any) => {
     }
   }
   if (originalConfig.url === '/auth/refresh-token') {
-    alert("Token was expired. You need login to access this feature!");
+    alert('Token was expired. You need login to access this feature!');
     window.location.reload();
   }
   return Promise.reject(error);
