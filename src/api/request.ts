@@ -14,37 +14,35 @@ const token = getDataStorage(STORAGE_KEY.ACCESS_TOKEN);
 const refreshToken = getDataStorage(STORAGE_KEY.REFRESH_TOKEN);
 
 const configure = (config: AxiosRequestConfig): any => {
-  let targetConfig: AxiosRequestConfig = {
-
-  }
+  let targetConfig: AxiosRequestConfig = {};
   if (config.url === '/auth/refresh-token') {
     targetConfig = {
       headers: { Authorization: `Bearer ${refreshToken}` },
-    }
+    };
   } else {
     targetConfig = {
-     headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token}` },
       // params: { version: REACT_APP_API_VERSION },
     };
-  }  
+  }
   return merge(config, targetConfig);
 };
 
 const configureErr = async (error: AxiosError<BaseResponse>) => {
   const status = error.response?.status;
   const data = error.response?.data;
-  // if (status === 401 && error.response?.data.ref === 'expired') {
-  //   try {
-  //     const { data } = await api.post("/auth/refresh-token");
-  //     const refreshRes = data.data;
-  //     setDataStorage(STORAGE_KEY.ACCESS_TOKEN, refreshRes.accessToken?.token);
-  //     setDataStorage(STORAGE_KEY.REFRESH_TOKEN, refreshRes.refreshToken?.token);
-  //     setDataStorage(STORAGE_KEY.USER_INFO, refreshRes.profile);
-  //     return Promise.reject({ ...data });
-  //   } catch (err) {
-  //     return Promise.reject(err);
-  //   }
-  // }
+  if (status === 401 && error.response?.data.ref === 'expired') {
+    try {
+      const { data } = await api.post('/auth/refresh-token');
+      const refreshRes = data.data;
+      setDataStorage(STORAGE_KEY.ACCESS_TOKEN, refreshRes.accessToken?.token);
+      setDataStorage(STORAGE_KEY.REFRESH_TOKEN, refreshRes.refreshToken?.token);
+      setDataStorage(STORAGE_KEY.USER_INFO, refreshRes.profile);
+      return Promise.reject({ ...data });
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  }
 
   if (data && STATUS_ERROR.includes(status as number)) {
     return { ...data, client: status === 400 };

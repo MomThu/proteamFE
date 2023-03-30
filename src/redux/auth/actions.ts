@@ -10,7 +10,7 @@ export const actionAuthLogin = createAsyncThunk(
   'auth/actionAuthLogin',
   async (payload: AuthLogin, { rejectWithValue }) => {
     try {
-      const { data } = await api.post<BaseResponse<UserResponse>>(url.login, payload);
+      const { data } = await api.post<BaseResponse<UserResponseData>>(url.login, payload);
       if (data.ref) throw rejectWithValue(data);
       return data.data;
     } catch (error: any) {

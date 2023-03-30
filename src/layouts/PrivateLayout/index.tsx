@@ -11,28 +11,11 @@ import AppHeader from './AppHeader';
 const { Content } = Layout;
 
 const PrivateLayout: React.FC = () => {
-  // const isLogged = useMemo(() => {
-  //   return Boolean(trim(getDataStorage(STORAGE_KEY.ACCESS_TOKEN)));
-  // }, []);
+  const isLogged = useMemo(() => {
+    return Boolean(trim(getDataStorage(STORAGE_KEY.ACCESS_TOKEN)));
+  }, []);
 
-  // return isLogged ? (
-  //   <Layout className="min-h-screen">
-  //     <Layout className="bg-[#EAF0F5]">
-  //       <AppHeader />
-  //       <Content className="px-6 py-5">
-  //         <Waiter>
-  //           <React.Suspense fallback={<Loading />}>
-  //             <Outlet />
-  //           </React.Suspense>
-  //         </Waiter>
-  //       </Content>
-  //     </Layout>
-  //   </Layout>
-  // ) : (
-  //   <Navigate to={routesMap.LOGIN} />
-  // );
-
-  return (
+  return isLogged ? (
     <Layout className="min-h-screen">
       <Layout className="bg-[#EAF0F5]">
         <AppHeader />
@@ -45,7 +28,9 @@ const PrivateLayout: React.FC = () => {
         </Content>
       </Layout>
     </Layout>
-  )
+  ) : (
+    <Navigate to={routesMap.LOGIN} />
+  );
 };
 
 export default PrivateLayout;
