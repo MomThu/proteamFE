@@ -7,6 +7,9 @@ const url = {
 
   // profile
   profile: '/user/profile',
+  skills: '/user/skills',
+  profileSkills: '/user/profile/skills',
+  updateProfileSkills: '/user/profile/update-skills',
 };
 
 export default url;

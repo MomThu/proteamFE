@@ -1,8 +1,5 @@
-export interface Profile {
-  name: string;
-  gpa: number;
-  school: string;
-  major: string;
-  linkedln_link: string;
-  phone: string;
+export interface UserState {
+  profile: User.Profile,
+  skills: User.Skill[],
+  profileSkill: User.Skill[],
 }

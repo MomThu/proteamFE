@@ -1,27 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
-import { Button, Checkbox, Col, Form, Image, Input, InputNumber, Modal, Row, Space, Typography } from 'antd';
+import { Button, Card, Form, Image, Input, InputNumber, Modal, Space, Typography } from 'antd';
+import { isEmpty } from 'lodash';
+
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { actionGetProfile, actionUpdateProfile } from 'redux/profile/actions';
 import { selectorProfile } from 'redux/profile/selectors';
 import logo from 'assets/image/page-404.jpeg';
-import { EditOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
-import routesMap from 'layouts/routesMap';
 import { notificationError, notificationSuccess } from 'utils/notifications';
 import { getMessageError } from 'utils/common';
+import Skill from './Skill';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const ProfileHeader = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const profile = useAppSelector(selectorProfile);
+
   const [form] = Form.useForm();
 
   const [openModal, setOpenModal] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
   const [openModalDiscardChange, setOpenModalDiscardChange] = useState(false);
 
   useEffect(() => {
@@ -47,19 +47,14 @@ const ProfileHeader = () => {
   };
 
   const onFinish = async (values: any) => {
-    console.log('Success:', values);
     try {
       await dispatch(actionUpdateProfile(values)).unwrap();
       notificationSuccess('Information Update Successful!');
       setOpenModal(false);
-      form.resetFields();
+      dispatch(actionGetProfile()).unwrap();
     } catch (error) {
       notificationError(getMessageError(error));
     }
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
   };
 
   return (
@@ -75,8 +70,8 @@ const ProfileHeader = () => {
           />
           <Space direction="vertical" className="mt-10 ml-10 flex flex-col">
             <Title>{profile?.name}</Title>
-            <Title level={5}>School: {profile.school}</Title>
-            <Title level={5}>Major: {profile.major}</Title>
+            {profile?.school && <Title level={5}>School: {profile.school}</Title>}
+            {profile?.major && <Title level={5}>Major: {profile.major}</Title>}
           </Space>
         </div>
         <div>
@@ -88,23 +83,19 @@ const ProfileHeader = () => {
           />
         </div>
       </div>
-      <div className="mt-10">
-        <Title className="text-left">Thông tin chung</Title>
-        <Space direction="vertical" className="">
-          <Title level={5}>GPA: {profile.gpa}</Title>
-          <Title level={5}>Email: {profile.email}</Title>
-          <Title level={5}>Linkedin Link: {profile.linkedln_link}</Title>
-          <Title level={5}>Phone: {profile.phone}</Title>
-        </Space>
-      </div>
-      <Modal
-        title="Edit profile"
-        open={openModal}
-        onOk={onFinish}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-        footer={null}
-      >
+      {!isEmpty(profile) && (
+        <Card className="mt-10">
+          <Title className="text-left">Detail Information</Title>
+          <Space direction="vertical" className="">
+            {profile.gpa && <Title level={5}>GPA: {profile.gpa}</Title>}
+            {profile.email && <Title level={5}>Email: {profile.email}</Title>}
+            {profile.linkedln_link && <Title level={5}>Linkedin Link: {profile.linkedln_link}</Title>}
+            {profile.phone && <Title level={5}>Phone: {profile.phone}</Title>}
+          </Space>
+        </Card>
+      )}
+      <Skill />
+      <Modal title="Edit profile" open={openModal} onOk={onFinish} onCancel={handleCancel} footer={null}>
         <Form
           name="editProfile"
           labelCol={{ span: 8 }}
@@ -112,38 +103,44 @@ const ProfileHeader = () => {
           style={{ maxWidth: 600 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           form={form}
         >
-          <Form.Item
-            label="Fullname"
-            name="name"
-            rules={[{ required: true, message: 'Please input your full name!' }]}
-            initialValue={profile.name}
-          >
-            <Input />
-          </Form.Item>
+          <div>
+            <Title level={5}>General Information</Title>
 
-          <Form.Item label="GPA" name="gpa" initialValue={profile.phone}>
-            <InputNumber />
-          </Form.Item>
+            <Form.Item
+              label="Fullname"
+              name="name"
+              rules={[{ required: true, message: 'Please input your full name!' }]}
+              initialValue={profile.name}
+            >
+              <Input />
+            </Form.Item>
 
-          <Form.Item label="School" name="school" initialValue={profile.school}>
-            <Input />
-          </Form.Item>
+            <Form.Item label="School" name="school" initialValue={profile.school}>
+              <Input />
+            </Form.Item>
 
-          <Form.Item label="Major" name="major" initialValue={profile.major}>
-            <Input />
-          </Form.Item>
+            <Form.Item label="Major" name="major" initialValue={profile.major}>
+              <Input />
+            </Form.Item>
+          </div>
 
-          <Form.Item label="Linkedin Link" name="linkedln_link" initialValue={profile.linkedln_link}>
-            <Input />
-          </Form.Item>
+          <div>
+            <Title level={5}>Detail Information</Title>
 
-          <Form.Item label="Phone Number" name="phone" initialValue={profile.phone}>
-            <Input />
-          </Form.Item>
+            <Form.Item label="GPA" name="gpa" initialValue={profile.gpa}>
+              <InputNumber />
+            </Form.Item>
 
+            <Form.Item label="Linkedin Link" name="linkedln_link" initialValue={profile.linkedln_link}>
+              <Input />
+            </Form.Item>
+
+            <Form.Item label="Phone Number" name="phone" initialValue={profile.phone}>
+              <Input />
+            </Form.Item>
+          </div>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
               Submit

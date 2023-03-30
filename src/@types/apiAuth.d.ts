@@ -1,4 +1,4 @@
-interface UserResponseData {
+interface UserResponse {
   accessToken?: {
     token?: string;
     expiresIn?: number;
@@ -11,7 +11,7 @@ interface UserResponseData {
 }
 
 interface UserInfo {
-  id?: number;
+  account_id?: number;
   email?: string;
   gpa?: string;
   linkedlnLink?: string;
