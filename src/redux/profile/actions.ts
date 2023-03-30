@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from 'api/request';
 import url from 'api/url';
 import { getMessageError } from 'utils/common';
@@ -10,6 +10,23 @@ export const actionGetProfile = createAsyncThunk(
   async () => {
     try {
       const { data } = await api.get<User.Profile>(url.profile);
+      return data;
+    } catch (error: any) {
+      throw new Error(getMessageError(error));
+    }
+  }
+);
+
+// get user profile
+export const actionGetUserProfile = createAsyncThunk(
+  'user/actionGetUserProfile',
+  async (payload: {id: number}) => {
+    try {
+      const { data } = await api.get<User.Profile>(`${url.profile}/${payload?.id}`, {
+        params: {
+          id: payload.id
+        }
+      });
       return data;
     } catch (error: any) {
       throw new Error(getMessageError(error));

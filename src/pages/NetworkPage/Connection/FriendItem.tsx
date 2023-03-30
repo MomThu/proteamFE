@@ -1,8 +1,11 @@
 import { Button, Col, Row, Typography } from 'antd';
 import React from 'react';
 
-const FriendItem = () => {
-  const {Text} = Typography;
+const {Link} = Typography;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const FriendItem = (props: any) => {
+  const {data} = props;
 
   return (
     <div className='p-6 m-2 bg-[#D6EAF8]'>
@@ -15,7 +18,7 @@ const FriendItem = () => {
               </div>
             </Col>
             <Col span={22} className='friend-text'>
-              <Text>Nguyen Quang Huy</Text>
+              <Link href={`/profile/user?${data.account_id}`}>{data.name}</Link>
             </Col>
           </Row>
         </Col>

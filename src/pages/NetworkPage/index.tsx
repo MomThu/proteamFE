@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { AppstoreOutlined, GroupOutlined, MailOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { GroupOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { FaHashtag, FaInvision } from 'react-icons/fa';
-import Connection from './Connection';
-import Invitation from './Invitation';
-import Groupss from './Groupss';
 
 import Friend from './Connection/Friend';
 import Follow from './Connection/Follow';
@@ -46,10 +43,10 @@ const NetworkPage: React.FC = () => {
   const [current, setCurrent] = useState('1');
 
   const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
-    console.log(keys, 'key');
+    // console.log(keys, 'key');
 
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-    console.log(latestOpenKey, 'latestOpenKey');
+    // console.log(latestOpenKey, 'latestOpenKey');
 
     if (rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
       setOpenKeys(keys);
