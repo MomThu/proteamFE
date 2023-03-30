@@ -1,28 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Checkbox, Col, Form, Image, Input, InputNumber, Modal, Row, Space, Typography } from 'antd';
+import { Button, Card, Form, Image, Input, InputNumber, Modal, Space, Typography } from 'antd';
+import { isEmpty } from 'lodash';
+
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { actionGetProfile, actionUpdateProfile } from 'redux/profile/actions';
 import { selectorProfile } from 'redux/profile/selectors';
 import logo from 'assets/image/page-404.jpeg';
-import { EditOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
-import routesMap from 'layouts/routesMap';
 import { notificationError, notificationSuccess } from 'utils/notifications';
 import { getMessageError } from 'utils/common';
 import Skill from './Skill';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const ProfileHeader = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const profile = useAppSelector(selectorProfile);
+
   const [form] = Form.useForm();
 
   const [openModal, setOpenModal] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
   const [openModalDiscardChange, setOpenModalDiscardChange] = useState(false);
 
   useEffect(() => {
@@ -48,19 +47,14 @@ const ProfileHeader = () => {
   };
 
   const onFinish = async (values: any) => {
-    console.log('Success:', values);
     try {
       await dispatch(actionUpdateProfile(values)).unwrap();
       notificationSuccess('Information Update Successful!');
       setOpenModal(false);
-      form.resetFields();
+      dispatch(actionGetProfile()).unwrap();
     } catch (error) {
       notificationError(getMessageError(error));
     }
-  };
-
-  const onFinishFailed = (error: any) => {
-    console.log('Failed:', error);
   };
 
   return (
@@ -89,7 +83,7 @@ const ProfileHeader = () => {
           />
         </div>
       </div>
-      {JSON.stringify(profile) !== "{}" &&
+      {!isEmpty(profile) && (
         <Card className="mt-10">
           <Title className="text-left">Detail Information</Title>
           <Space direction="vertical" className="">
@@ -98,17 +92,10 @@ const ProfileHeader = () => {
             {profile.linkedln_link && <Title level={5}>Linkedin Link: {profile.linkedln_link}</Title>}
             {profile.phone && <Title level={5}>Phone: {profile.phone}</Title>}
           </Space>
-        </Card>}
-        {}
+        </Card>
+      )}
       <Skill />
-      <Modal
-        title="Edit profile"
-        open={openModal}
-        onOk={onFinish}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-        footer={null}
-      >
+      <Modal title="Edit profile" open={openModal} onOk={onFinish} onCancel={handleCancel} footer={null}>
         <Form
           name="editProfile"
           labelCol={{ span: 8 }}
@@ -116,7 +103,6 @@ const ProfileHeader = () => {
           style={{ maxWidth: 600 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           form={form}
         >
           <div>
@@ -143,7 +129,7 @@ const ProfileHeader = () => {
           <div>
             <Title level={5}>Detail Information</Title>
 
-            <Form.Item label="GPA" name="gpa" initialValue={profile.phone}>
+            <Form.Item label="GPA" name="gpa" initialValue={profile.gpa}>
               <InputNumber />
             </Form.Item>
 
@@ -154,10 +140,7 @@ const ProfileHeader = () => {
             <Form.Item label="Phone Number" name="phone" initialValue={profile.phone}>
               <Input />
             </Form.Item>
-
           </div>
-
-
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
               Submit

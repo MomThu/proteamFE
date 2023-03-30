@@ -28,7 +28,7 @@ const AppContainer: React.FC = () => {
     dispatch(actionAuthSetInfoUser(userInfo));
     dispatch(actionAuthSetAccessToken(accessToken));
   }, [dispatch]);
-  
+
   return (
     <React.Suspense fallback={<Loading />}>
       <Routes>

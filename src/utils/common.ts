@@ -13,7 +13,7 @@ export const schemaRules = (schema: any): FormRule[] => {
   ];
 };
 
-export const getMessageError = (error: unknown, path = 'message'): string => {
+export const getMessageError = (error: unknown, path = 'message'): string => {  
   return get(error, path, MESSAGE_ERR);
 };
 

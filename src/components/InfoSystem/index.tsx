@@ -66,7 +66,7 @@ const InfoSystem: React.FC = () => {
     <Dropdown menu={{ items }} placement="bottomRight">
       {/* <Avatar size={40} icon={<UserOutlined />} className="mr-3 cursor-pointer" /> */}
       <Text className="text-sm cursor-pointer">
-        {`${user?.firstName} ${user?.lastName}`}
+        {`${user?.email}`}
         <CaretDownOutlined className="ml-2" />
       </Text>
     </Dropdown>

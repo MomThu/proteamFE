@@ -1,22 +1,17 @@
 interface UserResponse {
   accessToken?: {
-    token?: string,
-    expiresIn?: number
+    token?: string;
+    expiresIn?: number;
   };
   refreshToken?: {
-    token?: string,
-    expiresIn?: number
+    token?: string;
+    expiresIn?: number;
   };
   information?: {
-    id?: number;
+    account_id?: number;
     email?: string;
-    firstName?: string;
-    lastName?: string;
-    ldapUsername?: string;
     password?: string;
-    permissions?: any;
-    role?: string;
-    status?: string;
+    role?: number;
   };
   errors?: any;
   message?: string;
@@ -25,13 +20,8 @@ interface UserResponse {
 }
 
 interface UserInfo {
-  id?: number;
+  account_id?: number;
   email?: string;
-  firstName?: string;
-  lastName?: string;
-  ldapUsername?: string;
   password?: string;
-  permissions?: any;
-  role?: string;
-  status?: string;
+  role?: number;
 }
