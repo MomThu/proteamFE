@@ -29,8 +29,8 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Connection', 'sub1', <UserOutlined />, [getItem('List Friends', '1'), getItem('Follower', '2')]),
-  getItem('Invitation', 'sub2', <FaInvision />, [getItem('Received', '3'), getItem('Sent', '4')]),
+  getItem('Connection', 'sub1', <UserOutlined />, [getItem('List Friends', '1')]),
+  getItem('Invitation', 'sub2', <FaInvision />, [getItem('Received', '3')]),
   getItem('Groups', 'sub3', <GroupOutlined />, [getItem('Groups', '5')]),
   getItem('Hashtags', 'sub4', <FaHashtag />, [getItem('Hashtags', '6')]),
 ];

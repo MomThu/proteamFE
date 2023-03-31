@@ -11,6 +11,7 @@ declare namespace User {
     phone?: string;
     role?: number;
     cv?: string;
+    friend?: number;
   }
   
   interface Skill {

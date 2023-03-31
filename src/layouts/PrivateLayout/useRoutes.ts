@@ -50,7 +50,7 @@ const routes: AppRouteType[] = [
     component: UserProfilePage,
     rule: -1,
     openKey: [],
-    activeKey: [routesMap.PROFILE],
+    activeKey: [],
   },
 ];
 

@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { actionGetRequestFriend } from 'redux/network/actions';
+import { selectorRequests } from 'redux/network/selectors';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import ReceivedItem from './ReceivedItem';
 
 const Received = () => {
-  const listFriend = [1, 2, 3,4,5,6,7,8,9,10];
+  const dispatch = useAppDispatch();
+
+  const requestFriends = useAppSelector(selectorRequests);
+
+  useEffect(() => {
+    dispatch(actionGetRequestFriend()).unwrap();
+  }, [dispatch]);
+
+  const onReload = () => {
+    dispatch(actionGetRequestFriend()).unwrap();
+  };
   return (
-    <div className='bg-[#444444] w-full'>
-      {/* <div>friend</div> */}
-      {listFriend.map((item) => (
-        <div key={item}>
-          <ReceivedItem />
+    <div className="w-full">
+      {requestFriends.map((item, index) => (
+        <div key={index}>
+          <ReceivedItem data={item} onReload={onReload} />
         </div>
       ))}
     </div>

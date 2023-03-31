@@ -13,11 +13,15 @@ const Friend = () => {
     dispatch(actionGetFriend()).unwrap();
   }, [dispatch]);
   
+  const onReload = () => {
+    dispatch(actionGetFriend()).unwrap();
+  };
+
   return (
     <div className='w-full'>
       {friends.map((item) => (
         <div key={item.account_id}>
-          <FriendItem data={item} />
+          <FriendItem data={item} onReload={onReload} />
         </div>
       ))}
     </div>
