@@ -11,11 +11,19 @@ declare namespace User {
     phone?: string;
     role?: number;
     cv?: string;
+    friend?: number;
   }
   
   interface Skill {
     skill_skill_id?: number,
     skill_skill_name?: string
+  }
+
+  interface RequestFriend {
+    name?: string;
+    school?: string;
+    major?: string;
+    avatar?: string;
   }
   
 }

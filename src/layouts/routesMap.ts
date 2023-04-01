@@ -3,6 +3,7 @@ const LOGIN = '/login';
 const GOOGLE_LOGIN = '/google-login';
 const NOT_FOUND = '/404';
 const PROFILE = '/profile';
+const USER_PROFILE = `${PROFILE}/user`
 const NETWORK = '/network';
 const NOTIFICATION = '/notification';
 const CHAT = '/chat';
@@ -16,6 +17,7 @@ const routesMap = {
   NETWORK,
   NOTIFICATION,
   CHAT,
+  USER_PROFILE
 };
 
 export default routesMap;

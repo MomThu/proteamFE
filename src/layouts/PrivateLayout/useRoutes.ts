@@ -4,6 +4,7 @@ import { lazy, useMemo } from 'react';
 
 const HomePage = lazy(() => delayLazyLoad(import('pages/HomePage')));
 const ProfilePage = lazy(() => delayLazyLoad(import('pages/ProfilePage')));
+const UserProfilePage = lazy(() => delayLazyLoad(import('pages/ProfilePage/UserProfile')));
 const NetworkPage = lazy(() => delayLazyLoad(import('pages/NetworkPage')));
 const ChatPage = lazy(() => delayLazyLoad(import('pages/ChatPage')));
 const NotificationPage = lazy(() => delayLazyLoad(import('pages/NotificationPage')));
@@ -43,6 +44,13 @@ const routes: AppRouteType[] = [
     rule: -1,
     openKey: [],
     activeKey: [routesMap.NOTIFICATION],
+  },
+  {
+    path: routesMap.USER_PROFILE,
+    component: UserProfilePage,
+    rule: -1,
+    openKey: [],
+    activeKey: [],
   },
 ];
 
