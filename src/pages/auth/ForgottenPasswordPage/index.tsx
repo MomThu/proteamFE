@@ -1,8 +1,9 @@
 import { Button, Form, Input, Space, Spin, Typography } from 'antd';
-import { useAppDispatch } from 'app/hooks';
+import { api } from 'api/request';
+import url from 'api/url';
 import imageLogin from 'assets/image/login_background.png';
 import React, { useState } from 'react';
-import { getLinkToResetPassword } from 'redux/auth/actions';
+import { HttpStatus } from 'utils/constants';
 import { notificationError } from 'utils/notifications';
 
 const { Title } = Typography;
@@ -13,7 +14,6 @@ interface FormResetPassword {
 }
 
 const ForgottenPasswordPage: React.FC = () => {
-  const dispatch = useAppDispatch();
   const [emailedToReset, setEmailedToReset] = useState(false);
   const [sendingEmail, setSendingEmail] = useState(false);
 
@@ -31,11 +31,17 @@ const ForgottenPasswordPage: React.FC = () => {
 
   const handleGetLinkResetPassword = async (data: FormResetPassword) => {
     try {
-      await dispatch(
-        getLinkToResetPassword({ ...data, redirectUri: `${window.location.origin}/reset-password` })
-      ).unwrap();
-      setSendingEmail(false);
-      setEmailedToReset(true);
+      const response = await api.post<BaseResponse<any>>(url.forgottenPassword, {
+        ...data,
+        redirectUri: `${window.location.origin}/reset-password`,
+      });
+      if (response.data?.code === HttpStatus.OK) {
+        setSendingEmail(false);
+        setEmailedToReset(true);
+      } else {
+        notificationError('Email does not exist');
+        setSendingEmail(false);
+      }
     } catch (error) {
       notificationError('Email does not exist');
       setSendingEmail(false);
