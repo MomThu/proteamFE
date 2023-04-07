@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 type BaseResponse<T = any> = {
+  code: HttpStatus;
   success: boolean;
   data: T;
   message: string;

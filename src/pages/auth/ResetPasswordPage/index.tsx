@@ -1,10 +1,11 @@
 import { Button, Form, Input, Space, Spin, Typography } from 'antd';
-import { useAppDispatch } from 'app/hooks';
+import { api } from 'api/request';
+import url from 'api/url';
 import imageLogin from 'assets/image/login_background.png';
 import routesMap from 'layouts/routesMap';
 import React, { useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { resetPassword } from 'redux/auth/actions';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { HttpStatus } from 'utils/constants';
 import { notificationError } from 'utils/notifications';
 
 const { Title } = Typography;
@@ -18,7 +19,6 @@ interface FormResetPassword {
 
 const ResetPasswordPage: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [spending, setSpending] = useState(false);
   const [isResetSuccess, setIsResetSuccess] = useState(false);
   const [searchParams] = useSearchParams();
@@ -39,11 +39,21 @@ const ResetPasswordPage: React.FC = () => {
     const userId = searchParams.get('userId') || undefined;
     const resetString = searchParams.get('resetString') || undefined;
     try {
-      await dispatch(resetPassword({ ...data, userId, resetString })).unwrap();
-      setIsResetSuccess(true);
+      const response = await api.post<BaseResponse<any>>(url.resetPassword, {
+        newPassword: data.newPassword,
+        userId,
+        resetString,
+      });
+      if (response.data?.code === HttpStatus.OK) {
+        setSpending(false);
+        setIsResetSuccess(true);
+      } else {
+        notificationError('Password reset failed');
+        setSpending(false);
+      }
     } catch (error) {
-      setSpending(false);
       notificationError('Password reset failed');
+      setSpending(false);
     }
   };
 
@@ -109,11 +119,9 @@ const ResetPasswordPage: React.FC = () => {
           <div className="w-full max-w-[500px] text-center bg-gray-700 text-white p-8 rounded-md">
             <h2 className="md:text-[32px] leading-10 mb-6">Password Reset</h2>
             <p className="mb-4">{`Your password has been reset successfully.`}</p>
-            <p>{`You may now login`}</p>
+            <p className="mb-4">{`You may now login`}</p>
             <div className="flex justify-center">
-              <Button type="link" onClick={handleClickLogin}>
-                Login
-              </Button>
+              <Button onClick={handleClickLogin}>Login</Button>
             </div>
           </div>
         </div>

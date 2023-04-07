@@ -35,29 +35,6 @@ export const loginWithGoogle = createAsyncThunk('auth/loginWithGoogle', async (f
   }
 });
 
-// get link to reset password
-export const getLinkToResetPassword = createAsyncThunk(
-  'auth/getlinkToResetPassword',
-  async (form: IGetLinkToResetPasswordForm) => {
-    try {
-      const { data: response } = await api.post<BaseResponse<UserResponse>>(url.forgottenPassword, form);
-      return response.data;
-    } catch (error) {
-      throw new Error(getMessageError(error));
-    }
-  }
-);
-
-// reset password
-export const resetPassword = createAsyncThunk('auth/resetPassword', async (form: IResetPasswordForm) => {
-  try {
-    const { data: response } = await api.post<BaseResponse<UserResponse>>(url.resetPassword, form);
-    return response.data;
-  } catch (error) {
-    throw new Error(getMessageError(error));
-  }
-});
-
 // set info user
 export const AUTH_SET_INFO_USER = 'AUTH_SET_INFO_USER';
 export const AUTH_SET_ACCESS_TOKEN = 'AUTH_SET_ACCESS_TOKEN';

@@ -1,5 +1,3 @@
-import { string } from 'yargs';
-
 export interface AuthLogin {
   email: string;
   password: string;
