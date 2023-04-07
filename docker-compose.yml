@@ -8,5 +8,6 @@ services:
     container_name: frontend
     restart: always
     ports:
-      - '8080:80'
+      - '8000:80'
+    network_mode: 'host'
 # switch to public 80 on vps server

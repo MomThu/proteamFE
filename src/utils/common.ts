@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormRule } from 'antd';
-import { get } from 'lodash';
+import { get, isPlainObject, mapKeys, trim } from 'lodash';
 import { MESSAGE_ERR } from './constants';
 
 export const schemaRules = (schema: any): FormRule[] => {
@@ -13,7 +13,7 @@ export const schemaRules = (schema: any): FormRule[] => {
   ];
 };
 
-export const getMessageError = (error: unknown, path = 'message'): string => {  
+export const getMessageError = (error: unknown, path = 'message'): string => {
   return get(error, path, MESSAGE_ERR);
 };
 
@@ -44,3 +44,30 @@ export const numberFormat = (num?: number | string): string => {
   const numberFormat = new Intl.NumberFormat(); //default: English, vi-VN: Vietnamese
   return numberFormat.format(number);
 };
+
+export function trimObject(body: any): void {
+  const trimValue = (item: any) => {
+    mapKeys(item, (value, key) => {
+      // remove string contain only space characters
+      if (typeof value === 'string') {
+        item[key] = value.trim();
+      }
+
+      // iterate array
+      else if (Array.isArray(value)) {
+        value.forEach((subValue, index) => {
+          // remove string contain only space characters
+          if (typeof subValue === 'string' && !trim(subValue as string)) {
+            value.splice(index, 1);
+          } else if (isPlainObject(subValue)) {
+            trimValue(subValue);
+          }
+        });
+      } else if (isPlainObject(value)) {
+        trimValue(value);
+      }
+    });
+  };
+
+  trimValue(body);
+}

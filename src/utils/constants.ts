@@ -10,7 +10,7 @@ export const regexNonSpecial2 = /^[^:;'"<>\\/?~`+=_\-@#$%^&*{}[\]|]*$/;
 export const regexNonSpecial3 = /^[^:;'"<>\\/?~`+=@#$%^&*{}[\]|]*$/;
 export const regexPhone =
   /^(1900|1800)[0-9]{4}$|(05|03|04|07|08|09|024|028)[0-9]{8}$|(\84)[0-9]{9}$|(021[012345689]|023[23456789]|020[3456789]|022[0123456789]|029[01234679]|025[123456789]|026[01239]|027[01234567])[0-9]{7}$/;
-  
+
 export const Regex = {
   PHONE: /^[0-9]{1,255}$/,
   INT_PATTERN: `^\\d+$`,
@@ -23,4 +23,20 @@ export const Regex = {
   EMAIL_SPECIAL_CHARACTERS: /[$&:;=?#|'<>,()^*!%]+/,
   CHILDREN_TYPE_SPECIAL_CHARACTERS: /[$&+:;=?#|'<>,().^*!%@/\\~`"]+/,
   NAME_SPECIAL_CHARACTERS: /[$&+:;=?#|'<>,().^*!%@/\\~`"]+/,
+};
+
+export const ImageFileTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+
+export enum HttpStatus {
+  OK = 200,
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  FORBIDDEN = 403,
+  NOT_FOUND = 404,
+  UNPROCESSABLE_ENTITY = 422,
+  ITEM_NOT_FOUND = 444,
+  ITEM_ALREADY_EXIST = 445,
+  ITEM_IS_USING = 446,
+  ITEM_IS_INVALID = 448,
+  INTERNAL_SERVER_ERROR = 500,
 }

@@ -28,7 +28,6 @@ RUN rm -rf /usr/share/nginx/html/*
 
 COPY --from=BUILD_IMAGE /app/build /usr/share/nginx/html
 
-EXPOSE 8080 80
 # switch to public 80 on vps server
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
