@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { AppstoreOutlined, GroupOutlined, MailOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { GroupOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { FaHashtag, FaInvision } from 'react-icons/fa';
-import Connection from './Connection';
-import Invitation from './Invitation';
+
 import Friend from './Connection/Friend';
+import Follow from './Connection/Follow';
+import Received from './Invitation/Received';
+import Sent from './Invitation/Sent';
+import Groups from './Groupss/Groups';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -26,8 +29,8 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Connection', 'sub1', <UserOutlined />, [getItem('List Friends', '1'), getItem('Follower', '2')]),
-  getItem('Invitation', 'sub2', <FaInvision />, [getItem('Received', '3'), getItem('Sent', '4')]),
+  getItem('Connection', 'sub1', <UserOutlined />, [getItem('List Friends', '1')]),
+  getItem('Invitation', 'sub2', <FaInvision />, [getItem('Received', '3')]),
   getItem('Groups', 'sub3', <GroupOutlined />, [getItem('Groups', '5')]),
   getItem('Hashtags', 'sub4', <FaHashtag />, [getItem('Hashtags', '6')]),
 ];
@@ -40,10 +43,10 @@ const NetworkPage: React.FC = () => {
   const [current, setCurrent] = useState('1');
 
   const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
-    console.log(keys, 'key');
+    // console.log(keys, 'key');
 
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-    console.log(latestOpenKey, 'latestOpenKey');
+    // console.log(latestOpenKey, 'latestOpenKey');
 
     if (rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
       setOpenKeys(keys);
@@ -67,7 +70,15 @@ const NetworkPage: React.FC = () => {
         items={items}
         selectedKeys={[current]}
       />
-      <div className='w-full'>{current === '1' ? <Friend /> : current === '3' ? <Invitation /> : null}</div>
+      <div className='w-full'>{
+        current === '1' ? <Friend /> : 
+        current === '2' ? <Follow /> :
+        current === '3' ? <Received /> : 
+        current === '4' ? <Sent /> :
+        current === '5' ? <Groups /> :
+        null
+        }
+      </div>
     </div>
   );
 };

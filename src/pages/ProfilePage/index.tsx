@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { Typography } from 'antd';
+import React from 'react';
 
 
 import ProfileHeader from './ProfileHeader';

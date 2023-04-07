@@ -56,8 +56,7 @@ const LoginPage: React.FC = () => {
   };
 
   const handleClickForgetPassword = async () => {
-    console.log('handleClickForgetPassword');
-    // navigate to reset password page
+    navigate(routesMap.FORGOTTEN_PASSWORD);
   };
 
   const getGoogleLoginLink = async (): Promise<void> => {

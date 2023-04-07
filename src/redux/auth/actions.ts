@@ -3,7 +3,7 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from 'api/request';
 import url from 'api/url';
 import { getMessageError } from 'utils/common';
-import { AuthLogin, IGoogleLoginForm } from './type';
+import { AuthLogin, IGoogleLoginForm, IGetLinkToResetPasswordForm, IResetPasswordForm } from './type';
 
 // login
 export const actionAuthLogin = createAsyncThunk('auth/actionAuthLogin', async (payload: AuthLogin) => {
@@ -29,6 +29,29 @@ export const actionAuthLogout = createAsyncThunk('auth/actionAuthLogout', async 
 export const loginWithGoogle = createAsyncThunk('auth/loginWithGoogle', async (form: IGoogleLoginForm) => {
   try {
     const { data: response } = await api.post<BaseResponse<UserResponse>>(url.loginWithGoogle, form);
+    return response.data;
+  } catch (error) {
+    throw new Error(getMessageError(error));
+  }
+});
+
+// get link to reset password
+export const getLinkToResetPassword = createAsyncThunk(
+  'auth/getlinkToResetPassword',
+  async (form: IGetLinkToResetPasswordForm) => {
+    try {
+      const { data: response } = await api.post<BaseResponse<UserResponse>>(url.forgottenPassword, form);
+      return response.data;
+    } catch (error) {
+      throw new Error(getMessageError(error));
+    }
+  }
+);
+
+// reset password
+export const resetPassword = createAsyncThunk('auth/resetPassword', async (form: IResetPasswordForm) => {
+  try {
+    const { data: response } = await api.post<BaseResponse<UserResponse>>(url.resetPassword, form);
     return response.data;
   } catch (error) {
     throw new Error(getMessageError(error));
