@@ -9,6 +9,7 @@ const USER_PROFILE = `${PROFILE}/user`;
 const NETWORK = '/network';
 const NOTIFICATION = '/notification';
 const CHAT = '/chat';
+const MYPOST = '/mypost';
 
 const routesMap = {
   HOME,
@@ -22,6 +23,7 @@ const routesMap = {
   NOTIFICATION,
   CHAT,
   USER_PROFILE,
+  MYPOST,
 };
 
 export default routesMap;

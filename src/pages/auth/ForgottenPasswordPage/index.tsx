@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Form, Input, Space, Spin, Typography } from 'antd';
 import { api } from 'api/request';
 import url from 'api/url';

@@ -19,6 +19,10 @@ const url = {
   requestFriend: '/user/friend-request',
   acceptFriend: '/user/accept-friend',
   unfriend: '/user/unfriend',
+
+  // post 
+  allPosts: '/posts/all',
+  post: '/posts',
 };
 
 export default url;

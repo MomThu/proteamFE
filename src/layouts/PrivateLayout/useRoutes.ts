@@ -8,6 +8,7 @@ const UserProfilePage = lazy(() => delayLazyLoad(import('pages/ProfilePage/UserP
 const NetworkPage = lazy(() => delayLazyLoad(import('pages/NetworkPage')));
 const ChatPage = lazy(() => delayLazyLoad(import('pages/ChatPage')));
 const NotificationPage = lazy(() => delayLazyLoad(import('pages/NotificationPage')));
+const UserPostPage = lazy(() => delayLazyLoad(import('pages/MyPost')));
 
 const routes: AppRouteType[] = [
   {
@@ -48,6 +49,13 @@ const routes: AppRouteType[] = [
   {
     path: routesMap.USER_PROFILE,
     component: UserProfilePage,
+    rule: -1,
+    openKey: [],
+    activeKey: [],
+  },
+  {
+    path: routesMap.MYPOST,
+    component: UserPostPage,
     rule: -1,
     openKey: [],
     activeKey: [],

@@ -1,5 +1,5 @@
-import UploadAvatar from 'components/base/UpLoad/UploadAvatar';
 import React from 'react';
+import UploadAvatar from 'components/base/UpLoad/UploadAvatar';
 
 const HomePage: React.FC = () => {
   const handleUploadSuccess = (id: number, url: string) => {

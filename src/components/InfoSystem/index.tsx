@@ -54,6 +54,10 @@ const InfoSystem: React.FC = () => {
     navigate(routesMap.PROFILE);
   }, [navigate]);
 
+  const gotoPost = useCallback((): void => {
+    navigate(routesMap.MYPOST);
+  }, [navigate]);
+
   const gotoResetPassword = useCallback((): void => {
     navigate(routesMap.RESET_PASSWORD);
   }, [navigate]);
@@ -64,14 +68,21 @@ const InfoSystem: React.FC = () => {
         'dropdown-logout',
         <Text className="font-medium hover:text-primary" onClick={gotoProfile}>
           <FaUser className="mr-2" />
-          Your profile
+          Manage Your Profile
         </Text>
       ),
       getItem(
-        'dropdown-logout',
+        'dropdown-post',
+        <Text className="font-medium hover:text-primary" onClick={gotoPost}>
+          <FaUser className="mr-2" />
+          Manage Your Post
+        </Text>
+      ),
+      getItem(
+        'dropdown-change-password',
         <Text className="font-medium hover:text-primary" onClick={gotoResetPassword}>
           <FaUserEdit className="mr-2" />
-          Reset Password
+          Change Password
         </Text>
       ),
       getItem(
