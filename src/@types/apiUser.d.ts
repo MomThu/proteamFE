@@ -15,8 +15,8 @@ declare namespace User {
   }
   
   interface Skill {
-    skill_skill_id?: number,
-    skill_skill_name?: string
+    skill_id?: number,
+    skill_name?: string
   }
 
   interface RequestFriend {

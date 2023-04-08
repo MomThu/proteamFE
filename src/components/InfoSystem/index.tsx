@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import routesMap from 'layouts/routesMap';
 import { isEmpty } from 'lodash';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { FaUser, FaUserEdit } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { actionAuthLogout } from 'redux/auth/actions';
 import { selectorUserInfo } from 'redux/auth/selectors';
@@ -49,17 +50,39 @@ const InfoSystem: React.FC = () => {
     });
   }, [navigate, dispatch]);
 
+  const gotoProfile = useCallback((): void => {
+    navigate(routesMap.PROFILE);
+  }, [navigate]);
+
+  const gotoResetPassword = useCallback((): void => {
+    navigate(routesMap.RESET_PASSWORD);
+  }, [navigate]);
+
   const items = useMemo(
     (): MenuItem[] => [
       getItem(
         'dropdown-logout',
+        <Text className="font-medium hover:text-primary" onClick={gotoProfile}>
+          <FaUser className="mr-2" />
+          Your profile
+        </Text>
+      ),
+      getItem(
+        'dropdown-logout',
+        <Text className="font-medium hover:text-primary" onClick={gotoResetPassword}>
+          <FaUserEdit className="mr-2" />
+          Reset Password
+        </Text>
+      ),
+      getItem(
+        'dropdown-logout',
         <Text className="font-medium hover:text-primary" onClick={handleLogout}>
           <LogoutOutlined className="mr-2" />
-          Đăng xuất
+          Logout
         </Text>
       ),
     ],
-    [handleLogout]
+    [gotoProfile, gotoResetPassword, handleLogout]
   );
 
   return (

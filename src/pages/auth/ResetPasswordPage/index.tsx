@@ -5,6 +5,7 @@ import imageLogin from 'assets/image/login_background.png';
 import routesMap from 'layouts/routesMap';
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+// import { resetPassword } from 'redux/auth/actions';
 import { HttpStatus } from 'utils/constants';
 import { notificationError } from 'utils/notifications';
 

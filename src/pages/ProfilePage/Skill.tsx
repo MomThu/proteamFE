@@ -28,7 +28,7 @@ const Skill = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const optionProfileSkill: any = profileSkills.map((item) => get(item, 'skill_skill_id', ''));
+    const optionProfileSkill: any = profileSkills.map((item) => get(item, 'skill_id', ''));
     setOptionProfileSkills(optionProfileSkill);
 
     const optionSkill = skills.map((item) => {
@@ -91,8 +91,8 @@ const Skill = () => {
         <Space direction="vertical" className="">
           {profileSkills.map((item) => {
             return (
-              <div key={item.skill_skill_id}>
-                <Title level={5}>{item.skill_skill_name}</Title>
+              <div key={item.skill_id}>
+                <Title level={5}>{item.skill_name}</Title>
                 <Divider />
               </div>
             );
