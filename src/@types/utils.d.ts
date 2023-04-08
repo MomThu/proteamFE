@@ -19,3 +19,11 @@ type ValueLabel = {
   value: number | string;
   label: string;
 };
+
+type BaseResponseData<T = any> = {
+  code: HttpStatus;
+  success: boolean;
+  data: T;
+  message: string;
+  version: string;
+};
