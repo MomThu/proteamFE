@@ -2,7 +2,7 @@ import { Image, Menu, MenuProps } from 'antd';
 import { getRealPath } from 'layouts/helper';
 import routesMap from 'layouts/routesMap';
 import { isEmpty, map } from 'lodash';
-import logo from 'assets/image/PROTEAM_2.png';
+import logo from 'assets/image/logo_3.png';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavs } from '../useNavs';
@@ -70,12 +70,12 @@ const AppSidebar: React.FC = () => {
 
   const renderLogo = (): JSX.Element => {
     return (
-      <div className="sidebar-logo justify-evenly p-3">
+      <div className="sidebar-logo justify-evenly">
         {/* <Text className="flex-1 text-center text-white mb-0 text-base font-semibold"> */}
-        <Image src={logo} alt="ghtm" preview={false} width={100} rootClassName="mr-3" />
+        <Image src={logo} alt="ghtm" preview={false} width={120} rootClassName="mr-3" />
         {/* </Text> */}
       </div>
-    )
+    );
   };
 
   const renderMenu = (): JSX.Element => {
@@ -110,17 +110,11 @@ const AppSidebar: React.FC = () => {
     //   {renderLogo()}
     //   {renderMenu()}
     // </Sider>
-    <div className='flex flex-row w-[100%] h-[100%]'>
-      <div>
-        {renderLogo()}
+    <div className="flex flex-row w-[100%] h-[100%]">
+      <div>{renderLogo()}</div>
+      <div className="w-[100%]">
+        <div className="object-contain">{renderMenu()}</div>
       </div>
-      <div className='w-[100%]'>
-        <div className='object-contain'>
-          {renderMenu()}
-        </div>
-      </div>
-
-
     </div>
   );
 };

@@ -50,11 +50,6 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  const handleClickRememberMe = async (event: CheckboxChangeEvent) => {
-    console.log('handleClickRememberMe', event);
-    // save to local storage?
-  };
-
   const handleClickForgetPassword = async () => {
     navigate(routesMap.FORGOTTEN_PASSWORD);
   };
@@ -90,7 +85,7 @@ const LoginPage: React.FC = () => {
           <div className="flex justify-center">
             <span className="my-4">or</span>
           </div>
-          <Form form={form}>
+          <Form form={form} className="min-w-[250px]">
             <Form.Item
               name={'email'}
               labelAlign="left"
@@ -108,8 +103,7 @@ const LoginPage: React.FC = () => {
               <Input.Password placeholder="password" size="large" />
             </Form.Item>
           </Form>
-          <div className="flex mx-2 justify-between items-center">
-            <Checkbox onChange={handleClickRememberMe}>Remember Me</Checkbox>
+          <div className="flex mx-2 justify-end items-center">
             <Button type="link" onClick={handleClickForgetPassword}>
               Forget Password?
             </Button>

@@ -1,12 +1,15 @@
-import axios from 'axios';
 import axiosOrigin from 'axios';
 
 import { trimObject } from 'utils/common';
 import { HttpStatus } from 'utils/constants';
+import { api } from './request';
 
 class FileService {
-  async getPreSignedUrl(path: string, originalName: string): Promise<BaseResponse<IGetPreSignedUrlResponse>> {
-    return await axios.get('/auth/file/presigned-url', {
+  async getPreSignedUrl(
+    path: string,
+    originalName: string
+  ): Promise<BaseResponse<BaseResponseData<IGetPreSignedUrlResponse>>> {
+    return await api.get('/auth/file/presigned-url', {
       params: {
         path,
         originalName,
@@ -24,13 +27,13 @@ class FileService {
     return { success: true };
   }
 
-  async registerFile(params: IRegisterFileParams): Promise<BaseResponse<IRegisterFileResponse>> {
+  async registerFile(params: IRegisterFileParams): Promise<BaseResponse<BaseResponseData<IRegisterFileResponse>>> {
     trimObject(params);
-    return await axios.post('/auth/file', params);
+    return await api.post('/auth/file', params);
   }
 
   async getFileDetail(id: number): Promise<BaseResponse<IRegisterFileResponse>> {
-    return await axios.get(`/auth/file/${id}`);
+    return await api.get(`/auth/file/${id}`);
   }
 }
 
@@ -43,7 +46,7 @@ export async function uploadFile(filePath: string, fileItem: IFormatFile): Promi
       success: getS3PreSignedUrlResponse.success,
     };
 
-  const { path, originalName, fileName, presignedUrl } = getS3PreSignedUrlResponse.data;
+  const { path, originalName, fileName, presignedUrl } = getS3PreSignedUrlResponse.data.data;
 
   const uploadToS3Response = await fileService.uploadFileToS3(fileItem.file, presignedUrl);
 
@@ -70,8 +73,8 @@ export async function uploadFile(filePath: string, fileItem: IFormatFile): Promi
 
   return {
     success: true,
-    id: registerFileResponse.data.id,
-    url: registerFileResponse.data.url,
+    id: registerFileResponse.data.data.id,
+    url: registerFileResponse.data.data.url,
   };
 }
 
