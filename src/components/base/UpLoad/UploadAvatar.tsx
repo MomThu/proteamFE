@@ -4,24 +4,19 @@ import React, { useState } from 'react';
 import ImgCrop from 'antd-img-crop';
 import { HttpStatus, ImageFileTypes } from 'utils/constants';
 import { notificationError } from 'utils/notifications';
-import { fileService, uploadFileToS3 } from 'api/file.service';
+import { fileService } from 'api/file.service';
 
 interface IProps {
   path?: string;
+  onSuccess: (id: number, url: string) => void;
 }
 
 function UploadAvatar(props: IProps) {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const acceptFileTypes = ImageFileTypes.join(',');
-  const [avatarId, setAvatarId] = useState<number>();
-  const [avatarUrl, setAvatarUrl] = useState('');
 
-  const onChange: UploadProps['onChange'] = ({ file, fileList }) => {
+  const onChange: UploadProps['onChange'] = ({ fileList }) => {
     setFileList(fileList);
-    if (file.status === 'success') {
-      console.log(file.response);
-      setAvatarUrl(file.response?.url);
-    }
   };
 
   const onPreview = async (file: UploadFile) => {
@@ -72,7 +67,7 @@ function UploadAvatar(props: IProps) {
     }
 
     onSuccess('ok');
-    setAvatarId(registerFileResponse?.data?.data.id);
+    props.onSuccess(registerFileResponse?.data?.data.id, registerFileResponse?.data?.data.url);
 
     return {
       success: true,
