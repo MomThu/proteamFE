@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
-import { Card, Dropdown, MenuProps, notification, Typography } from 'antd';
-import { CaretDownOutlined, MoreOutlined } from '@ant-design/icons';
-import { actionDeletePost, actionGetAllPosts, actionUpdatePost } from 'redux/post/actions';
+import { Card, Dropdown, MenuProps, Typography } from 'antd';
+import { MoreOutlined } from '@ant-design/icons';
+import { actionDeletePost, actionGetAllPosts } from 'redux/post/actions';
 import { useAppDispatch } from 'app/hooks';
 import { notificationError, notificationSuccess } from 'utils/notifications';
 
