@@ -59,13 +59,13 @@ const InfoSystem: React.FC = () => {
   }, [navigate]);
 
   const gotoResetPassword = useCallback((): void => {
-    navigate(routesMap.RESET_PASSWORD);
+    navigate(routesMap.CHANGE_PASSWORD);
   }, [navigate]);
 
   const items = useMemo(
     (): MenuItem[] => [
       getItem(
-        'dropdown-logout',
+        'dropdown-profile',
         <Text className="font-medium hover:text-primary" onClick={gotoProfile}>
           <FaUser className="mr-2" />
           Manage Your Profile
@@ -93,17 +93,19 @@ const InfoSystem: React.FC = () => {
         </Text>
       ),
     ],
-    [gotoProfile, gotoResetPassword, handleLogout]
+    [gotoProfile, gotoResetPassword, handleLogout, gotoPost]
   );
 
   return (
-    <Dropdown menu={{ items }} placement="bottomRight">
+    <>
       {/* <Avatar size={40} icon={<UserOutlined />} className="mr-3 cursor-pointer" /> */}
-      <Text className="text-sm cursor-pointer flex min-w-[150px] gap-3">
-        {`${user?.name}`}
-        <CaretDownOutlined className="ml-2" />
-      </Text>
-    </Dropdown>
+      <Dropdown menu={{ items }} placement="bottomRight">
+        <Text className="text-sm cursor-pointer flex min-w-[150px] gap-3">
+          {`${user?.name}`}
+          <CaretDownOutlined className="ml-2" />
+        </Text>
+      </Dropdown>
+    </>
   );
 };
 

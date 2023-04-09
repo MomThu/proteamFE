@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Form, Image, Input, InputNumber, Modal, Space, Typography } from 'antd';
 import { isEmpty } from 'lodash';
-
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { actionGetProfile, actionUpdateProfile } from 'redux/profile/actions';
 import { selectorProfile } from 'redux/profile/selectors';
-import logo from 'assets/image/page-404.jpeg';
+// import logo from 'assets/image/page-404.jpeg';
+import UploadAvatar from 'components/base/UpLoad/UploadAvatar';
 import { FiEdit } from 'react-icons/fi';
 import { notificationError, notificationSuccess } from 'utils/notifications';
 import { getMessageError } from 'utils/common';
@@ -57,17 +57,29 @@ const ProfileHeader = () => {
     }
   };
 
+  const handleUploadSuccess = async (id: number, url: string) => {
+    const payload = {
+      avatar: url,
+    };
+    await dispatch(actionUpdateProfile(payload)).unwrap();
+    dispatch(actionGetProfile()).unwrap();
+  };
+
   return (
     <div>
       <div className="flex justify-between bg-[#D6EAF8] p-10">
         <div className="flex flex-wrap">
-          <Image
-            src={logo}
-            alt="ghtm"
-            preview={false}
-            width={200}
-            className="shadow rounded-full max-w-full h-auto align-middle border-none"
-          />
+          {profile?.avatar ? (
+            <Image
+              src={profile?.avatar}
+              alt="ghtm"
+              preview={false}
+              width={200}
+              className="shadow rounded-full max-w-full h-auto align-middle border-none"
+            />
+          ) : (
+            <UploadAvatar onSuccess={handleUploadSuccess} />
+          )}
           <Space direction="vertical" className="mt-10 ml-10 flex flex-col">
             <Title>{profile?.name}</Title>
             {profile?.school && <Title level={5}>School: {profile.school}</Title>}

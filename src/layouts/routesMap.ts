@@ -2,6 +2,7 @@ const HOME = '/';
 const LOGIN = '/login';
 const RESET_PASSWORD = '/reset-password';
 const FORGOTTEN_PASSWORD = '/forgotten-password';
+const CHANGE_PASSWORD = '/change-password';
 const GOOGLE_LOGIN = '/google-login';
 const NOT_FOUND = '/404';
 const PROFILE = '/profile';
@@ -16,6 +17,7 @@ const routesMap = {
   LOGIN,
   RESET_PASSWORD,
   FORGOTTEN_PASSWORD,
+  CHANGE_PASSWORD,
   NOT_FOUND,
   GOOGLE_LOGIN,
   PROFILE,

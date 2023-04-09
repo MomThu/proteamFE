@@ -1,10 +1,12 @@
-import { Button, Card, Col, Modal, Row, Tooltip, Typography } from 'antd';
+import { Avatar, Button, Card, Col, Modal, Row, Tooltip, Typography } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useAppDispatch } from 'app/hooks';
 import React, { useState } from 'react';
 import { FaImage } from 'react-icons/fa';
+import { UserOutlined } from '@ant-design/icons';
 import { actionCreatePost, actionGetAllPosts } from 'redux/post/actions';
 import { notificationError, notificationSuccess } from 'utils/notifications';
+import UploadImage from 'components/base/UpLoad/UploadImage';
 
 const { Text } = Typography;
 const Post: React.FC = () => {
@@ -12,6 +14,7 @@ const Post: React.FC = () => {
 
   const [isOpenModalCreatePost, setIsOpenModalCreatePost] = useState(false);
   const [value, setValue] = useState('');
+  const [image, setImage] = useState('');
 
   const openCloseModalCreatePost = () => {
     setIsOpenModalCreatePost(!isOpenModalCreatePost);
@@ -19,6 +22,7 @@ const Post: React.FC = () => {
 
   const handleCancel = () => {
     setValue('');
+    setImage('');
     setIsOpenModalCreatePost(false);
   };
 
@@ -29,6 +33,7 @@ const Post: React.FC = () => {
         skills: [],
         min_gpa: 0,
         max_gpa:4,
+        // image: image
       }
       await dispatch(actionCreatePost(payload)).unwrap();
       notificationSuccess("Post successful!");
@@ -37,11 +42,12 @@ const Post: React.FC = () => {
       notificationError("Post Error")
     }
     setIsOpenModalCreatePost(false);
-      setValue('');
+    setValue('');
+    setImage('');
   };
 
-  const handleImage = () => {
-    // console.log('image');
+  const handleUploadSuccess = async (id: number, url: string) => {
+    setImage(url);
   };
 
   return (
@@ -49,7 +55,7 @@ const Post: React.FC = () => {
       <div>
         <Row>
           <Col span={4}>
-            <p>image</p>
+            <Avatar size={40} icon={<UserOutlined />} className="mr-3 cursor-pointer" />
           </Col>
           <Col span={18}>
             <Button className="bg-gray-200 w-[100%]" shape="round" onClick={openCloseModalCreatePost}>
@@ -75,11 +81,11 @@ const Post: React.FC = () => {
             <p>Insert to your post</p>
             <div>
               <Tooltip placement="top" title={'Image/Video'}>
-                <FaImage fontSize={30} onClick={handleImage} />
+                <UploadImage path='post' onSuccess={handleUploadSuccess} icon={<FaImage fontSize={30} />} />
               </Tooltip>
             </div>
           </div>
-          <Button type='primary' onClick={handleSave} disabled={value ? false : true}>
+          <Button type='primary' onClick={handleSave} disabled={value || image ? false : true}>
             Post
           </Button>
         </div>

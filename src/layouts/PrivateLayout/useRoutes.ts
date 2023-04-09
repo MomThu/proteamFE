@@ -9,6 +9,7 @@ const NetworkPage = lazy(() => delayLazyLoad(import('pages/NetworkPage')));
 const ChatPage = lazy(() => delayLazyLoad(import('pages/ChatPage')));
 const NotificationPage = lazy(() => delayLazyLoad(import('pages/NotificationPage')));
 const UserPostPage = lazy(() => delayLazyLoad(import('pages/MyPost')));
+const ChangePasswordPage = lazy(() => delayLazyLoad(import('pages/auth/ChangePasswordPage')));
 
 const routes: AppRouteType[] = [
   {
@@ -56,6 +57,13 @@ const routes: AppRouteType[] = [
   {
     path: routesMap.MYPOST,
     component: UserPostPage,
+    rule: -1,
+    openKey: [],
+    activeKey: [],
+  },
+  {
+    path: routesMap.CHANGE_PASSWORD,
+    component: ChangePasswordPage,
     rule: -1,
     openKey: [],
     activeKey: [],

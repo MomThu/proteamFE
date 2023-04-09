@@ -6,6 +6,7 @@ const url = {
   loginWithGoogle: '/auth/google-login',
   resetPassword: 'auth/reset-password',
   forgottenPassword: 'auth/reset-password-link',
+  changePassword: 'auth/change-password',
 
   // profile
   profile: '/user/profile',

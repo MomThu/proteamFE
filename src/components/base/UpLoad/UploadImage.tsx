@@ -9,10 +9,11 @@ import { fileService } from 'api/file.service';
 
 interface IProps {
   path?: string;
+  icon?: any;
   onSuccess: (id: number, url: string) => void;
 }
 
-function UploadAvatar(props: IProps) {
+function UploadImage(props: IProps) {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const acceptFileTypes = ImageFileTypes.join(',');
 
@@ -80,7 +81,7 @@ function UploadAvatar(props: IProps) {
   return (
     <ImgCrop rotationSlider>
       <Upload
-        listType="picture-circle"
+        // listType="picture-circle"
         fileList={fileList}
         onChange={onChange}
         onPreview={onPreview}
@@ -88,10 +89,10 @@ function UploadAvatar(props: IProps) {
         accept={acceptFileTypes}
         customRequest={handleFileUpload}
       >
-        {fileList.length < 1 && 'Upload'}
+        {fileList.length < 1 && props.icon ? props.icon : 'Upload'}
       </Upload>
     </ImgCrop>
   );
 }
 
-export default UploadAvatar;
+export default UploadImage;

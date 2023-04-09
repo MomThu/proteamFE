@@ -19,9 +19,9 @@ const NewsFeed: React.FC = () => {
   return (
     <div>
       <div>
-        <Title>My post</Title>
+        <Title level={2}>My post</Title>
       </div>
-      {listPosts.map((item, index) => {
+      {listPosts && listPosts.length && listPosts.map((item, index) => {
         return (
           <div key={index}>
             <PostComponent data={item} />

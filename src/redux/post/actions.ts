@@ -35,9 +35,11 @@ export const actionGetPost = createAsyncThunk(
 // update post
 export const actionUpdatePost = createAsyncThunk(
   'post/actionUpdatePost',
-  async (payload: Post.Post, { rejectWithValue }) => {
+  async (payload: any, { rejectWithValue }) => {
     try {
-      const { data } = await api.patch<Post.Post>(url.post, payload);
+      const { data } = await api.patch<any>(url.post, payload, {params: {
+        post_id: payload.post_id
+      }});
       return data;
     } catch (error: any) {
       if (error?.message) throw rejectWithValue(error);

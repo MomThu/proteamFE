@@ -1,35 +1,25 @@
-import { Button, Form, Input, Space, Spin, Typography } from 'antd';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Button, Form, Input, Typography } from 'antd';
 import { api } from 'api/request';
 import url from 'api/url';
 import imageLogin from 'assets/image/login_background.png';
-import routesMap from 'layouts/routesMap';
-import React, { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-// import { resetPassword } from 'redux/auth/actions';
-import { HttpStatus } from 'utils/constants';
-import { notificationError } from 'utils/notifications';
+import React from 'react';
+import { notificationError, notificationSuccess } from 'utils/notifications';
 
 const { Title } = Typography;
 
 interface FormResetPassword {
+  oldPassword: string;
   newPassword: string;
   confirmNewPassword: string;
-  userId?: string;
-  resetString?: string;
 }
 
 const ChangePasswordPage: React.FC = () => {
-  const navigate = useNavigate();
-  const [spending, setSpending] = useState(false);
-  const [isResetSuccess, setIsResetSuccess] = useState(false);
-  const [searchParams] = useSearchParams();
-
   const [form] = Form.useForm<FormResetPassword>();
 
   const handleSubmit = async () => {
     try {
       const data = await form.validateFields();
-      setSpending(true);
       handleResetPassword(data);
     } catch (error) {
       // console.log(error);
@@ -37,29 +27,15 @@ const ChangePasswordPage: React.FC = () => {
   };
 
   const handleResetPassword = async (data: FormResetPassword) => {
-    const userId = searchParams.get('userId') || undefined;
-    const resetString = searchParams.get('resetString') || undefined;
     try {
-      const response = await api.post<BaseResponse<any>>(url.resetPassword, {
-        newPassword: data.newPassword,
-        userId,
-        resetString,
+      await api.patch<BaseResponse<any>>(url.changePassword, {
+        oldPassword: data.oldPassword,
+        newPassword: data.newPassword
       });
-      if (response.data?.code === HttpStatus.OK) {
-        setSpending(false);
-        setIsResetSuccess(true);
-      } else {
-        notificationError('Password reset failed');
-        setSpending(false);
-      }
+      notificationSuccess("Change password successfully!")
     } catch (error) {
       notificationError('Password reset failed');
-      setSpending(false);
     }
-  };
-
-  const handleClickLogin = () => {
-    navigate(routesMap.LOGIN);
   };
 
   return (
@@ -74,7 +50,7 @@ const ChangePasswordPage: React.FC = () => {
           <Title className="text-center text-[40px] leading-[48px] font-bold mb-8">Reset Password</Title>
 
           <Form form={form}>
-          <Form.Item
+            <Form.Item
               name={'oldPassword'}
               labelAlign="left"
               required
