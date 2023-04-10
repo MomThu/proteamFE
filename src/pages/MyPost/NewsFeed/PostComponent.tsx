@@ -56,8 +56,12 @@ const PostComponent = (props: IProps) => {
   };
 
   const onFinish = async (values: any) => {
+    const payload = {
+      ...values,
+      post_id: props.data?.post_id
+    }
     try {
-      await dispatch(actionUpdatePost(values)).unwrap();
+      await dispatch(actionUpdatePost(payload)).unwrap();
       notificationSuccess('Post Update Successful!');
       setOpenModal(false);
       dispatch(actionGetAllPosts()).unwrap();
@@ -137,10 +141,10 @@ const PostComponent = (props: IProps) => {
         >
           <div>
             <Form.Item
-              label="Fullname"
-              name="name"
-              rules={[{ required: true, message: 'Please input your full name!' }]}
-              // initialValue={profile.name}
+              label="Content"
+              name="content"
+              rules={[{ required: true, message: 'Please edit your content!' }]}
+              initialValue={props.data?.content}
             >
               <Input />
             </Form.Item>
