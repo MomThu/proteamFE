@@ -33,7 +33,7 @@ const Post: React.FC = () => {
         skills: [],
         min_gpa: 0,
         max_gpa:4,
-        // image: image
+        image: image
       }
       await dispatch(actionCreatePost(payload)).unwrap();
       notificationSuccess("Post successful!");

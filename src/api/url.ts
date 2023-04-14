@@ -24,6 +24,8 @@ const url = {
   // post 
   allPosts: '/posts/all',
   post: '/posts',
+  filterPost: '/posts/search',
+  allPostsUser: '/posts/user',
 };
 
 export default url;

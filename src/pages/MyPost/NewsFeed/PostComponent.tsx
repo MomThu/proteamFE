@@ -58,8 +58,8 @@ const PostComponent = (props: IProps) => {
   const onFinish = async (values: any) => {
     const payload = {
       ...values,
-      post_id: props.data?.post_id
-    }
+      post_id: props.data?.post_id,
+    };
     try {
       await dispatch(actionUpdatePost(payload)).unwrap();
       notificationSuccess('Post Update Successful!');
@@ -103,28 +103,31 @@ const PostComponent = (props: IProps) => {
 
   return (
     <div className="m-10">
-      <Card>
-        <div className="font-bold">{userInfo?.name}</div>
-        <div className="font-thin text-xs">
-          {props.data?.create_time ? moment(props.data?.create_time).format(TIME_FORMAT_6) : ''}
-        </div>
+      <Card className="w-[60%]">
         <div className="flex flex-row justify-between">
-          <div>{props.data?.content}</div>
+          <div>
+            <div className="font-bold">{userInfo?.name}</div>
+            <div className="font-thin text-xs">
+              {props.data?.create_time ? moment(props.data?.create_time).format(TIME_FORMAT_6) : ''}
+            </div>
+          </div>
           <Dropdown menu={{ items }} placement="bottomRight">
             {/* <Avatar size={40} icon={<UserOutlined />} className="mr-3 cursor-pointer" /> */}
-            <Text className="text-sm cursor-pointer flex min-w-[150px] gap-3">
+            <Text>
               <MoreOutlined className="ml-2" />
             </Text>
           </Dropdown>
         </div>
+        <div>{props.data?.content}</div>
         <div>
           {props.data?.image ? (
             <Image
               src={props.data?.image}
-              alt="ghtm"
+              alt="postImage"
               preview={false}
-              width={200}
-              className="shadow rounded-full max-w-full h-auto align-middle border-none"
+              width={300}
+              // height={300}
+              className="shadow max-w-full h-auto border-none"
             />
           ) : null}
         </div>

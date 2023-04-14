@@ -1,17 +1,11 @@
 import React from 'react';
+import News from './Posts';
 
 const HomePage: React.FC = () => {
-  // const handleUploadSuccess = (id: number, url: string) => {
-  //   console.log('imageId', id);
-  //   console.log('imageSrc', url);
-  //   // save data to profile user here
-    
-  // };
-
   return (
     <div>
       <p>Homepage</p>
-      {/* <UploadAvatar onSuccess={handleUploadSuccess} /> */}
+      <News />
     </div>
   );
 };

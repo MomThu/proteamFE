@@ -1,4 +1,4 @@
-import { Typography } from 'antd';
+import { Empty, Typography } from 'antd';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import React, { useEffect } from 'react';
 import { actionGetAllPosts } from 'redux/post/actions';
@@ -21,13 +21,13 @@ const NewsFeed: React.FC = () => {
       <div>
         <Title level={2}>My post</Title>
       </div>
-      {listPosts && listPosts.length && listPosts.map((item, index) => {
+      {listPosts && listPosts.length ? listPosts.map((item, index) => {
         return (
           <div key={index}>
             <PostComponent data={item} />
           </div>
         );
-      })}
+      }) : <Empty />}
     </div>
   );
 };

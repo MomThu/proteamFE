@@ -1,9 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { actionGetPost, actionGetAllPosts } from './actions';
+import { actionGetPost, actionGetAllPosts, actionGetAllPostsUser } from './actions';
 import { PostState } from './type';
 
 const initState: PostState = {
   allPosts: [],
+  allNews: [],
   post: {},
 };
 
@@ -12,6 +13,9 @@ const postReducer = createReducer(initState, (builder) => {
     state.post = action.payload;
   });
   builder.addCase(actionGetAllPosts.fulfilled, (state, action) => {    
+    state.allNews = action.payload;
+  });
+  builder.addCase(actionGetAllPostsUser.fulfilled, (state, action) => {    
     state.allPosts = action.payload;
   });
 });
