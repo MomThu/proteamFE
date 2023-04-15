@@ -1,10 +1,10 @@
-import { Card, Dropdown, MenuProps, Image, Typography } from 'antd';
+import { Card, Dropdown, MenuProps, Image, Typography, Avatar } from 'antd';
 import moment from 'moment';
 import React, { useMemo } from 'react';
-import { MoreOutlined, CloseOutlined } from '@ant-design/icons';
+import { MoreOutlined, CloseOutlined, UserOutlined } from '@ant-design/icons';
 import { TIME_FORMAT_6 } from 'utils/time';
 
-const { Text } = Typography;
+const { Text, Link } = Typography;
 type MenuItem = Required<MenuProps>['items'][number];
 
 const getItem = (
@@ -30,15 +30,33 @@ const NewsComponent = (props: IProps) => {
   );
 
   const onCancel = () => {
-    console.log("cancel item")
-  }
+    return;
+  };
 
   return (
     <div className="m-10">
       <Card>
         <div className="flex flex-row justify-between">
           <div>
-            <div className="font-bold">{props.data?.name}</div>
+            <div className="flex flex-row">
+              <div className="mr-5">
+                {props.data?.avatar ? (
+                  <Image
+                    src={props.data?.avatar}
+                    alt="avatar"
+                    preview={false}
+                    width={40}
+                    className="shadow rounded-full max-w-full h-auto border-none"
+                  />
+                ) : (
+                  <Avatar size={40} icon={<UserOutlined />} className="mr-3 cursor-pointer" />
+                )}
+              </div>
+              <Link className="font-bold text-black" href={`/profile/user?${props.data?.account_id}`}>
+                {props.data?.name}
+              </Link>
+            </div>
+
             <div className="font-thin text-xs">
               {props.data?.create_time ? moment(props.data?.create_time).format(TIME_FORMAT_6) : ''}
             </div>
@@ -54,6 +72,7 @@ const NewsComponent = (props: IProps) => {
         </div>
 
         <div>{props.data?.content}</div>
+
         <div>
           {props.data?.image ? (
             <Image

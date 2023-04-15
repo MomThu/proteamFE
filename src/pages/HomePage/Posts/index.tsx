@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Checkbox, Col, Empty, Modal, Row, Typography } from 'antd';
+import { Button, Checkbox, Col, Empty, Input, Modal, Row, Space, Typography } from 'antd';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import React, { useEffect, useState } from 'react';
 import { FilterOutlined } from '@ant-design/icons';
@@ -77,6 +77,17 @@ const News = () => {
     }
   };
 
+  const onSearch = async (value: string) => {
+    const payload = {
+      content: value,
+    };
+    try {
+      await dispatch(actionFilterPost(payload)).unwrap();
+    } catch (error) {
+      notificationError(getMessageError(error));
+    }
+  };
+
   if (!listNews || listNews.length === 0) {
     return <Empty />;
   } else
@@ -88,7 +99,9 @@ const News = () => {
               <Post onReload={onReload} />
             </div>
             <div className="mx-10 flex justify-between">
-              <div></div>
+              <Space>
+                <Input.Search placeholder="Search..." onSearch={onSearch} style={{ width: 200 }} />
+              </Space>
               <Button icon={<FilterOutlined />} onClick={openCloseModalFilter}>
                 Filter
               </Button>

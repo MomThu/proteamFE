@@ -22,9 +22,11 @@ const MyPosts: React.FC = () => {
   }
   return (
     <div>
-      <Post onReload={onReload} />
+      <div className='w-[60%] m-10'>
+        <Post onReload={onReload} />
+      </div>
       <div>
-        <div>
+        <div className='m-10'>
           <Title level={2}>My post</Title>
         </div>
         {listPosts && listPosts.length ? (
