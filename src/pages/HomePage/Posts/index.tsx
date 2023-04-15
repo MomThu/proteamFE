@@ -3,7 +3,7 @@ import { Button, Checkbox, Col, Empty, Input, Modal, Row, Space, Typography } fr
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import React, { useEffect, useState } from 'react';
 import { FilterOutlined } from '@ant-design/icons';
-import { actionFilterPost, actionGetAllPosts } from 'redux/post/actions';
+import { actionFilterPost } from 'redux/post/actions';
 import { selectorFilterPosts } from 'redux/post/selectors';
 import Post from 'pages/MyPost/Post';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
@@ -45,7 +45,8 @@ const News = () => {
   }, [skills]);
 
   const onReload = async () => {
-    await dispatch(actionGetAllPosts()).unwrap();
+    const payload = {};
+    await dispatch(actionFilterPost(payload)).unwrap();
   };
 
   const openCloseModalFilter = () => {
