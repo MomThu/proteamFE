@@ -1,8 +1,8 @@
 import { Empty, Typography } from 'antd';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import React, { useEffect } from 'react';
-import { actionGetAllPosts } from 'redux/post/actions';
-import { selectorAllPosts } from 'redux/post/selectors';
+import { actionGetAllPostsUser } from 'redux/post/actions';
+import { selectorAllUserPosts } from 'redux/post/selectors';
 import PostComponent from './PostComponent';
 
 const {Title} = Typography;
@@ -10,10 +10,10 @@ const {Title} = Typography;
 const NewsFeed: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const listPosts = useAppSelector(selectorAllPosts);
+  const listPosts = useAppSelector(selectorAllUserPosts);
 
   useEffect(() => {
-    dispatch(actionGetAllPosts()).unwrap();
+    dispatch(actionGetAllPostsUser()).unwrap();
   }, [dispatch]);
 
   return (

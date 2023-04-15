@@ -35,10 +35,10 @@ const NewsComponent = (props: IProps) => {
 
   return (
     <div className="m-10">
-      <Card className="w-[60%]">
+      <Card>
         <div className="flex flex-row justify-between">
           <div>
-            <div className="font-bold">{props.data?.user_name}</div>
+            <div className="font-bold">{props.data?.name}</div>
             <div className="font-thin text-xs">
               {props.data?.create_time ? moment(props.data?.create_time).format(TIME_FORMAT_6) : ''}
             </div>

@@ -8,6 +8,7 @@ declare namespace Post {
     create_time?: string;
     min_gpa?: number;
     max_gpa?: number;
-    user_name?: string;
+    name?: string;
+    avatar?: string;
   }
 }

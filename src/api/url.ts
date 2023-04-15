@@ -20,7 +20,8 @@ const url = {
   requestFriend: '/user/friend-request',
   acceptFriend: '/user/accept-friend',
   unfriend: '/user/unfriend',
-
+  searchUser: '/user/search',
+  
   // post 
   allPosts: '/posts/all',
   post: '/posts',

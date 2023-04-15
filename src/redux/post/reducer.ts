@@ -4,7 +4,7 @@ import { PostState } from './type';
 
 const initState: PostState = {
   allPosts: [],
-  allNews: [],
+  allUserPosts: [],
   post: {},
 };
 
@@ -13,10 +13,10 @@ const postReducer = createReducer(initState, (builder) => {
     state.post = action.payload;
   });
   builder.addCase(actionGetAllPosts.fulfilled, (state, action) => {    
-    state.allNews = action.payload;
+    state.allPosts = action.payload;
   });
   builder.addCase(actionGetAllPostsUser.fulfilled, (state, action) => {    
-    state.allPosts = action.payload;
+    state.allUserPosts = action.payload;
   });
 });
 

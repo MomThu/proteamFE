@@ -8,3 +8,7 @@ export const selectorRequests = (state: RootState): User.RequestFriend[] => {
   return state.network?.requests;
 };
 
+export const selectorSearchUsers = (state: RootState): User.Profile[] => {
+  return state.network?.searchUsers;
+};
+

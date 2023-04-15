@@ -2,7 +2,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Button, Card, Dropdown, Form, Input, MenuProps, Modal, Typography, Image } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
-import { actionDeletePost, actionGetAllPosts, actionUpdatePost } from 'redux/post/actions';
+import { actionDeletePost, actionGetAllPostsUser, actionUpdatePost } from 'redux/post/actions';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { notificationError, notificationSuccess } from 'utils/notifications';
 import { selectorUserInfo } from 'redux/auth/selectors';
@@ -64,7 +64,7 @@ const PostComponent = (props: IProps) => {
       await dispatch(actionUpdatePost(payload)).unwrap();
       notificationSuccess('Post Update Successful!');
       setOpenModal(false);
-      dispatch(actionGetAllPosts()).unwrap();
+      dispatch(actionGetAllPostsUser()).unwrap();
     } catch (error) {
       notificationError(getMessageError(error));
     }
@@ -77,7 +77,7 @@ const PostComponent = (props: IProps) => {
       };
       await dispatch(actionDeletePost(payload)).unwrap();
       notificationSuccess('Delete successful!');
-      dispatch(actionGetAllPosts()).unwrap();
+      dispatch(actionGetAllPostsUser()).unwrap();
     } catch (error) {
       notificationError('Delete failed!');
     }
@@ -149,7 +149,10 @@ const PostComponent = (props: IProps) => {
               rules={[{ required: true, message: 'Please edit your content!' }]}
               initialValue={props.data?.content}
             >
-              <Input />
+              <Input.TextArea
+                placeholder="What do you want to talk about?"
+                autoSize={{ minRows: 4, maxRows: 6 }}
+              />
             </Form.Item>
           </div>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

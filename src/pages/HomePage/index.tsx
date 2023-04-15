@@ -4,7 +4,6 @@ import News from './Posts';
 const HomePage: React.FC = () => {
   return (
     <div>
-      <p>Homepage</p>
       <News />
     </div>
   );

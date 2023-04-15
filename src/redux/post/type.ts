@@ -1,6 +1,6 @@
 export interface PostState {
   allPosts: Post.Post[],
-  allNews: Post.Post[],
+  allUserPosts: Post.Post[],
   post: Post.Post,
 }
 

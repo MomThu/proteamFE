@@ -4,10 +4,11 @@ export const selectorPost = (state: RootState): Post.Post => {
   return state.post?.post;
 };
 
-export const selectorAllPosts = (state: RootState): Post.Post[] => {
-  return state.post?.allPosts;
+export const selectorAllUserPosts = (state: RootState): Post.Post[] => {
+  return state.post?.allUserPosts;
 };
 
-export const selectorAllNews = (state: RootState): Post.Post[] => {
-  return state.post?.allNews;
+
+export const selectorAllPosts = (state: RootState): Post.Post[] => {
+  return state.post?.allPosts;
 };

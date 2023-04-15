@@ -98,13 +98,23 @@ const UserProfile = () => {
     <div>
       <div className="flex justify-between bg-[#fff] p-10">
         <div className="flex flex-wrap">
-          <Image
-            src={logo}
-            alt="ghtm"
-            preview={false}
-            width={200}
-            className="shadow rounded-full max-w-full h-auto align-middle border-none"
-          />
+          {profile?.avatar ? (
+            <Image
+              src={profile?.avatar}
+              alt="ava"
+              preview={false}
+              width={200}
+              className="shadow rounded-full max-w-full h-auto align-middle border-none"
+            />
+          ) : (
+            <Image
+              src={logo}
+              alt="ava"
+              preview={false}
+              width={200}
+              className="shadow rounded-full max-w-full h-auto align-middle border-none"
+            />
+          )}
           <Space direction="vertical" className="mt-10 ml-10 flex flex-col">
             <Title>{profile?.name}</Title>
             {profile?.school && <Title level={5}>School: {profile.school}</Title>}
