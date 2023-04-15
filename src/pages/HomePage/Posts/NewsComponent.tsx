@@ -52,13 +52,14 @@ const NewsComponent = (props: IProps) => {
                   <Avatar size={40} icon={<UserOutlined />} className="mr-3 cursor-pointer" />
                 )}
               </div>
-              <Link className="font-bold text-black" href={`/profile/user?${props.data?.account_id}`}>
-                {props.data?.name}
-              </Link>
-            </div>
-
-            <div className="font-thin text-xs">
-              {props.data?.create_time ? moment(props.data?.create_time).format(TIME_FORMAT_6) : ''}
+              <div>
+                <Link className="font-bold text-black" href={`/profile/user?${props.data?.account_id}`}>
+                  {props.data?.name}
+                </Link>
+                <div className="font-thin text-xs">
+                  {props.data?.create_time ? moment(props.data?.create_time).format(TIME_FORMAT_6) : ''}
+                </div>
+              </div>
             </div>
           </div>
           <div>
@@ -71,9 +72,9 @@ const NewsComponent = (props: IProps) => {
           </div>
         </div>
 
-        <div>{props.data?.content}</div>
+        <div className='mt-5'>{props.data?.content}</div>
 
-        <div>
+        <div className='mt-5'>
           {props.data?.image ? (
             <Image
               src={props.data?.image}
