@@ -29,9 +29,7 @@ const News = () => {
 
   useEffect(() => {
     // dispatch(actionGetAllPosts()).unwrap();
-    const payload = {
-      
-    };
+    const payload = {};
     dispatch(actionFilterPost(payload)).unwrap();
     dispatch(actionGetSkills()).unwrap();
   }, [dispatch]);
@@ -51,7 +49,7 @@ const News = () => {
   };
 
   const openCloseModalFilter = () => {
-    setOptionProfileSkills([])
+    setOptionProfileSkills([]);
     setOpenModalFilter(!openModalFilter);
   };
 
@@ -88,59 +86,58 @@ const News = () => {
     }
   };
 
-  if (!listNews || listNews.length === 0) {
-    return <Empty />;
-  } else
-    return (
-      <div>
-        <Row gutter={16}>
-          <Col span={18}>
-            <div className="m-10">
-              <Post onReload={onReload} />
-            </div>
-            <div className="mx-10 flex justify-between">
-              <Space>
-                <Input.Search placeholder="Search..." onSearch={onSearch} style={{ width: 200 }} />
-              </Space>
-              <Button icon={<FilterOutlined />} onClick={openCloseModalFilter}>
-                Filter
-              </Button>
-            </div>
+  return (
+    <div>
+      <Row gutter={16}>
+        <Col span={18}>
+          <div className="m-10">
+            <Post onReload={onReload} />
+          </div>
+          <div className="mx-10 flex justify-between">
+            <Space>
+              <Input.Search placeholder="Search..." onSearch={onSearch} style={{ width: 200 }} />
+            </Space>
+            <Button icon={<FilterOutlined />} onClick={openCloseModalFilter}>
+              Filter
+            </Button>
+          </div>
 
-            {listNews &&
-              listNews.length &&
-              listNews.map((item, index) => {
-                return (
-                  <div key={index}>
-                    <NewsComponent data={item} />
-                  </div>
-                );
-              })}
-          </Col>
-          <Col span={6}>
-            <ConnectComponent />
-          </Col>
+          {listNews && listNews.length ? (
+            listNews.map((item, index) => {
+              return (
+                <div key={index}>
+                  <NewsComponent data={item} />
+                </div>
+              );
+            })
+          ) : (
+            <Empty />
+          )}
+        </Col>
+        <Col span={6}>
+          <ConnectComponent />
+        </Col>
 
-          <Modal
-            open={openModalFilter}
-            title="Filter post"
-            onCancel={handleCancel}
-            okText="Filter"
-            cancelText="Cancel"
-            onOk={onFinish}
-            destroyOnClose={true}
-          >
-            <Text>Select skills</Text>
-            <Checkbox.Group
-              className="flex flex-wrap"
-              options={optionSkills}
-              defaultValue={optionProfileSkills}
-              onChange={onChangeSkill}
-            />
-          </Modal>
-        </Row>
-      </div>
-    );
+        <Modal
+          open={openModalFilter}
+          title="Filter post"
+          onCancel={handleCancel}
+          okText="Filter"
+          cancelText="Cancel"
+          onOk={onFinish}
+          destroyOnClose={true}
+        >
+          <Text>Select skills</Text>
+          <Checkbox.Group
+            className="flex flex-wrap"
+            options={optionSkills}
+            defaultValue={optionProfileSkills}
+            onChange={onChangeSkill}
+          />
+        </Modal>
+      </Row>
+    </div>
+  );
 };
 
 export default News;
