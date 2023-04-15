@@ -1,39 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Upload } from 'antd';
-import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import { Button, Upload } from 'antd';
+import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
+import { UploadOutlined }  from '@ant-design/icons';
 import React, { useState } from 'react';
-import ImgCrop from 'antd-img-crop';
-import { HttpStatus, ImageFileTypes } from 'utils/constants';
+import { HttpStatus } from 'utils/constants';
 import { notificationError } from 'utils/notifications';
 import { fileService } from 'api/file.service';
 
 interface IProps {
   path?: string;
   icon?: any;
-  onSuccess: (id: number, url: string) => void;
+  onSuccess: (id: number, url: string, fileName: string,) => void;
 }
 
-function UploadImage(props: IProps) {
+function BaseUploadFile(props: IProps) {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const acceptFileTypes = ImageFileTypes.join(',');
+  // const acceptFileTypes = ImageFileTypes.join(',');
 
   const onChange: UploadProps['onChange'] = ({ fileList }) => {
     setFileList(fileList);
-  };
-
-  const onPreview = async (file: UploadFile) => {
-    let src = file.url as string;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj as RcFile);
-        reader.onload = () => resolve(reader.result as string);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
   };
 
   const onBeforeUpload = (file: File) => {
@@ -46,7 +31,7 @@ function UploadImage(props: IProps) {
   };
 
   const handleFileUpload = async ({ file, onSuccess }: any) => {
-    const { data } = await fileService.getPreSignedUrl(props?.path || 'avatar', file.name);
+    const { data } = await fileService.getPreSignedUrl(props?.path || 'file', file.name);
     const { path, fileName, presignedUrl } = data.data;
     const uploadToS3Response = await fileService.uploadFileToS3(file, presignedUrl);
     if (!uploadToS3Response?.success) {
@@ -69,7 +54,8 @@ function UploadImage(props: IProps) {
     }
 
     onSuccess('ok');
-    props.onSuccess(registerFileResponse?.data?.data.id, registerFileResponse?.data?.data.url);
+    
+    props.onSuccess(registerFileResponse?.data?.data.id, registerFileResponse?.data?.data.url, registerFileResponse?.data?.data.originName);
 
     return {
       success: true,
@@ -79,21 +65,17 @@ function UploadImage(props: IProps) {
   };
 
   return (
-    <ImgCrop rotationSlider>
-      <Upload
-        // listType="picture-circle"
-        fileList={fileList}
-        onChange={onChange}
-        onPreview={onPreview}
-        beforeUpload={onBeforeUpload}
-        accept={acceptFileTypes}
-        customRequest={handleFileUpload}
-        maxCount={1}
-      >
-        {fileList.length < 1 && props.icon ? props.icon : 'Upload'}
-      </Upload>
-    </ImgCrop>
+    <Upload
+      fileList={fileList}
+      onChange={onChange}
+      beforeUpload={onBeforeUpload}
+      // accept={acceptFileTypes}
+      customRequest={handleFileUpload}
+      maxCount={1}
+    >
+      {fileList.length < 1 && props.icon ? props.icon : <Button icon={<UploadOutlined />}>Upload CV</Button>}
+    </Upload>
   );
 }
 
-export default UploadImage;
+export default BaseUploadFile;

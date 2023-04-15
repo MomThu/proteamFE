@@ -7,12 +7,13 @@ import { actionGetProfile, actionUpdateProfile } from 'redux/profile/actions';
 import { selectorProfile } from 'redux/profile/selectors';
 // import logo from 'assets/image/page-404.jpeg';
 import UploadAvatar from 'components/base/UpLoad/UploadAvatar';
+import BaseUploadFile from 'components/base/UpLoad/UploadFile';
 import { FiEdit } from 'react-icons/fi';
 import { notificationError, notificationSuccess } from 'utils/notifications';
 import { getMessageError } from 'utils/common';
 import Skill from './Skill';
 
-const { Title } = Typography;
+const { Title, Link } = Typography;
 
 const ProfileHeader = () => {
   const dispatch = useAppDispatch();
@@ -65,6 +66,19 @@ const ProfileHeader = () => {
     dispatch(actionGetProfile()).unwrap();
   };
 
+  const onUploadFileSuccessful = async (id: number, url: string) => {
+    try {
+      const payload = {
+        cv: url,
+      };
+      await dispatch(actionUpdateProfile(payload)).unwrap();
+      notificationSuccess('Upload successful!');
+      dispatch(actionGetProfile()).unwrap();
+    } catch (err) {
+      notificationError('Upload failed!');
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-between bg-[#D6EAF8] p-10">
@@ -106,7 +120,16 @@ const ProfileHeader = () => {
           </Space>
         </Card>
       )}
+      {profile?.cv ? (
+        <div>
+          <BaseUploadFile onSuccess={onUploadFileSuccessful} />
+          <Link href={profile?.cv} target="_blank">View your CV here</Link>
+        </div>
+      ) : (
+        <BaseUploadFile onSuccess={onUploadFileSuccessful} />
+      )}
       <Skill />
+
       <Modal title="Edit profile" open={openModal} onOk={onFinish} onCancel={handleCancel} footer={null}>
         <Form
           name="editProfile"

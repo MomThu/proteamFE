@@ -11,7 +11,7 @@ import { actionAcceptFriend, actionRequestFriend, actionUnFriend } from 'redux/n
 import { notificationError, notificationSuccess } from 'utils/notifications';
 import { getMessageError } from 'utils/common';
 
-const { Title } = Typography;
+const { Title, Link } = Typography;
 
 const UserProfile = () => {
   const dispatch = useAppDispatch();
@@ -136,7 +136,14 @@ const UserProfile = () => {
           ) : null}
         </div>
       </div>
-      {!isEmpty(profile) && (
+      {profile?.cv && profile.friend === 1 ? (
+        <div>
+          <Link href={profile?.cv} target="_blank">
+            View the CV here
+          </Link>
+        </div>
+      ) : null}
+      {!isEmpty(profile) && profile.friend === 1 && (
         <Card className="mt-10">
           <Title level={3} className="text-left">
             Detail Information

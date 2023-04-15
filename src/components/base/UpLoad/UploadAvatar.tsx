@@ -87,6 +87,7 @@ function UploadAvatar(props: IProps) {
         beforeUpload={onBeforeUpload}
         accept={acceptFileTypes}
         customRequest={handleFileUpload}
+        maxCount={1}
       >
         {fileList.length < 1 && 'Upload'}
       </Upload>

@@ -12,3 +12,7 @@ export const selectorAllUserPosts = (state: RootState): Post.Post[] => {
 export const selectorAllPosts = (state: RootState): Post.Post[] => {
   return state.post?.allPosts;
 };
+
+export const selectorFilterPosts = (state: RootState): Post.Post[] => {
+  return state.post?.filterPosts;
+};

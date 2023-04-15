@@ -82,7 +82,7 @@ export const actionGetAllPosts = createAsyncThunk('post/actionGetAllPosts', asyn
   }
 });
 
-// get all posts
+// filter posts
 export const actionFilterPost = createAsyncThunk('post/actionFilterPost', async (payload: any, { rejectWithValue }) => {
   try {
     const { data } = await api.post<Post.Post[]>(url.filterPost, payload);

@@ -2,8 +2,12 @@
 import { Button, Form, Input, Typography } from 'antd';
 import { api } from 'api/request';
 import url from 'api/url';
+import { useAppDispatch } from 'app/hooks';
 import imageLogin from 'assets/image/login_background.png';
+import routesMap from 'layouts/routesMap';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { actionAuthLogout } from 'redux/auth/actions';
 import { notificationError, notificationSuccess } from 'utils/notifications';
 
 const { Title } = Typography;
@@ -15,6 +19,8 @@ interface FormResetPassword {
 }
 
 const ChangePasswordPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [form] = Form.useForm<FormResetPassword>();
 
   const handleSubmit = async () => {
@@ -33,6 +39,8 @@ const ChangePasswordPage: React.FC = () => {
         newPassword: data.newPassword
       });
       notificationSuccess("Change password successfully!")
+      await dispatch(actionAuthLogout()).unwrap();
+      navigate(routesMap.LOGIN);
     } catch (error) {
       notificationError('Password reset failed');
     }

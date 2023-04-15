@@ -2,11 +2,13 @@ export interface PostState {
   allPosts: Post.Post[],
   allUserPosts: Post.Post[],
   post: Post.Post,
+  filterPosts: Post.Post[],
 }
 
 export interface CreatePost {
   content: string,
-  skills: number[],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  skills: any,
   min_gpa: number,
   max_gpa: number,
   image: string,

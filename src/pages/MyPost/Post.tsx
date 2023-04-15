@@ -1,36 +1,65 @@
-import { Avatar, Button, Card, Col, Modal, Row, Tooltip, Typography, Image } from 'antd';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Avatar, Button, Card, Col, Modal, Row, Tooltip, Typography, Image, Checkbox } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import React, { useEffect, useState } from 'react';
 import { FaImage } from 'react-icons/fa';
 import { UserOutlined } from '@ant-design/icons';
-import { actionCreatePost, actionGetAllPosts } from 'redux/post/actions';
+import { actionCreatePost } from 'redux/post/actions';
 import { notificationError, notificationSuccess } from 'utils/notifications';
 import UploadImage from 'components/base/UpLoad/UploadImage';
-import { actionGetProfile } from 'redux/profile/actions';
-import { selectorProfile } from 'redux/profile/selectors';
+import { actionGetProfile, actionGetSkills } from 'redux/profile/actions';
+import { selectorProfile, selectorSkills } from 'redux/profile/selectors';
+import { CheckboxValueType } from 'antd/es/checkbox/Group';
+import { get } from 'lodash';
 
+interface IProps {
+  onReload: () => void;
+}
 const { Text } = Typography;
-const Post: React.FC = () => {
+
+const Post = (props: IProps) => {
   const dispatch = useAppDispatch();
 
   const userInfo = useAppSelector(selectorProfile);
+  const skills = useAppSelector(selectorSkills);
 
   const [isOpenModalCreatePost, setIsOpenModalCreatePost] = useState(false);
   const [value, setValue] = useState('');
   const [image, setImage] = useState('');
-
+  const [skillSelected, setSkillSelected] = useState<CheckboxValueType[]>([]);
+  const [optionSkills, setOptionSkills] = useState<any>([]);
+  const [optionProfileSkills, setOptionProfileSkills] = useState<any>([]);
+  
   useEffect(() => {
     dispatch(actionGetProfile()).unwrap();
+    dispatch(actionGetSkills()).unwrap();
   }, [dispatch]);
 
+  useEffect(() => {
+    const optionSkill = skills.map((item) => {
+      return {
+        label: get(item, 'skill_name', ''),
+        value: get(item, 'skill_id', ''),
+      };
+    });
+    setOptionSkills(optionSkill);
+  }, [skills]);
+
   const openCloseModalCreatePost = () => {
+    setOptionProfileSkills([]);
     setIsOpenModalCreatePost(!isOpenModalCreatePost);
+  };
+
+  const onChangeSkill = (checkedValues: CheckboxValueType[]) => {
+    setSkillSelected(checkedValues);
+    setOptionProfileSkills(checkedValues);
   };
 
   const handleCancel = () => {
     setValue('');
     setImage('');
+    setSkillSelected([]);
     setIsOpenModalCreatePost(false);
   };
 
@@ -38,14 +67,14 @@ const Post: React.FC = () => {
     try {
       const payload = {
         content: value,
-        skills: [],
+        skills: skillSelected,
         min_gpa: 0,
         max_gpa: 4,
         image: image,
       };
       await dispatch(actionCreatePost(payload)).unwrap();
       notificationSuccess('Post successful!');
-      dispatch(actionGetAllPosts()).unwrap();
+      props?.onReload();
     } catch (error) {
       notificationError('Post Error');
     }
@@ -101,6 +130,13 @@ const Post: React.FC = () => {
               </Tooltip>
             </div>
           </div>
+          <Text>Select skills</Text>
+            <Checkbox.Group
+              className="flex flex-wrap"
+              options={optionSkills}
+              defaultValue={optionProfileSkills}
+              onChange={onChangeSkill}
+            />
           <Button type="primary" onClick={handleSave} disabled={value || image ? false : true}>
             Post
           </Button>

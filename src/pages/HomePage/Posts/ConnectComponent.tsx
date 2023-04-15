@@ -16,9 +16,10 @@ const ConnectComponent = () => {
   const userInfo = useAppSelector(selectorProfile);
 
   useEffect(() => {
+    const randNum = Math.floor(Math.random() * 150);
     const payload = {
-      limit: 10,
-      page_number: 0,
+      limit: 5,
+      page_number: randNum,
     };
     dispatch(actionSearchUser(payload)).unwrap();
     dispatch(actionGetProfile()).unwrap();
@@ -26,7 +27,7 @@ const ConnectComponent = () => {
 
   return (
     <div className="my-10 fixed">
-      <Card className="w-[100%]">
+      <Card className="w-[100%] h-fit">
         <Title level={4}>Add to your connection</Title>
         {listUsers.map((item, index) => {
           if (userInfo?.account_id !== item?.account_id) {
