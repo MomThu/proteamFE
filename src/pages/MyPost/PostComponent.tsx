@@ -103,7 +103,7 @@ const PostComponent = (props: IProps) => {
 
   return (
     <div className="m-10">
-      <Card className="w-[60%]">
+      <Card>
         <div className="flex flex-row justify-between">
           <div>
             <div className="font-bold">{userInfo?.name}</div>

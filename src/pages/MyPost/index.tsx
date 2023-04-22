@@ -21,13 +21,13 @@ const MyPosts: React.FC = () => {
     await dispatch(actionGetAllPostsUser()).unwrap();
   }
   return (
-    <div>
+    <div className='flex flex-col items-center justify-center'>
       <div className='w-[60%] m-10'>
         <Post onReload={onReload} />
       </div>
-      <div>
-        <div className='m-10'>
-          <Title level={2}>My post</Title>
+      <div className='w-[60%] m-10'>
+        <div className='ml-10'>
+          <Title level={4}>My post</Title>
         </div>
         {listPosts && listPosts.length ? (
           listPosts.map((item, index) => {
