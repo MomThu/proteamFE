@@ -3,7 +3,7 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from 'api/request';
 import url from 'api/url';
 import { getMessageError } from 'utils/common';
-import { AuthLogin, IGoogleLoginForm, IGetLinkToResetPasswordForm, IResetPasswordForm } from './type';
+import { AuthLogin, IGoogleLoginForm } from './type';
 
 // login
 export const actionAuthLogin = createAsyncThunk('auth/actionAuthLogin', async (payload: AuthLogin) => {

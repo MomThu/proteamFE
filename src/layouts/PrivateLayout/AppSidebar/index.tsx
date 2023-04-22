@@ -1,10 +1,15 @@
-import { Image, Menu, MenuProps } from 'antd';
+import { Image, Input, Menu, MenuProps, Space } from 'antd';
 import { getRealPath } from 'layouts/helper';
 import routesMap from 'layouts/routesMap';
 import { isEmpty, map } from 'lodash';
 import logo from 'assets/image/logo_3.png';
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'app/hooks';
+import { actionSearchUser } from 'redux/network/actions';
+import { notificationError } from 'utils/notifications';
+import { getMessageError } from 'utils/common';
+import { PAGE_SIZE } from 'utils/constants';
 import { useNavs } from '../useNavs';
 import { useRoutes } from '../useRoutes';
 
@@ -21,6 +26,9 @@ const getItem = (
 };
 
 const AppSidebar: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const navs = useNavs();
   const routes = useRoutes();
   const location = useLocation();
@@ -68,6 +76,24 @@ const AppSidebar: React.FC = () => {
     return items;
   }, [navs]);
 
+  const onSearch = async (value: string) => {
+    const payload = {
+      name: value,
+      limit: PAGE_SIZE,
+      page_number: 0
+    };
+    try {
+      await dispatch(actionSearchUser(payload)).unwrap();
+      navigate(routesMap.USER, {
+        state: {
+          search: value
+        }
+      });
+    } catch (error) {
+      notificationError(getMessageError(error));
+    }
+  }
+
   const renderLogo = (): JSX.Element => {
     return (
       <div className="sidebar-logo justify-evenly">
@@ -94,26 +120,15 @@ const AppSidebar: React.FC = () => {
   };
 
   return (
-    // <Sider
-    //   width={230}
-    //   theme="dark"
-    //   breakpoint={'xl'}
-    //   className="menu-sidebar"
-    //   collapsedWidth={55}
-    //   trigger={null}
-    //   collapsible
-    //   collapsed={collapsed}
-    //   onBreakpoint={(broken): void => {
-    //     setCollapsed(broken);
-    //   }}
-    // >
-    //   {renderLogo()}
-    //   {renderMenu()}
-    // </Sider>
     <div className="flex flex-row w-[100%] h-[100%]">
       <div>{renderLogo()}</div>
       <div className="w-[100%]">
         <div className="object-contain">{renderMenu()}</div>
+      </div>
+      <div>
+        <Space>
+          <Input.Search placeholder="Search..." onSearch={onSearch} style={{ width: 200 }} />
+        </Space>
       </div>
     </div>
   );

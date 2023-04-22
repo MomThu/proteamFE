@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Col, Row, Typography } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { Button, Col, Row, Typography, Image, Avatar } from 'antd';
 import { useAppDispatch } from 'app/hooks';
 import React from 'react';
 import { actionUnFriend } from 'redux/network/actions';
@@ -35,8 +36,19 @@ const FriendItem: React.FC<Props> = (props: any) => {
         <Col span={18}>
           <Row>
             <Col span={2}>
+              
               <div className="friend-img">
-                <img src="https://d1hjkbq40fs2x4.cloudfront.net/2016-01-31/files/1045-1.jpg" alt="" />
+                {data?.avatar ? (
+                  <Image
+                    src={data?.avatar}
+                    alt="avatar"
+                    preview={false}
+                    width={50}
+                    className="shadow rounded-full max-w-full h-auto border-none"
+                  />
+                ) : (
+                  <Avatar size={50} icon={<UserOutlined />} className="mr-3 cursor-pointer" />
+                )}
               </div>
             </Col>
             <Col span={22} className="friend-text">

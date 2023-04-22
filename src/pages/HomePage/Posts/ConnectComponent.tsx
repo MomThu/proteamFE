@@ -1,9 +1,8 @@
 import { Avatar, Card, Image, Row, Typography } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { actionSearchUser } from 'redux/network/actions';
-import { selectorSearchUsers } from 'redux/network/selectors';
 import { selectorProfile } from 'redux/profile/selectors';
 import { actionGetProfile } from 'redux/profile/actions';
 
@@ -12,18 +11,24 @@ const { Title, Link } = Typography;
 const ConnectComponent = () => {
   const dispatch = useAppDispatch();
 
-  const listUsers = useAppSelector(selectorSearchUsers);
   const userInfo = useAppSelector(selectorProfile);
 
-  useEffect(() => {
+  const [listUsers, setListUsers] = useState<User.Profile[]>([]);
+
+  const fetchUsers = useCallback(async () => {
     const randNum = Math.floor(Math.random() * 150);
     const payload = {
       limit: 5,
       page_number: randNum,
     };
-    dispatch(actionSearchUser(payload)).unwrap();
-    dispatch(actionGetProfile()).unwrap();
+    const response = await dispatch(actionSearchUser(payload)).unwrap();
+    setListUsers(response);
   }, [dispatch]);
+
+  useEffect(() => {
+    fetchUsers();
+    dispatch(actionGetProfile()).unwrap();
+  }, [dispatch, fetchUsers]);
 
   return (
     <div className="my-10 fixed">

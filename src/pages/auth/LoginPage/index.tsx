@@ -1,12 +1,11 @@
-import { Button, Checkbox, Form, Input, Typography } from 'antd';
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { Button, Form, Input, Typography } from 'antd';
 import { api } from 'api/request';
 import url from 'api/url';
 import { useAppDispatch } from 'app/hooks';
 import imageLogin from 'assets/image/login_background.png';
 import { ReactComponent as GoogleLogo } from 'assets/image/logo-google.svg';
 import routesMap from 'layouts/routesMap';
-import { get, trim } from 'lodash';
+import { trim } from 'lodash';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { actionAuthLogin } from 'redux/auth/actions';

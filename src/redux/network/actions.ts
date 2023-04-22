@@ -61,14 +61,11 @@ export const actionUnFriend = createAsyncThunk('user/actionUnFriend', async (pay
 });
 
 // request friend
-export const actionSearchUser = createAsyncThunk(
-  'user/actionSearchUser',
-  async (payload: any) => {
-    try {
-      const { data } = await api.post<any>(url.searchUser, payload);
-      return data;
-    } catch (error: any) {
-      throw new Error(getMessageError(error));
-    }
+export const actionSearchUser = createAsyncThunk('user/actionSearchUser', async (payload: any) => {
+  try {
+    const { data } = await api.post<any>(url.searchUser, payload);
+    return data;
+  } catch (error: any) {
+    throw new Error(getMessageError(error));
   }
-);
+});

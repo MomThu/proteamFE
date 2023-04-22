@@ -12,3 +12,6 @@ export const selectorSearchUsers = (state: RootState): User.Profile[] => {
   return state.network?.searchUsers;
 };
 
+export const selectorMoreSearchUsers = (state: RootState): boolean => {
+  return state.network?.hasMoreSearch;
+};

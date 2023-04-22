@@ -10,6 +10,7 @@ const ChatPage = lazy(() => delayLazyLoad(import('pages/ChatPage')));
 const NotificationPage = lazy(() => delayLazyLoad(import('pages/NotificationPage')));
 const UserPostPage = lazy(() => delayLazyLoad(import('pages/MyPost')));
 const ChangePasswordPage = lazy(() => delayLazyLoad(import('pages/auth/ChangePasswordPage')));
+const UserPage = lazy(() => delayLazyLoad(import('pages/UserPage')));
 
 const routes: AppRouteType[] = [
   {
@@ -64,6 +65,13 @@ const routes: AppRouteType[] = [
   {
     path: routesMap.CHANGE_PASSWORD,
     component: ChangePasswordPage,
+    rule: -1,
+    openKey: [],
+    activeKey: [],
+  },
+  {
+    path: routesMap.USER,
+    component: UserPage,
     rule: -1,
     openKey: [],
     activeKey: [],
