@@ -3,7 +3,7 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   // fix conflict css Antd and Tailwind
   corePlugins: {
-    preflight: false
+    preflight: false,
   },
   theme: {
     extend: {
@@ -12,5 +12,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-}
+  plugins: [require('tailwind-scrollbar')],
+};

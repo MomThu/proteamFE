@@ -4,45 +4,51 @@
 
 html,
 body {
-    padding: 0;
-    margin: 0;
-    font-family: 'Apercu Pro', 'Helvetica', 'Calibri', 'Roboto', 'Arial',
-        'sans-serif';
-    font-size: 16px;
+  padding: 0;
+  margin: 0;
+  font-family: 'Apercu Pro', 'Helvetica', 'Calibri', 'Roboto', 'Arial', 'sans-serif';
+  font-size: 16px;
 }
 
 :root {
-    --color-primary: #1890ff;
+  --color-primary: #1890ff;
 
-    --color-white: #ffffff;
+  --color-white: #ffffff;
 
-    --color-gray-40: #535f78;
-    --color-gray-90: #e1e4ea;
-    --color-gray-95: #f0f1f5;
+  --color-gray-40: #535f78;
+  --color-gray-90: #e1e4ea;
+  --color-gray-95: #f0f1f5;
 
-    --color-green-20: #0a5c1f;
-    --color-green-80: #a3f5b8;
-    --color-green-90: #d1fadb;
+  --color-green-20: #0a5c1f;
+  --color-green-80: #a3f5b8;
+  --color-green-90: #d1fadb;
 }
-
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-.friend-img img{
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.friend-text{
-    position: relative;
-    left: 10px;
-    display: flex;
-    align-items: center;
+.friend-img img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
 }
 
-  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap');
+.friend-text {
+  position: relative;
+  left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+li {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap');
