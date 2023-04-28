@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Upload } from 'antd';
 import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
-import { UploadOutlined }  from '@ant-design/icons';
-import React, { useState } from 'react';
+import { UploadOutlined } from '@ant-design/icons';
+import React, { ReactNode, useState } from 'react';
 import { HttpStatus } from 'utils/constants';
 import { notificationError } from 'utils/notifications';
 import { fileService } from 'api/file.service';
 
 interface IProps {
   path?: string;
-  icon?: any;
-  onSuccess: (id: number, url: string, fileName: string,) => void;
+  icon?: ReactNode;
+  onSuccess: (id: number, url: string, fileName: string) => void;
 }
 
 function BaseUploadFile(props: IProps) {
@@ -54,8 +54,12 @@ function BaseUploadFile(props: IProps) {
     }
 
     onSuccess('ok');
-    
-    props.onSuccess(registerFileResponse?.data?.data.id, registerFileResponse?.data?.data.url, registerFileResponse?.data?.data.originName);
+
+    props.onSuccess(
+      registerFileResponse?.data?.data.id,
+      registerFileResponse?.data?.data.url,
+      registerFileResponse?.data?.data.originName
+    );
 
     return {
       success: true,
@@ -73,7 +77,7 @@ function BaseUploadFile(props: IProps) {
       customRequest={handleFileUpload}
       maxCount={1}
     >
-      {fileList.length < 1 && props.icon ? props.icon : <Button icon={<UploadOutlined />}>Upload CV</Button>}
+      {fileList.length < 1 ? props.icon ? props.icon : <Button icon={<UploadOutlined />}>Upload CV</Button> : null}
     </Upload>
   );
 }
