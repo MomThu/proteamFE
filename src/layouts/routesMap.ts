@@ -12,6 +12,7 @@ const NOTIFICATION = '/notification';
 const CHAT = '/chat';
 const MYPOST = '/mypost';
 const USER = '/users';
+const STATISTIC = '/statistic';
 
 const routesMap = {
   HOME,
@@ -28,6 +29,7 @@ const routesMap = {
   USER_PROFILE,
   MYPOST,
   USER,
+  STATISTIC,
 };
 
 export default routesMap;

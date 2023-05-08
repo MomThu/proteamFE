@@ -27,6 +27,13 @@ const url = {
   post: '/posts',
   filterPost: '/posts/search',
   allPostsUser: '/posts/user',
+
+  // statistic
+  allStats: 'stats/user_stats',
+  gpaStats: 'stats/gpa',
+  schoolStats: 'stats/school',
+  skillStats: 'stats/skill',
+  
 };
 
 export default url;
