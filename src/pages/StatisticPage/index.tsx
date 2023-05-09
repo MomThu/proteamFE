@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
-import { Pie } from '@ant-design/plots';
+import { Column, Pie } from '@ant-design/plots';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { selectorAllStats, selectorGpaStats, selectorSkillStats } from 'redux/statistic/selectors';
 import {
@@ -89,25 +89,49 @@ const StatisticPage = () => {
     ],
   };
 
-  const configPieSkill = {
-    appendPadding: 10,
+  // const configPieSkill = {
+  //   appendPadding: 10,
+  //   data: dataSkillStat,
+  //   angleField: 'value',
+  //   colorField: 'type',
+  //   radius: 0.8,
+  //   label: {
+  //     type: 'outer',
+  //     content: '{name} {percentage}',
+  //   },
+  //   interactions: [
+  //     {
+  //       type: 'pie-legend-active',
+  //     },
+  //     {
+  //       type: 'element-active',
+  //     },
+  //   ],
+  // };
+  const brandColor = '#5B8FF9';
+  const config = {
     data: dataSkillStat,
-    angleField: 'value',
-    colorField: 'type',
-    radius: 0.8,
-    label: {
-      type: 'outer',
-      content: '{name} {percentage}',
+    xField: 'type',
+    yField: 'value',
+    seriesField: '',
+    color: ({ type }: any) => {
+      return brandColor;
     },
-    interactions: [
-      {
-        type: 'pie-legend-active',
+    label: {
+      content: (originData: any) => {
+        const val = originData?.value;
+        return val;
       },
-      {
-        type: 'element-active',
+      // offset: 10,
+    },
+    xAxis: {
+      label: {
+        // autoHide: true,
+        autoRotate: false,
       },
-    ],
+    },
   };
+
   const listSchools = !isEmpty(allStats)
     ? allStats?.schools.map((school: any) => {
         const majorBySchool = [];
@@ -141,11 +165,13 @@ const StatisticPage = () => {
         treeData={listSchools}
       />
       <Row className="flex flex-row justify-between mt-10">
-        <Col xs={10}>
-          <Pie {...configPie} />
+        <Col xs={15}>
+          <div className='my-10 font-bold'>Số sinh viên theo các kỹ năng</div>
+          <Column {...config} />
         </Col>
-        <Col xs={10}>
-          <Pie {...configPieSkill} />
+        <Col xs={8}>
+          <div className='my-10 font-bold'>Tỷ lệ sinh viên chia theo học lực</div>
+          <Pie {...configPie} />
         </Col>
       </Row>
     </div>
