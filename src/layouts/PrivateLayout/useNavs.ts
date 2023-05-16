@@ -5,7 +5,7 @@ import { FiBell, FiHome, FiMessageCircle, FiUser, FiUsers } from 'react-icons/fi
 
 const navs: Array<NavLinkItem> = [
   {
-    name: 'Trang chủ',
+    name: 'HomePage',
     key: routesMap.HOME,
     icon: FiHome,
   },

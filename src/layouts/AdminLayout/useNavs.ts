@@ -6,7 +6,7 @@ import { FiBell, FiHome, FiMessageCircle, FiUser, FiUsers, FiBarChart } from 're
 
 const navs: Array<NavLinkItem> = [
   {
-    name: 'Trang chủ',
+    name: 'HomePage',
     key: routesMap.HOME,
     icon: FiHome,
   },

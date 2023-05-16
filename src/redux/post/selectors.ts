@@ -16,3 +16,7 @@ export const selectorAllPosts = (state: RootState): Post.Post[] => {
 export const selectorFilterPosts = (state: RootState): Post.Post[] => {
   return state.post?.filterPosts;
 };
+
+export const selectorMoreSearchPosts = (state: RootState): boolean => {
+  return state.post?.hasMoreSearch;
+};
