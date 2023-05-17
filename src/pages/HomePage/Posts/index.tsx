@@ -41,7 +41,7 @@ const News = () => {
 
   useEffect(() => {
     const payload = {
-      limit: 2,
+      limit: 10,
       page_number: 0,
       search: search && search.length ? search : null
     };
@@ -56,11 +56,11 @@ const News = () => {
 
   const fetchPosts = () => {
     const payload = {
-      limit: 2,
-      page_number: page + 2,
+      limit: 10,
+      page_number: page + 10,
       search: search && search.length ? search : null,
     };
-    setPage((prevState) => prevState + 2);
+    setPage((prevState) => prevState + 10);
     setTimeout(async () => {
       if (listNews && listNews.length) {
         const response = await dispatch(actionFilterPost(payload)).unwrap();
