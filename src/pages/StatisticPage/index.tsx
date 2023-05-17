@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Column, Pie } from '@ant-design/plots';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { selectorAllStats, selectorGpaStats, selectorSkillStats } from 'redux/statistic/selectors';
+import { selectorAllStats, selectorGpaStats, selectorSchoolStats, selectorSkillStats } from 'redux/statistic/selectors';
 import {
   actionGetStatsAll,
   actionGetStatsGpa,
@@ -18,11 +18,12 @@ const StatisticPage = () => {
   const allStats = useAppSelector(selectorAllStats);
   const gpaStats = useAppSelector(selectorGpaStats);
   const skillStats = useAppSelector(selectorSkillStats);
-  // const schoolStats = useAppSelector(selectorSchoolStats);
+  const schoolStats = useAppSelector(selectorSchoolStats);
 
   const [value, setValue] = useState<string>();
   const [dataStatsGpa, setDataStatGpa] = useState<any>([]);
   const [dataSkillStat, setDataSkillStat] = useState<any>([]);
+  const [dataSchoolStat, setDataSchoolStat] = useState<any>([]);
 
   const onChangeSelect = async (newValue: string) => {
     if (newValue) {
@@ -67,7 +68,18 @@ const StatisticPage = () => {
         })
       : [];
     setDataSkillStat(skills);
-  }, [skillStats, gpaStats]);
+
+    const schools =
+      schoolStats && schoolStats.length
+        ? schoolStats.map((school: any) => {
+            return {
+              type: school.account_school,
+              value: toNumber(school.count),
+            };
+          })
+        : [];
+    setDataSchoolStat(schools);
+  }, [skillStats, gpaStats, schoolStats]);
 
   const configPie = {
     appendPadding: 10,
@@ -89,27 +101,32 @@ const StatisticPage = () => {
     ],
   };
 
-  // const configPieSkill = {
-  //   appendPadding: 10,
-  //   data: dataSkillStat,
-  //   angleField: 'value',
-  //   colorField: 'type',
-  //   radius: 0.8,
-  //   label: {
-  //     type: 'outer',
-  //     content: '{name} {percentage}',
-  //   },
-  //   interactions: [
-  //     {
-  //       type: 'pie-legend-active',
-  //     },
-  //     {
-  //       type: 'element-active',
-  //     },
-  //   ],
-  // };
+  const brandColorSchool = '#00FEF6';
+  const configSchool = {
+    data: dataSchoolStat,
+    xField: 'type',
+    yField: 'value',
+    seriesField: '',
+    color: ({ type }: any) => {
+      return brandColorSchool;
+    },
+    label: {
+      content: (originData: any) => {
+        const val = originData?.value;
+        return val;
+      },
+      // offset: 10,
+    },
+    xAxis: {
+      label: {
+        // autoHide: true,
+        autoRotate: false,
+      },
+    },
+  };
+
   const brandColor = '#5B8FF9';
-  const config = {
+  const configSkill = {
     data: dataSkillStat,
     xField: 'type',
     yField: 'value',
@@ -153,24 +170,30 @@ const StatisticPage = () => {
 
   return (
     <div>
-      <TreeSelect
-        showSearch
-        style={{ width: '50%' }}
-        value={value}
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        placeholder="Please select"
-        allowClear
-        // treeDefaultExpandAll
-        onChange={onChangeSelect}
-        treeData={listSchools}
-      />
       <Row className="flex flex-row justify-between mt-10">
         <Col xs={15}>
-          <div className='my-10 font-bold'>Số sinh viên theo các kỹ năng</div>
-          <Column {...config} />
+          <div className="mb-10 font-bold">Số sinh viên theo từng trường</div>
+          <Column {...configSchool} />
+        </Col>
+        <Col span={24} className="mt-20 mb-10">
+          <TreeSelect
+            showSearch
+            style={{ width: '50%' }}
+            value={value}
+            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            placeholder="Chọn trường/ngành cần thống kê"
+            allowClear
+            // treeDefaultExpandAll
+            onChange={onChangeSelect}
+            treeData={listSchools}
+          />
+        </Col>
+        <Col xs={15}>
+          <div className="mb-10 font-bold">Số sinh viên theo các kỹ năng</div>
+          <Column {...configSkill} />
         </Col>
         <Col xs={8}>
-          <div className='my-10 font-bold'>Tỷ lệ sinh viên chia theo học lực</div>
+          <div className="mb-10 font-bold">Tỷ lệ sinh viên chia theo học lực</div>
           <Pie {...configPie} />
         </Col>
       </Row>
