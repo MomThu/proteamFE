@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { actionGetUserProfile } from 'redux/profile/actions';
 import { selectorUserProfile } from 'redux/profile/selectors';
 import logo from 'assets/image/page-404.jpeg';
+import verified from 'assets/image/ic_verified@2x.png';
 import { actionAcceptFriend, actionRequestFriend, actionUnFriend } from 'redux/network/actions';
 import { notificationError, notificationSuccess } from 'utils/notifications';
 import { getMessageError } from 'utils/common';
@@ -116,9 +117,23 @@ const UserProfile = () => {
             />
           )}
           <Space direction="vertical" className="mt-10 ml-10 flex flex-col">
-            <Title>{profile?.name}</Title>
-            {profile?.school && <Title level={5}>School: {profile.school}</Title>}
-            {profile?.major && <Title level={5}>Major: {profile.major}</Title>}
+            <div className="flex flex-row">
+              <Title>{profile?.name}</Title>
+              {profile?.role === 2 && (
+                <Image src={verified} alt="verified" preview={false} className="justify-items-center" />
+              )}
+            </div>
+            {profile?.role === 2 ? (
+              <div>
+                {profile?.school && <Title level={5}>Company: {profile.school}</Title>}
+                {profile?.major && <Title level={5}>Major: {profile.major}</Title>}
+              </div>
+            ) : (
+              <div>
+                {profile?.school && <Title level={5}>School: {profile.school}</Title>}
+                {profile?.major && <Title level={5}>Major: {profile.major}</Title>}
+              </div>
+            )}
           </Space>
         </div>
         <div>
@@ -148,12 +163,20 @@ const UserProfile = () => {
           <Title level={3} className="text-left">
             Detail Information
           </Title>
-          <Space direction="vertical" className="">
-            {profile?.gpa && <Title level={5}>GPA: {profile.gpa}</Title>}
-            {profile?.email && <Title level={5}>Email: {profile.email}</Title>}
-            {profile?.linkedln_link && <Title level={5}>Linkedin Link: {profile.linkedln_link}</Title>}
-            {profile?.phone && <Title level={5}>Phone: {profile.phone}</Title>}
-          </Space>
+          {profile?.role === 2 ? (
+            <Space direction="vertical" className="">
+              {profile.email && <Title level={5}>Email: {profile.email}</Title>}
+              {profile.linkedln_link && <Title level={5}>Linkedin Link: {profile.linkedln_link}</Title>}
+              {profile.phone && <Title level={5}>Phone: {profile.phone}</Title>}
+            </Space>
+          ) : (
+            <Space direction="vertical" className="">
+              {profile.gpa && <Title level={5}>GPA: {profile.gpa}</Title>}
+              {profile.email && <Title level={5}>Email: {profile.email}</Title>}
+              {profile.linkedln_link && <Title level={5}>Linkedin Link: {profile.linkedln_link}</Title>}
+              {profile.phone && <Title level={5}>Phone: {profile.phone}</Title>}
+            </Space>
+          )}
         </Card>
       )}
     </div>

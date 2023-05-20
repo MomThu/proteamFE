@@ -18,6 +18,6 @@ interface UserInfo {
   linkedlnLink?: string;
   name?: string;
   phone?: string;
-  role?: string;
+  role?: number;
   school?: string;
 }

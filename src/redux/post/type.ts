@@ -3,6 +3,7 @@ export interface PostState {
   allUserPosts: Post.Post[],
   post: Post.Post,
   filterPosts: Post.Post[],
+  hasMoreSearch: boolean,
 }
 
 export interface CreatePost {

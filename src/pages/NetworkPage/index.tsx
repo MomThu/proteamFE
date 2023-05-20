@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import { GroupOutlined, UserOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import { FaHashtag, FaInvision } from 'react-icons/fa';
+import { FaInvision } from 'react-icons/fa';
 
 import Friend from './Connection/Friend';
-import Follow from './Connection/Follow';
 import Received from './Invitation/Received';
-import Sent from './Invitation/Sent';
-import Groups from './Groupss/Groups';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -30,13 +27,11 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem('Connection', 'sub1', <UserOutlined />, [getItem('List Friends', '1')]),
-  getItem('Invitation', 'sub2', <FaInvision />, [getItem('Received', '3')]),
-  getItem('Groups', 'sub3', <GroupOutlined />, [getItem('Groups', '5')]),
-  getItem('Hashtags', 'sub4', <FaHashtag />, [getItem('Hashtags', '6')]),
+  getItem('Invitation', 'sub2', <FaInvision />, [getItem('Received', '2')]),
 ];
 
 // submenu keys of first level
-const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4'];
+const rootSubmenuKeys = ['sub1', 'sub2'];
 
 const NetworkPage: React.FC = () => {
   const [openKeys, setOpenKeys] = useState(['sub1']);
@@ -48,6 +43,7 @@ const NetworkPage: React.FC = () => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
     // console.log(latestOpenKey, 'latestOpenKey');
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     if (rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
       setOpenKeys(keys);
     } else {
@@ -72,10 +68,7 @@ const NetworkPage: React.FC = () => {
       />
       <div className='w-full'>{
         current === '1' ? <Friend /> : 
-        current === '2' ? <Follow /> :
-        current === '3' ? <Received /> : 
-        current === '4' ? <Sent /> :
-        current === '5' ? <Groups /> :
+        current === '2' ? <Received /> : 
         null
         }
       </div>

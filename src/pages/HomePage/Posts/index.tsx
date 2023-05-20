@@ -4,13 +4,14 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import React, { useEffect, useState } from 'react';
 import { FilterOutlined } from '@ant-design/icons';
 import { actionFilterPost } from 'redux/post/actions';
-import { selectorFilterPosts } from 'redux/post/selectors';
+import { selectorFilterPosts, selectorMoreSearchPosts } from 'redux/post/selectors';
 import Post from 'pages/MyPost/Post';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { notificationError } from 'utils/notifications';
 import { selectorSkills } from 'redux/profile/selectors';
 import { actionGetSkills } from 'redux/profile/actions';
 import { get } from 'lodash';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { getMessageError } from 'utils/common';
 import NewsComponent from './NewsComponent';
 import ConnectComponent from './ConnectComponent';
@@ -21,18 +22,53 @@ const News = () => {
 
   const listNews = useAppSelector(selectorFilterPosts);
   const skills = useAppSelector(selectorSkills);
+  const hasMore = useAppSelector(selectorMoreSearchPosts);
 
+  const [page, setPage] = useState(0);
+  const [posts, setPosts] = useState<Post.Post[]>([]);
+  const [search, setSearch] = useState("");
   const [openModalFilter, setOpenModalFilter] = useState(false);
   const [skillSelected, setSkillSelected] = useState<CheckboxValueType[]>([]);
   const [optionSkills, setOptionSkills] = useState<any>([]);
   const [optionProfileSkills, setOptionProfileSkills] = useState<any>([]);
 
+  // useEffect(() => {
+  //   // dispatch(actionGetAllPosts()).unwrap();
+  //   const payload = {};
+  //   dispatch(actionFilterPost(payload)).unwrap();
+  //   dispatch(actionGetSkills()).unwrap();
+  // }, [dispatch]);
+
   useEffect(() => {
-    // dispatch(actionGetAllPosts()).unwrap();
-    const payload = {};
+    const payload = {
+      limit: 10,
+      page_number: 0,
+      search: search && search.length ? search : null
+    };
     dispatch(actionFilterPost(payload)).unwrap();
     dispatch(actionGetSkills()).unwrap();
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, search]);
+
+  useEffect(() => {
+    setPosts(listNews);
+  }, [listNews])
+
+  const fetchPosts = () => {
+    const payload = {
+      limit: 10,
+      page_number: page + 10,
+      search: search && search.length ? search : null,
+    };
+    setPage((prevState) => prevState + 10);
+    setTimeout(async () => {
+      if (listNews && listNews.length) {
+        const response = await dispatch(actionFilterPost(payload)).unwrap();
+        const listPosts = posts.concat(response);
+        setPosts(listPosts);
+      }
+    }, 1000);
+  };
 
   useEffect(() => {
     const optionSkill = skills.map((item) => {
@@ -77,14 +113,15 @@ const News = () => {
   };
 
   const onSearch = async (value: string) => {
-    const payload = {
-      content: value,
-    };
-    try {
-      await dispatch(actionFilterPost(payload)).unwrap();
-    } catch (error) {
-      notificationError(getMessageError(error));
-    }
+    setSearch(value);
+    // const payload = {
+    //   content: value,
+    // };
+    // try {
+    //   await dispatch(actionFilterPost(payload)).unwrap();
+    // } catch (error) {
+    //   notificationError(getMessageError(error));
+    // }
   };
 
   return (
@@ -103,14 +140,16 @@ const News = () => {
             </Button>
           </div>
 
-          {listNews && listNews.length ? (
-            listNews.map((item, index) => {
-              return (
-                <div key={index}>
-                  <NewsComponent data={item} />
-                </div>
-              );
-            })
+          {posts && posts.length ? (
+            <InfiniteScroll dataLength={posts.length} next={fetchPosts} hasMore={hasMore} loader={<h4>Loading ...</h4>}>
+              {posts.map((item, index) => {
+                return (
+                  <div key={index}>
+                    <NewsComponent data={item} />
+                  </div>
+                );
+              })}
+            </InfiniteScroll>
           ) : (
             <Empty />
           )}

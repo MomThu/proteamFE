@@ -7,6 +7,7 @@ const initState: PostState = {
   allUserPosts: [],
   post: {},
   filterPosts: [],
+  hasMoreSearch: true,
 };
 
 const postReducer = createReducer(initState, (builder) => {
@@ -16,7 +17,10 @@ const postReducer = createReducer(initState, (builder) => {
   builder.addCase(actionGetAllPosts.fulfilled, (state, action) => {    
     state.allPosts = action.payload;
   });
-  builder.addCase(actionFilterPost.fulfilled, (state, action) => {    
+  builder.addCase(actionFilterPost.fulfilled, (state, action) => {
+    if (action.payload.length === 0) {
+      state.hasMoreSearch = false
+    }
     state.filterPosts = action.payload;
   });
   builder.addCase(actionGetAllPostsUser.fulfilled, (state, action) => {    

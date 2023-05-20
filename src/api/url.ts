@@ -30,6 +30,11 @@ const url = {
 
   // chat
   allConversation: '/chats/conversation/get-by-user-id',
+  // statistic
+  allStats: 'stats/user_stats',
+  gpaStats: 'stats/gpa',
+  schoolStats: 'stats/school',
+  skillStats: 'stats/skill',
 };
 
 export default url;
