@@ -1,8 +1,13 @@
 import { Button } from 'antd';
 import Search from 'antd/es/input/Search';
+import { useAppSelector } from 'app/hooks';
 import React from 'react';
+import { selectorConversationList } from 'redux/chat/selector';
+import ConversationItem from './ConversationItem';
 
 export default function ConversationList() {
+  const conversationList = useAppSelector(selectorConversationList);
+
   const handleCreateNewConversation = () => {
     console.log('first');
   };
@@ -19,15 +24,13 @@ export default function ConversationList() {
           <Search placeholder="search conversation" onSearch={handleSearchConversation} className="flex-1" />
         </div>
         <ul>
-          {Array(15)
-            .fill(0)
-            .map((item, index) => {
-              return (
-                <li className="h-16 border-b border-0 !border-gray-400 border-solid flex items-center px-5" key={index}>
-                  {index}
-                </li>
-              );
-            })}
+          {conversationList.map((item, index) => {
+            return (
+              <li className="h-16 !border-b border-0 !border-gray-400 border-solid flex items-center px-5" key={index}>
+                <ConversationItem {...item} />
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className=" bg-white px-5 h-16 flex items-center">

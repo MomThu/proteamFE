@@ -21,12 +21,15 @@ const url = {
   acceptFriend: '/user/accept-friend',
   unfriend: '/user/unfriend',
   searchUser: '/user/search',
-  
-  // post 
+
+  // post
   allPosts: '/posts/all',
   post: '/posts',
   filterPost: '/posts/search',
   allPostsUser: '/posts/user',
+
+  // chat
+  allConversation: '/chats/conversation/get-by-user-id',
 };
 
 export default url;

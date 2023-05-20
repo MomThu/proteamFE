@@ -2,17 +2,30 @@ import { Layout } from 'antd';
 import Loading from 'components/Loading';
 import routesMap from 'layouts/routesMap';
 import { trim } from 'lodash';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { Waiter } from 'react-wait';
 import { getDataStorage, STORAGE_KEY } from 'utils/storage';
 import AppHeader from './AppHeader';
+import Socket from '../../plugins/socket';
 
 const { Content } = Layout;
 
 const PrivateLayout: React.FC = () => {
   const isLogged = useMemo(() => {
     return Boolean(trim(getDataStorage(STORAGE_KEY.ACCESS_TOKEN)));
+  }, []);
+
+  useEffect(() => {
+    const user = getDataStorage(STORAGE_KEY.USER_INFO) as UserInfo;
+    Socket.connect({
+      senderId: user?.account_id || 0,
+      senderEmail: user?.email || '',
+    });
+
+    return () => {
+      Socket.disconnect();
+    };
   }, []);
 
   return isLogged ? (
