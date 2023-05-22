@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Avatar, Button, Card, Col, Modal, Row, Tooltip, Typography, Image, Checkbox } from 'antd';
+import { Avatar, Button, Card, Col, Modal, Row, Tooltip, Typography, Image, Checkbox, InputNumber, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import React, { useEffect, useState } from 'react';
@@ -30,7 +30,9 @@ const Post = (props: IProps) => {
   const [skillSelected, setSkillSelected] = useState<CheckboxValueType[]>([]);
   const [optionSkills, setOptionSkills] = useState<any>([]);
   const [optionProfileSkills, setOptionProfileSkills] = useState<any>([]);
-  
+  const [inputMinGPA, setInputMinGPA] = useState(0);
+  const [inputMaxGPA, setInputMaxGPA] = useState(4);
+
   useEffect(() => {
     dispatch(actionGetProfile()).unwrap();
     dispatch(actionGetSkills()).unwrap();
@@ -60,27 +62,36 @@ const Post = (props: IProps) => {
     setValue('');
     setImage('');
     setSkillSelected([]);
+    setInputMinGPA(0);
+    setInputMaxGPA(4);
     setIsOpenModalCreatePost(false);
   };
 
   const handleSave = async () => {
-    try {
-      const payload = {
-        content: value,
-        skills: skillSelected,
-        min_gpa: 0,
-        max_gpa: 4,
-        image: image,
-      };
-      await dispatch(actionCreatePost(payload)).unwrap();
-      notificationSuccess('Post successful!');
-      props?.onReload();
-    } catch (error) {
-      notificationError('Post Error');
+    if (inputMinGPA > inputMaxGPA) {
+      notificationError('Max GPA must greater than min GPA');
+    } else {
+      try {
+        const payload = {
+          content: value,
+          skills: skillSelected,
+          min_gpa: inputMinGPA,
+          max_gpa: inputMaxGPA,
+          image: image,
+        };
+        await dispatch(actionCreatePost(payload)).unwrap();
+        notificationSuccess('Post successful!');
+        props?.onReload();
+      } catch (error) {
+        notificationError('Post Error');
+      }
+      setIsOpenModalCreatePost(false);
+      setValue('');
+      setImage('');
+      setSkillSelected([]);
+      setInputMinGPA(0);
+      setInputMaxGPA(4);
     }
-    setIsOpenModalCreatePost(false);
-    setValue('');
-    setImage('');
   };
 
   const handleUploadSuccess = async (id: number, url: string) => {
@@ -114,7 +125,7 @@ const Post = (props: IProps) => {
           </Col>
         </Row>
       </div>
-      <Modal open={isOpenModalCreatePost} title="Create a post" onCancel={handleCancel} footer={null}>
+      <Modal open={isOpenModalCreatePost} title="Create a post" onCancel={handleCancel} footer={null} destroyOnClose={true}>
         <div>
           <TextArea
             placeholder="What do you want to talk about?"
@@ -131,12 +142,50 @@ const Post = (props: IProps) => {
             </div>
           </div>
           <Text>Select skills</Text>
-            <Checkbox.Group
-              className="flex flex-wrap"
-              options={optionSkills}
-              defaultValue={optionProfileSkills}
-              onChange={onChangeSkill}
+          <Checkbox.Group
+            className="flex flex-wrap"
+            options={optionSkills}
+            defaultValue={optionProfileSkills}
+            onChange={onChangeSkill}
+          />
+          <div>
+            <Text>GPA</Text>
+          </div>
+          <Input.Group compact className='mb-5'>
+            <InputNumber
+              style={{ width: 100, textAlign: 'center' }}
+              placeholder="Minimum"
+              min={0}
+              max={4}
+              step={0.01}
+              onChange={(value) => setInputMinGPA(value || 0)}
+              value={inputMinGPA}
             />
+            <Input
+              className="site-input-split"
+              style={{
+                width: 30,
+                borderLeft: 0,
+                borderRight: 0,
+                pointerEvents: 'none',
+              }}
+              placeholder="~"
+              disabled
+            />
+            <InputNumber
+              className="site-input-right"
+              style={{
+                width: 100,
+                textAlign: 'center',
+              }}
+              placeholder="Maximum"
+              min={0}
+              max={4}
+              step={0.01}
+              onChange={(value) => setInputMaxGPA(value || 4)}
+              value={inputMaxGPA}
+            />
+          </Input.Group>
           <Button type="primary" onClick={handleSave} disabled={value || image ? false : true}>
             Post
           </Button>

@@ -1,38 +1,15 @@
-import { Card, Dropdown, MenuProps, Image, Typography, Avatar } from 'antd';
+import { Card, Image, Typography, Avatar } from 'antd';
 import moment from 'moment';
-import React, { useMemo } from 'react';
-import { MoreOutlined, CloseOutlined, UserOutlined } from '@ant-design/icons';
+import React from 'react';
+import { UserOutlined } from '@ant-design/icons';
 import { TIME_FORMAT_6 } from 'utils/time';
+import verified from 'assets/image/ic_verified.png';
 
-const { Text, Link } = Typography;
-type MenuItem = Required<MenuProps>['items'][number];
-
-const getItem = (
-  key: React.Key,
-  label: React.ReactNode,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: 'group'
-): MenuItem => {
-  return { key, icon, children, label, type } as MenuItem;
-};
-
+const { Link } = Typography;
 interface IProps {
   data?: Post.Post;
 }
 const NewsComponent = (props: IProps) => {
-  const items = useMemo(
-    (): MenuItem[] => [
-      getItem('dropdown-save', <Text className="font-medium hover:text-primary">Save this post</Text>),
-      getItem('dropdown-report', <Text className="font-medium hover:text-primary">Report this post</Text>),
-    ],
-    []
-  );
-
-  const onCancel = () => {
-    return;
-  };
-
   return (
     <div className="m-10">
       <Card>
@@ -53,28 +30,25 @@ const NewsComponent = (props: IProps) => {
                 )}
               </div>
               <div>
-                <Link className="font-bold text-black" href={`/profile/user?${props.data?.account_id}`}>
-                  {props.data?.name}
-                </Link>
+                <div className='flex flex-row'>
+                  <Link className="font-bold text-black" href={`/profile/user?${props.data?.account_id}`}>
+                    {props.data?.name}
+                    {props.data?.role === 2 && (
+                      <Image src={verified} alt="verified" preview={false} className="justify-items-center" />
+                    )}
+                  </Link>
+                </div>
                 <div className="font-thin text-xs">
                   {props.data?.create_time ? moment(props.data?.create_time).format(TIME_FORMAT_6) : ''}
                 </div>
               </div>
             </div>
           </div>
-          <div>
-            <Dropdown menu={{ items }} placement="bottomLeft">
-              <Text>
-                <MoreOutlined className="ml-2" />
-              </Text>
-            </Dropdown>
-            <CloseOutlined className="ml-2" onClick={onCancel} />
-          </div>
         </div>
 
-        <div className='mt-5'>{props.data?.content}</div>
+        <div className="mt-5">{props.data?.content}</div>
 
-        <div className='mt-5'>
+        <div className="mt-5">
           {props.data?.image ? (
             <Image
               src={props.data?.image}

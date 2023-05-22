@@ -79,7 +79,7 @@ function UploadImage(props: IProps) {
   };
 
   return (
-    <ImgCrop rotationSlider>
+    <ImgCrop rotationSlider aspect={3/2}>
       <Upload
         // listType="picture-circle"
         fileList={fileList}

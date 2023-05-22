@@ -10,5 +10,6 @@ declare namespace Post {
     max_gpa?: number;
     name?: string;
     avatar?: string;
+    role?: number;
   }
 }

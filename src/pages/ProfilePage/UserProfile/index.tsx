@@ -158,7 +158,7 @@ const UserProfile = () => {
           </Link>
         </div>
       ) : null}
-      {!isEmpty(profile) && profile.friend === 1 && (
+      {!isEmpty(profile) && (profile.friend === 1 || profile.role === 2) && (
         <Card className="mt-10">
           <Title level={3} className="text-left">
             Detail Information

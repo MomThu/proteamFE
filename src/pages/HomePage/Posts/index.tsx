@@ -43,7 +43,7 @@ const News = () => {
     const payload = {
       limit: 10,
       page_number: 0,
-      search: search && search.length ? search : null
+      content: search && search.length ? search : null
     };
     dispatch(actionFilterPost(payload)).unwrap();
     dispatch(actionGetSkills()).unwrap();
@@ -58,7 +58,7 @@ const News = () => {
     const payload = {
       limit: 10,
       page_number: page + 10,
-      search: search && search.length ? search : null,
+      content: search && search.length ? search : null,
     };
     setPage((prevState) => prevState + 10);
     setTimeout(async () => {
