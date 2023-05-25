@@ -10,16 +10,16 @@ const initState: UserState = {
 };
 
 const userReducer = createReducer(initState, (builder) => {
-  builder.addCase(actionGetProfile.fulfilled, (state, action) => {    
+  builder.addCase(actionGetProfile.fulfilled, (state, action) => {
     state.profile = action.payload;
   });
-  builder.addCase(actionGetUserProfile.fulfilled, (state, action) => {    
+  builder.addCase(actionGetUserProfile.fulfilled, (state, action) => {
     state.userProfile = action.payload;
   });
-  builder.addCase(actionGetSkills.fulfilled, (state, action) => {    
+  builder.addCase(actionGetSkills.fulfilled, (state, action) => {
     state.skills = action.payload;
   });
-  builder.addCase(actionGetProfileSkills.fulfilled, (state, action) => {    
+  builder.addCase(actionGetProfileSkills.fulfilled, (state, action) => {
     state.profileSkill = action.payload;
   });
 });

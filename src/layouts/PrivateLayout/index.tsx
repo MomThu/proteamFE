@@ -17,11 +17,14 @@ const PrivateLayout: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const user = getDataStorage(STORAGE_KEY.USER_INFO) as UserInfo;
-    Socket.connect({
-      senderId: user?.account_id || 0,
-      senderEmail: user?.email || '',
-    });
+    if (isLogged) {
+      console.log('connect socket');
+      const user = getDataStorage(STORAGE_KEY.USER_INFO) as UserInfo;
+      Socket.connect({
+        senderId: user?.account_id || 0,
+        senderEmail: user?.email || '',
+      });
+    }
 
     return () => {
       Socket.disconnect();

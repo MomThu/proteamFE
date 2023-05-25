@@ -30,6 +30,9 @@ const url = {
 
   // chat
   allConversation: '/chats/conversation/get-by-user-id',
+  createConversation: '/chats/conversation',
+  createMessage: 'chats/message',
+
   // statistic
   allStats: 'stats/user_stats',
   gpaStats: 'stats/gpa',

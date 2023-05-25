@@ -1,11 +1,3 @@
-export interface IMessage {
-  id: number;
-  content: string;
-  file: string;
-  is_remove: boolean;
-  is_unsent: boolean;
-}
-
 export interface IConversationUser {
   id: number;
   is_admin: boolean;
@@ -22,7 +14,7 @@ export interface IConversation {
   background: string | null;
   last_message_id: number | null;
   users: UserInfo[];
-  message: IMessage[];
+  messages: IMessage[];
   conversationUser: IConversationUser;
 }
 
@@ -30,3 +22,5 @@ export interface ConversationListResponse {
   items: IConversation[];
   totalItems: number;
 }
+export type MessageResponse = IMessage;
+export type CreateConversationResponse = IConversation;
