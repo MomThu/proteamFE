@@ -63,7 +63,7 @@ const ForgottenPasswordPage: React.FC = () => {
       ) : !emailedToReset ? (
         <div className="flex justify-end mr-36 ">
           <div className="bg-white flex flex-col py-8 px-20 rounded-xl shadow-xl max-w-[528px]">
-            <Title className="text-center text-[40px] leading-[48px] font-bold mb-8">Password Reset</Title>
+            <Title className="text-center text-[40px] leading-[48px] font-bold mb-8">Forgotten Password</Title>
 
             <Form form={form} className="mt-5">
               <Form.Item

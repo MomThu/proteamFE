@@ -6,7 +6,6 @@ const { Link } = Typography;
 
 type Props = {
   data: User.Profile;
-  onReload: () => void;
 };
 const UserItem: React.FC<Props> = (props: Props) => {
 

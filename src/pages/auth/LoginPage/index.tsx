@@ -1,9 +1,6 @@
 import { Button, Form, Input, Typography } from 'antd';
-import { api } from 'api/request';
-import url from 'api/url';
 import { useAppDispatch } from 'app/hooks';
 import imageLogin from 'assets/image/login_background.png';
-import { ReactComponent as GoogleLogo } from 'assets/image/logo-google.svg';
 import routesMap from 'layouts/routesMap';
 import { trim } from 'lodash';
 import React, { useEffect } from 'react';
@@ -53,18 +50,18 @@ const LoginPage: React.FC = () => {
     navigate(routesMap.FORGOTTEN_PASSWORD);
   };
 
-  const getGoogleLoginLink = async (): Promise<void> => {
-    try {
-      const response = await api.get<BaseResponse<{ link: string; redirectUri: string }>>(url.getGoogleLoginLink, {
-        params: {
-          redirectUri: `${window.location.origin}/google-login`,
-        },
-      });
-      window.open(response.data?.data?.link);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getGoogleLoginLink = async (): Promise<void> => {
+  //   try {
+  //     const response = await api.get<BaseResponse<{ link: string; redirectUri: string }>>(url.getGoogleLoginLink, {
+  //       params: {
+  //         redirectUri: `${window.location.origin}/google-login`,
+  //       },
+  //     });
+  //     window.open(response.data?.data?.link);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div
@@ -76,14 +73,11 @@ const LoginPage: React.FC = () => {
       <div className="flex justify-end mr-36 ">
         <div className="bg-white flex flex-col py-8 px-20 rounded-xl shadow-xl max-w-[528px]">
           <Title className="text-center text-[40px] leading-[48px] font-bold mb-8">Login</Title>
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <Button className="h-12 w-12 !p-2" shape="round" onClick={getGoogleLoginLink}>
               <GoogleLogo className="w-full h-full block" />
             </Button>
-          </div>
-          <div className="flex justify-center">
-            <span className="my-4">or</span>
-          </div>
+          </div> */}
           <Form form={form} className="min-w-[250px]">
             <Form.Item
               name={'email'}

@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import { Button, Card, Image, Space, Typography } from 'antd';
 import { isEmpty } from 'lodash';
-
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { actionGetUserProfile } from 'redux/profile/actions';
 import { selectorUserProfile } from 'redux/profile/selectors';
@@ -175,7 +174,9 @@ const UserProfile = () => {
               {profile.email && <Title level={5}>Email: {profile.email}</Title>}
               {profile.linkedln_link && <Title level={5}>Linkedin Link: {profile.linkedln_link}</Title>}
               {profile.phone && <Title level={5}>Phone: {profile.phone}</Title>}
+              {/* <Skill /> */}
             </Space>
+            
           )}
         </Card>
       )}

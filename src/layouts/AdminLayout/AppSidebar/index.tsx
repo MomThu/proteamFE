@@ -80,19 +80,19 @@ const AppSidebar: React.FC = () => {
     const payload = {
       name: value,
       limit: PAGE_SIZE,
-      page_number: 0
+      page_number: 0,
     };
     try {
       await dispatch(actionSearchUser(payload)).unwrap();
       navigate(routesMap.USER, {
         state: {
-          search: value
-        }
+          search: value,
+        },
       });
     } catch (error) {
       notificationError(getMessageError(error));
     }
-  }
+  };
 
   const renderLogo = (): JSX.Element => {
     return (

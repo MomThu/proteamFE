@@ -19,20 +19,20 @@ const UserPage = () => {
 
   useEffect(() => {
     const payload = {
+      ...state,
       limit: 10,
       page_number: 0,
-      name: state.search
     };
     dispatch(actionSearchUser(payload)).unwrap();
     setUsers(listUser);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, state.search]);
+  }, [dispatch, state]);
 
   const fetchUsers = () => {
     const payload = {
+      ...state,
       limit: 10,
       page_number: page + 10,
-      name: state.search
     };
     setPage((prevState) => prevState + 10);
     setTimeout(async () => {
@@ -42,23 +42,6 @@ const UserPage = () => {
         setUsers(listUsers);
       }
     }, 1000);
-  };
-
-  // const fetchUsers = () => {
-  //   const payload = {
-  //     limit: 10,
-  //     page_number: page + 10,
-  //     name: state.search
-  //   };
-  //   setPage((prevState) => prevState + 10);
-  //   setTimeout(() => {
-  //     if (hasMore) {
-  //       dispatch(actionSearchUser(payload)).unwrap();
-  //     }
-  //   }, 1000);
-  // };
-  const onReload = () => {
-    // dispatch(actionSearchUser()).unwrap();
   };
 
   if (users && users.length) {
@@ -73,7 +56,7 @@ const UserPage = () => {
           users.map((item) => {
             return (
               <div key={item.account_id}>
-                <UserItem data={item} onReload={onReload} />
+                <UserItem data={item} />
               </div>
             )
           })

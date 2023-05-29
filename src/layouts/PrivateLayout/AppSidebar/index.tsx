@@ -1,13 +1,17 @@
-import { Image, Input, Menu, MenuProps, Space } from 'antd';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Button, Checkbox, Image, Input, InputNumber, Menu, MenuProps, Modal, Space, Typography } from 'antd';
 import { getRealPath } from 'layouts/helper';
 import routesMap from 'layouts/routesMap';
-import { isEmpty, map } from 'lodash';
+import { get, isEmpty, map } from 'lodash';
 import logo from 'assets/image/logo_3.png';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { actionSearchUser } from 'redux/network/actions';
 import { notificationError } from 'utils/notifications';
+import { actionGetSkills } from 'redux/profile/actions';
+import { selectorSkills } from 'redux/profile/selectors';
+import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { getMessageError } from 'utils/common';
 import { PAGE_SIZE } from 'utils/constants';
 import { useNavs } from '../useNavs';
@@ -24,7 +28,7 @@ const getItem = (
 ): MenuItem => {
   return { key, icon, children, label, type } as MenuItem;
 };
-
+const { Text } = Typography;
 const AppSidebar: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -33,8 +37,18 @@ const AppSidebar: React.FC = () => {
   const routes = useRoutes();
   const location = useLocation();
 
+  const skills = useAppSelector(selectorSkills);
+
   const [selectedKeys, setSelectedKeys] = useState<string[] | undefined>();
   const [openKeys, setOpenKeys] = useState<string[] | undefined>();
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [name, setName] = useState('');
+  const [optionSkills, setOptionSkills] = useState<any>([]);
+  const [skillSelected, setSkillSelected] = useState<CheckboxValueType[]>([]);
+  const [inputMinGPA, setInputMinGPA] = useState(0);
+  const [inputMaxGPA, setInputMaxGPA] = useState(4);
+  const [school, setSchool] = useState('');
+  const [major, setMajor] = useState('');
 
   useEffect(() => {
     const pathNames = location.pathname.split('/').filter((x) => x);
@@ -76,30 +90,72 @@ const AppSidebar: React.FC = () => {
     return items;
   }, [navs]);
 
-  const onSearch = async (value: string) => {
-    const payload = {
-      name: value,
-      limit: PAGE_SIZE,
-      page_number: 0
-    };
-    try {
-      await dispatch(actionSearchUser(payload)).unwrap();
-      navigate(routesMap.USER, {
-        state: {
-          search: value
-        }
-      });
-    } catch (error) {
-      notificationError(getMessageError(error));
+  useEffect(() => {
+    dispatch(actionGetSkills()).unwrap();
+  }, [dispatch]);
+
+  useEffect(() => {
+    const optionSkill = skills.map((item) => {
+      return {
+        label: get(item, 'skill_name', ''),
+        value: get(item, 'skill_id', ''),
+      };
+    });
+    setOptionSkills(optionSkill);
+  }, [skills]);
+
+  const handleOpenModal = () => {
+    setIsOpenModal(!isOpenModal);
+    setSkillSelected([]);
+      setInputMinGPA(0);
+      setInputMaxGPA(4);
+      setName('');
+      setSchool('');
+      setMajor('');
+  };
+
+  const openModal = <Button onClick={handleOpenModal}>Filter Users</Button>;
+
+  const handleSave = async () => {
+    if (inputMinGPA > inputMaxGPA) {
+      notificationError('Max GPA must greater than min GPA');
+    } else {
+      try {
+        const payload = {
+          name: name,
+          skills: skillSelected,
+          school: school,
+          major: major,
+          min_gpa: inputMinGPA,
+          max_gpa: inputMaxGPA,
+          limit: PAGE_SIZE,
+          page_number: 0,
+        };
+        await dispatch(actionSearchUser(payload)).unwrap();
+        navigate(routesMap.USER, {
+          state: payload
+        });
+      } catch (error) {
+        notificationError(getMessageError(error));
+      }
+      setIsOpenModal(false);
+      setSkillSelected([]);
+      setInputMinGPA(0);
+      setInputMaxGPA(4);
+      setName('');
+      setSchool('');
+      setMajor('');
     }
-  }
+  };
+
+  const onChangeSkill = (checkedValues: CheckboxValueType[]) => {
+    setSkillSelected(checkedValues);
+  };
 
   const renderLogo = (): JSX.Element => {
     return (
       <div className="sidebar-logo justify-evenly">
-        {/* <Text className="flex-1 text-center text-white mb-0 text-base font-semibold"> */}
         <Image src={logo} alt="ghtm" preview={false} width={120} rootClassName="mr-3" />
-        {/* </Text> */}
       </div>
     );
   };
@@ -127,9 +183,62 @@ const AppSidebar: React.FC = () => {
       </div>
       <div>
         <Space>
-          <Input.Search placeholder="Search..." onSearch={onSearch} style={{ width: 200 }} />
+          {/* <Input.Search addonBefore={openModal} placeholder="Search..." onSearch={onSearch} style={{ width: 200 }} /> */}
+          {openModal}
         </Space>
+
       </div>
+      <Modal open={isOpenModal} title="Search users by: " onCancel={handleOpenModal} destroyOnClose={true} footer={null}>
+        <div>
+          <Input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+          <Input placeholder="School" value={school} onChange={(e) => setSchool(e.target.value)} />
+          <Input placeholder="Major" value={major} onChange={(e) => setMajor(e.target.value)} />
+
+          <Text>Select skills</Text>
+          <Checkbox.Group className="flex flex-wrap" options={optionSkills} onChange={onChangeSkill} />
+          <div>
+            <Text>GPA</Text>
+          </div>
+          <Input.Group compact className="mb-5">
+            <InputNumber
+              style={{ width: 100, textAlign: 'center' }}
+              placeholder="Minimum"
+              min={0}
+              max={4}
+              step={0.01}
+              onChange={(value) => setInputMinGPA(value || 0)}
+              value={inputMinGPA}
+            />
+            <Input
+              className="site-input-split"
+              style={{
+                width: 30,
+                borderLeft: 0,
+                borderRight: 0,
+                pointerEvents: 'none',
+              }}
+              placeholder="~"
+              disabled
+            />
+            <InputNumber
+              className="site-input-right"
+              style={{
+                width: 100,
+                textAlign: 'center',
+              }}
+              placeholder="Maximum"
+              min={0}
+              max={4}
+              step={0.01}
+              onChange={(value) => setInputMaxGPA(value || 4)}
+              value={inputMaxGPA}
+            />
+          </Input.Group>
+          <Button type="primary" onClick={handleSave}>
+            Submit
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };
