@@ -94,7 +94,7 @@ const ProfileHeader = () => {
           ) : (
             <UploadAvatar onSuccess={handleUploadSuccess} />
           )}
-          <Space direction="vertical" className="mt-10 ml-10 flex flex-col">
+          <Space direction="vertical" className={`mt-10 flex flex-col ${profile?.avatar ? 'ml-10' : ''}`}>
             <div className="flex flex-row">
               <Title>{profile?.name}</Title>
               {profile?.role === 2 && (
@@ -143,14 +143,16 @@ const ProfileHeader = () => {
         </Card>
       )}
       {profile?.cv ? (
-        <div>
+        <div className="mt-10 flex gap-3 items-center">
           <BaseUploadFile onSuccess={onUploadFileSuccessful} />
-          <Link href={profile?.cv} target="_blank">
+          <Link className="text-[20px]" href={profile?.cv} target="_blank">
             View your CV here
           </Link>
         </div>
       ) : (
-        <BaseUploadFile onSuccess={onUploadFileSuccessful} />
+        <div className="mt-10">
+          <BaseUploadFile onSuccess={onUploadFileSuccessful} />
+        </div>
       )}
       <Skill />
       {profile?.role === 2 ? (

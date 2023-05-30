@@ -1,14 +1,10 @@
 import React from 'react';
-
-
 import ProfileHeader from './ProfileHeader';
 
 const ProfilePage: React.FC = () => {
   return (
     <div>
-      <div>
-        <ProfileHeader />
-      </div>
+      <ProfileHeader />
     </div>
   );
 };

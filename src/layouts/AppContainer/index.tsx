@@ -25,14 +25,10 @@ const AppContainer: React.FC = () => {
   const routePublic = usePublicRoutes();
   const routeAdmin = useAdminRoutes();
 
-  // const [userInformation, setUserInformation] = useState<User.Profile>({});
-
   const userInformation = useAppSelector(selectorUserInfo);
 
   useEffect(() => {
     const userInfo = getDataStorage(STORAGE_KEY.USER_INFO);
-    // setUserInformation(userInfo);
-    // console.log(userInfo, 'userInformation');
     const accessToken = getDataStorage(STORAGE_KEY.ACCESS_TOKEN);
     dispatch(actionAuthSetInfoUser(userInfo));
     dispatch(actionAuthSetAccessToken(accessToken));
@@ -51,9 +47,6 @@ const AppContainer: React.FC = () => {
           ) : (
             <Route element={<PrivateLayout />}>{makeRoutes(routePrivate)}</Route>
           )}
-
-          {/* Private admin route */}
-          {/* {userInformation && userInformation?.role === 1 && } */}
 
           {/* Catch all */}
           <Route path="*" element={<Page404 />} />

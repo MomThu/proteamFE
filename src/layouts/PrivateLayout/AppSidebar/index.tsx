@@ -80,19 +80,19 @@ const AppSidebar: React.FC = () => {
     const payload = {
       name: value,
       limit: PAGE_SIZE,
-      page_number: 0
+      page_number: 0,
     };
     try {
       await dispatch(actionSearchUser(payload)).unwrap();
       navigate(routesMap.USER, {
         state: {
-          search: value
-        }
+          search: value,
+        },
       });
     } catch (error) {
       notificationError(getMessageError(error));
     }
-  }
+  };
 
   const renderLogo = (): JSX.Element => {
     return (
@@ -125,10 +125,8 @@ const AppSidebar: React.FC = () => {
       <div className="w-[100%]">
         <div className="object-contain">{renderMenu()}</div>
       </div>
-      <div>
-        <Space>
-          <Input.Search placeholder="Search..." onSearch={onSearch} style={{ width: 200 }} />
-        </Space>
+      <div className="flex justify-center items-center">
+        <Input.Search placeholder="Search..." onSearch={onSearch} style={{ width: 200 }} />
       </div>
     </div>
   );

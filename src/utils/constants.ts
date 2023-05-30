@@ -26,6 +26,7 @@ export const Regex = {
 };
 
 export const ImageFileTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+export const CVFileTypes = ['.pdf', '.docx'];
 
 export enum HttpStatus {
   OK = 200,

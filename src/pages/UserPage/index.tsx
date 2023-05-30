@@ -21,18 +21,18 @@ const UserPage = () => {
     const payload = {
       limit: 10,
       page_number: 0,
-      name: state.search
+      name: state.search,
     };
     dispatch(actionSearchUser(payload)).unwrap();
     setUsers(listUser);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, state.search]);
 
   const fetchUsers = () => {
     const payload = {
       limit: 10,
       page_number: page + 10,
-      name: state.search
+      name: state.search,
     };
     setPage((prevState) => prevState + 10);
     setTimeout(async () => {
@@ -44,40 +44,20 @@ const UserPage = () => {
     }, 1000);
   };
 
-  // const fetchUsers = () => {
-  //   const payload = {
-  //     limit: 10,
-  //     page_number: page + 10,
-  //     name: state.search
-  //   };
-  //   setPage((prevState) => prevState + 10);
-  //   setTimeout(() => {
-  //     if (hasMore) {
-  //       dispatch(actionSearchUser(payload)).unwrap();
-  //     }
-  //   }, 1000);
-  // };
   const onReload = () => {
     // dispatch(actionSearchUser()).unwrap();
   };
 
   if (users && users.length) {
     return (
-      <InfiniteScroll
-        dataLength={users.length}
-        next={fetchUsers}
-        hasMore={hasMore}
-        loader={<h4>Loading ...</h4>}
-      >
-        {
-          users.map((item) => {
-            return (
-              <div key={item.account_id}>
-                <UserItem data={item} onReload={onReload} />
-              </div>
-            )
-          })
-        }
+      <InfiniteScroll dataLength={users.length} next={fetchUsers} hasMore={hasMore} loader={<h4>Loading ...</h4>}>
+        {users.map((item) => {
+          return (
+            <div key={item.account_id}>
+              <UserItem data={item} onReload={onReload} />
+            </div>
+          );
+        })}
       </InfiniteScroll>
     );
   }

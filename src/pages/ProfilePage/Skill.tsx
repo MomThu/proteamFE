@@ -93,7 +93,7 @@ const Skill = () => {
             return (
               <div key={item.skill_id}>
                 <Title level={5}>{item.skill_name}</Title>
-                <Divider />
+                <Divider className="my-1" />
               </div>
             );
           })}
@@ -108,7 +108,7 @@ const Skill = () => {
           destroyOnClose={true}
         >
           <Checkbox.Group
-            className="flex flex-wrap"
+            className="grid grid-cols-2 gap-3 [&>*:first-child]:ml-2"
             options={optionSkills}
             defaultValue={optionProfileSkills}
             onChange={onChangeSkill}
