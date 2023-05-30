@@ -3,7 +3,7 @@ import { Button, Upload } from 'antd';
 import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { UploadOutlined } from '@ant-design/icons';
 import React, { ReactNode, useState } from 'react';
-import { HttpStatus } from 'utils/constants';
+import { HttpStatus, CVFileTypes } from 'utils/constants';
 import { notificationError } from 'utils/notifications';
 import { fileService } from 'api/file.service';
 
@@ -15,7 +15,7 @@ interface IProps {
 
 function BaseUploadFile(props: IProps) {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  // const acceptFileTypes = ImageFileTypes.join(',');
+  const acceptFileTypes = CVFileTypes.join(',');
 
   const onChange: UploadProps['onChange'] = ({ fileList }) => {
     setFileList(fileList);
@@ -73,7 +73,7 @@ function BaseUploadFile(props: IProps) {
       fileList={fileList}
       onChange={onChange}
       beforeUpload={onBeforeUpload}
-      // accept={acceptFileTypes}
+      accept={acceptFileTypes}
       customRequest={handleFileUpload}
       maxCount={1}
     >

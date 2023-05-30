@@ -21,19 +21,23 @@ const url = {
   acceptFriend: '/user/accept-friend',
   unfriend: '/user/unfriend',
   searchUser: '/user/search',
-  
-  // post 
+
+  // post
   allPosts: '/posts/all',
   post: '/posts',
   filterPost: '/posts/search',
   allPostsUser: '/posts/user',
+
+  // chat
+  allConversation: '/chats/conversation/get-by-user-id',
+  createConversation: '/chats/conversation',
+  createMessage: 'chats/message',
 
   // statistic
   allStats: 'stats/user_stats',
   gpaStats: 'stats/gpa',
   schoolStats: 'stats/school',
   skillStats: 'stats/skill',
-  
 };
 
 export default url;

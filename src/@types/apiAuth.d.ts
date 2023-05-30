@@ -12,6 +12,7 @@ interface UserResponse {
 
 interface UserInfo {
   account_id?: number;
+  avatar?: string;
   email?: string;
   gpa?: string;
   linkedlnLink?: string;

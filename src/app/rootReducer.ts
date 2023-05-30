@@ -3,6 +3,7 @@ import authReducer from 'redux/auth/reducer';
 import networkReducer from 'redux/network/reducer';
 import postReducer from 'redux/post/reducer';
 import userReducer from 'redux/profile/reducer';
+import chatReducer from 'redux/chat/reducer';
 import statsReducer from 'redux/statistic/reducer';
 
 const createRootReducer = () => {
@@ -11,6 +12,7 @@ const createRootReducer = () => {
     user: userReducer,
     network: networkReducer,
     post: postReducer,
+    chat: chatReducer,
     stats: statsReducer,
   });
 };

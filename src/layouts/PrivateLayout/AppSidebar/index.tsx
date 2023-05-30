@@ -107,11 +107,11 @@ const AppSidebar: React.FC = () => {
   const handleOpenModal = () => {
     setIsOpenModal(!isOpenModal);
     setSkillSelected([]);
-      setInputMinGPA(0);
-      setInputMaxGPA(4);
-      setName('');
-      setSchool('');
-      setMajor('');
+    setInputMinGPA(0);
+    setInputMaxGPA(4);
+    setName('');
+    setSchool('');
+    setMajor('');
   };
 
   const openModal = <Button onClick={handleOpenModal}>Filter Users</Button>;
@@ -133,7 +133,7 @@ const AppSidebar: React.FC = () => {
         };
         await dispatch(actionSearchUser(payload)).unwrap();
         navigate(routesMap.USER, {
-          state: payload
+          state: payload,
         });
       } catch (error) {
         notificationError(getMessageError(error));
@@ -150,6 +150,23 @@ const AppSidebar: React.FC = () => {
 
   const onChangeSkill = (checkedValues: CheckboxValueType[]) => {
     setSkillSelected(checkedValues);
+  };
+  const onSearch = async (value: string) => {
+    const payload = {
+      name: value,
+      limit: PAGE_SIZE,
+      page_number: 0,
+    };
+    try {
+      await dispatch(actionSearchUser(payload)).unwrap();
+      navigate(routesMap.USER, {
+        state: {
+          search: value,
+        },
+      });
+    } catch (error) {
+      notificationError(getMessageError(error));
+    }
   };
 
   const renderLogo = (): JSX.Element => {
@@ -181,14 +198,16 @@ const AppSidebar: React.FC = () => {
       <div className="w-[100%]">
         <div className="object-contain">{renderMenu()}</div>
       </div>
-      <div>
-        <Space>
-          {/* <Input.Search addonBefore={openModal} placeholder="Search..." onSearch={onSearch} style={{ width: 200 }} /> */}
-          {openModal}
-        </Space>
-
+      <div className="flex justify-center items-center">
+        <Input.Search placeholder="Search..." onSearch={onSearch} style={{ width: 200 }} />
       </div>
-      <Modal open={isOpenModal} title="Search users by: " onCancel={handleOpenModal} destroyOnClose={true} footer={null}>
+      <Modal
+        open={isOpenModal}
+        title="Search users by: "
+        onCancel={handleOpenModal}
+        destroyOnClose={true}
+        footer={null}
+      >
         <div>
           <Input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
           <Input placeholder="School" value={school} onChange={(e) => setSchool(e.target.value)} />
