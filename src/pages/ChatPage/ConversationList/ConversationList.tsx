@@ -23,8 +23,6 @@ export default function ConversationList() {
     dispatch(actionGetFriend()).unwrap();
   }, [dispatch]);
 
-  const options = [{ value: 'Burns Bay Road' }, { value: 'Downing Street' }, { value: 'Wall Street' }];
-
   const friendOptions = useMemo(() => {
     return (
       friends?.map((item) => {
@@ -165,13 +163,13 @@ export default function ConversationList() {
             <div>
               <AutoComplete
                 dropdownMatchSelectWidth={252}
-                options={options}
+                options={friendOptions}
                 value={memberValue}
                 onSelect={(value) => {
                   setMemberValue(value);
                 }}
                 filterOption={(inputValue, option) =>
-                  option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                  option!.value?.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
                 }
               >
                 <Input.Search

@@ -34,6 +34,7 @@ export default {
           authorization: `Bearer ${token}`,
         },
         reconnection: true,
+        protocols: ['http'],
       });
       if (info?.senderId) this.login(info);
     }

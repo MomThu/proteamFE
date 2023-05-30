@@ -5,7 +5,7 @@ import fallbackImageUser from 'assets/image/fallback_image/user.png';
 import fallbackImageUserGroup from 'assets/image/fallback_image/user-group.png';
 import { useAppDispatch } from 'app/hooks';
 import { setCurrentConversation } from 'redux/chat/reducer';
-import { MoreOutlined } from '@ant-design/icons';
+import { MoreOutlined, UserOutlined } from '@ant-design/icons';
 
 export default function ConversationItem(props: IConversation) {
   const dispatch = useAppDispatch();
@@ -19,11 +19,7 @@ export default function ConversationItem(props: IConversation) {
   return (
     <div className=" w-full flex justify-between items-center cursor-pointer" onClick={handleClickConversation}>
       <div className="flex items-center gap-3">
-        <Avatar
-          src={props.background || (props.is_inbox ? fallbackImageUser : fallbackImageUserGroup)}
-          size={48}
-          alt=""
-        />
+        <Avatar src={props.background} icon={<UserOutlined />} alt="" />
 
         <div className="flex-1 flex flex-col justify-between">
           <h4>{props.title}</h4>
