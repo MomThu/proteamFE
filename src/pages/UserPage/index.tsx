@@ -27,14 +27,13 @@ const UserPage = () => {
     dispatch(actionSearchUser(payload)).unwrap();
     setUsers(listUser);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, state.search]);
+  }, [dispatch, state]);
 
   const fetchUsers = () => {
     const payload = {
       ...state,
       limit: 10,
       page_number: page + 10,
-      name: state.search,
     };
     setPage((prevState) => prevState + 10);
     setTimeout(async () => {
