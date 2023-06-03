@@ -194,9 +194,9 @@ const AppSidebar: React.FC = () => {
         footer={null}
       >
         <div>
-          <Input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-          <Input placeholder="School" value={school} onChange={(e) => setSchool(e.target.value)} />
-          <Input placeholder="Major" value={major} onChange={(e) => setMajor(e.target.value)} />
+          <Input placeholder="Name" className='my-1' value={name} onChange={(e) => setName(e.target.value)} />
+          <Input placeholder="School/Company" className='my-1' value={school} onChange={(e) => setSchool(e.target.value)} />
+          <Input placeholder="Major" className='my-1' value={major} onChange={(e) => setMajor(e.target.value)} />
 
           <Text>Select skills</Text>
           <Checkbox.Group className="flex flex-wrap" options={optionSkills} onChange={onChangeSkill} />
