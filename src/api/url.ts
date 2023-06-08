@@ -28,6 +28,9 @@ const url = {
   filterPost: '/posts/search',
   allPostsUser: '/posts/user',
 
+  // notification
+  allNotification: '/noti/notification/get-by-user-id',
+
   // chat
   allConversation: '/chats/conversation/get-by-user-id',
   createConversation: '/chats/conversation',

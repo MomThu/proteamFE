@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Checkbox, Image, Input, InputNumber, Menu, MenuProps, Modal, Space, Typography } from 'antd';
+import { Badge, Button, Checkbox, Image, Input, InputNumber, Menu, MenuProps, Modal, Space, Typography } from 'antd';
+import { CheckboxValueType } from 'antd/es/checkbox/Group';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import logo from 'assets/image/logo_3.png';
 import { getRealPath } from 'layouts/helper';
 import routesMap from 'layouts/routesMap';
 import { get, isEmpty, map } from 'lodash';
-import logo from 'assets/image/logo_3.png';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { actionSearchUser } from 'redux/network/actions';
-import { notificationError } from 'utils/notifications';
 import { actionGetSkills } from 'redux/profile/actions';
 import { selectorSkills } from 'redux/profile/selectors';
-import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { getMessageError } from 'utils/common';
 import { PAGE_SIZE } from 'utils/constants';
+import { notificationError } from 'utils/notifications';
 import { useNavs } from '../useNavs';
 import { useRoutes } from '../useRoutes';
 
@@ -74,7 +74,14 @@ const AppSidebar: React.FC = () => {
     const items: MenuItem[] = [];
 
     navs.forEach((nav) => {
-      const Icon = nav.icon ? <nav.icon size={20} /> : undefined;
+      const Icon =
+        nav.icon && nav.badge ? (
+          <Badge count={nav.badge}>
+            <nav.icon size={20} />
+          </Badge>
+        ) : nav.icon ? (
+          <nav.icon size={20} />
+        ) : undefined;
 
       if (isEmpty(nav.items)) {
         items.push(getItem(nav.key, <Link to={nav.key}>{nav.name}</Link>, Icon));
@@ -182,9 +189,7 @@ const AppSidebar: React.FC = () => {
         <div className="object-contain">{renderMenu()}</div>
       </div>
       <div className="flex justify-center items-center">
-        <Space>
-          {openModal}
-        </Space>
+        <Space>{openModal}</Space>
       </div>
       <Modal
         open={isOpenModal}
@@ -194,12 +199,21 @@ const AppSidebar: React.FC = () => {
         footer={null}
       >
         <div>
-          <Input placeholder="Name" className='my-1' value={name} onChange={(e) => setName(e.target.value)} />
-          <Input placeholder="School/Company" className='my-1' value={school} onChange={(e) => setSchool(e.target.value)} />
-          <Input placeholder="Major" className='my-1' value={major} onChange={(e) => setMajor(e.target.value)} />
+          <Input placeholder="Name" className="my-1" value={name} onChange={(e) => setName(e.target.value)} />
+          <Input
+            placeholder="School/Company"
+            className="my-1"
+            value={school}
+            onChange={(e) => setSchool(e.target.value)}
+          />
+          <Input placeholder="Major" className="my-1" value={major} onChange={(e) => setMajor(e.target.value)} />
 
           <Text>Select skills</Text>
-          <Checkbox.Group className="flex flex-wrap" options={optionSkills} onChange={onChangeSkill} />
+          <Checkbox.Group
+            className="grid grid-cols-3 gap-3 [&>*:first-child]:ml-2"
+            options={optionSkills}
+            onChange={onChangeSkill}
+          />
           <div>
             <Text>GPA</Text>
           </div>

@@ -8,6 +8,7 @@ export const SocketEvents = {
   DISCONNECT: 'disconnect',
   WEB_APP_USER_LOGIN: 'web_app_user_login',
   CREATE_CONVERSATION: 'create_conversation',
+  WEB_APP_USER_ADDED_CONVERSATION: 'added_conversation',
   CREATE_MESSAGE: 'sent_message',
   RECEIVE_MESSAGE: 'receive_message',
 };
@@ -62,6 +63,11 @@ export default {
   receiveMessage(callBack: (payload: IMessage) => void) {
     if (socket) {
       socket.on(SocketEvents.RECEIVE_MESSAGE, callBack);
+    }
+  },
+  addedToConversation(callBack: () => void) {
+    if (socket) {
+      socket.on(SocketEvents.WEB_APP_USER_ADDED_CONVERSATION, callBack);
     }
   },
 };

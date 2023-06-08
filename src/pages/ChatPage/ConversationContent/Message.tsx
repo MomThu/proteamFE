@@ -4,6 +4,7 @@ import fallbackImageUser from 'assets/image/fallback_image/user.png';
 import { selectorUserInfo } from 'redux/auth/selectors';
 import dayjs from 'plugins/dayjs';
 import React from 'react';
+import { UserOutlined } from '@ant-design/icons';
 
 interface IProps {
   messageInfo?: IMessage;
@@ -21,7 +22,8 @@ export default function Message(props: IProps) {
       >
         <Avatar
           className={`${props.userInfo?.account_id === userInfo.account_id ? 'hidden' : ''}`}
-          src={props.userInfo?.avatar || fallbackImageUser}
+          src={props.userInfo?.avatar}
+          icon={<UserOutlined />}
           size={48}
           alt=""
         />

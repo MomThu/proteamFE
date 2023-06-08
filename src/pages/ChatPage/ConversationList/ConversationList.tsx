@@ -1,7 +1,7 @@
-import { AutoComplete, Button, Form, Input, List, Modal } from 'antd';
+import { Button, Form, Input, Modal, Select, Space } from 'antd';
 import Search from 'antd/es/input/Search';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { cloneDeep } from 'lodash';
+import UploadAvatar from 'components/base/UpLoad/UploadAvatar';
 import socket from 'plugins/socket';
 import React, { useEffect, useMemo, useState } from 'react';
 import { selectorUserInfo } from 'redux/auth/selectors';
@@ -13,6 +13,8 @@ import { selectorFriends } from 'redux/network/selectors';
 import { getMessageError } from 'utils/common';
 import { notificationError, notificationSuccess } from 'utils/notifications';
 import ConversationItem from './ConversationItem';
+
+const { Option } = Select;
 
 export default function ConversationList() {
   const dispatch = useAppDispatch();
@@ -52,7 +54,6 @@ export default function ConversationList() {
   };
 
   const [membersList, setMemberList] = useState<string[]>([]);
-  const [memberValue, setMemberValue] = useState<string>('');
   const [form] = Form.useForm();
 
   const handleClickStartNewConversation = () => {
@@ -64,13 +65,14 @@ export default function ConversationList() {
   };
 
   const handleCreateNewConversation = async () => {
+    const data = await form.validateFields();
     const payload: ICreateConversation = {
       is_inbox: membersList.length === 1,
       is_conversation_request: false,
       title: form.getFieldValue('name'),
       last_message_id: null,
       description: form.getFieldValue('description'),
-      background: null,
+      background: form.getFieldValue('background'),
       members: membersList,
     };
 
@@ -85,23 +87,12 @@ export default function ConversationList() {
     }
   };
 
-  const handleAddMember = (value: string) => {
+  const handleAddMember = (value: string[]) => {
     if (!value) return;
-    const newMemberList = cloneDeep(membersList);
-    newMemberList.push(value);
-    setMemberList(newMemberList);
-    setMemberValue('');
+    setMemberList(value);
   };
-
-  const handleRemoveMember = (member: string) => {
-    console.log(member);
-    const newMemberList = cloneDeep(membersList);
-
-    setMemberList(
-      newMemberList.filter((item) => {
-        return item != member;
-      })
-    );
+  const handleUploadSuccess = async (id: number, url: string) => {
+    form.setFieldValue('background', url);
   };
 
   return (
@@ -145,6 +136,9 @@ export default function ConversationList() {
           onFinish={handleClickStartNewConversation}
           form={form}
         >
+          <Form.Item label="Background" name="background" rules={[{ required: false }]}>
+            <UploadAvatar onSuccess={handleUploadSuccess} path="conversation" />
+          </Form.Item>
           <Form.Item
             label="Name"
             name="name"
@@ -161,48 +155,23 @@ export default function ConversationList() {
           </Form.Item>
           <Form.Item label="Members" name="members">
             <div>
-              <AutoComplete
-                dropdownMatchSelectWidth={252}
-                options={friendOptions}
-                value={memberValue}
-                onSelect={(value) => {
-                  setMemberValue(value);
-                }}
-                filterOption={(inputValue, option) =>
-                  option!.value?.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                }
+              <Select
+                mode="multiple"
+                style={{ width: '100%' }}
+                placeholder="Add members"
+                onChange={handleAddMember}
+                optionLabelProp="label"
               >
-                <Input.Search
-                  value={memberValue}
-                  size="large"
-                  onChange={(event) => {
-                    setMemberValue(event.target.value);
-                  }}
-                  enterButton="Add"
-                  onSearch={handleAddMember}
-                />
-              </AutoComplete>
-              {!!membersList.length && (
-                <List
-                  size="small"
-                  header={null}
-                  footer={null}
-                  dataSource={membersList}
-                  renderItem={(item) => (
-                    <List.Item key={item}>
-                      <p>{item}</p>
-                      <Button
-                        type="link"
-                        onClick={() => {
-                          handleRemoveMember(item);
-                        }}
-                      >
-                        Remove
-                      </Button>
-                    </List.Item>
-                  )}
-                />
-              )}
+                {friendOptions?.map((item, index) => {
+                  return (
+                    <Option key={index} value={item.value} label={item.value}>
+                      <Space>
+                        <span>{`${item.value}`}</span>
+                      </Space>
+                    </Option>
+                  );
+                })}
+              </Select>
             </div>
           </Form.Item>
         </Form>

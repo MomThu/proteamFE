@@ -10,6 +10,7 @@ import { selectorUserInfo } from 'redux/auth/selectors';
 import { createMessage, getConversationByUserId } from 'redux/chat/actions';
 import { setCurrentConversation } from 'redux/chat/reducer';
 import { selectorCurrentConversation } from 'redux/chat/selector';
+import { getNotificationListByUserId } from 'redux/notification/actions';
 import { getMessageError } from 'utils/common';
 import { notificationError } from 'utils/notifications';
 import Message from './Message';
@@ -26,6 +27,11 @@ export default function ConversationContent() {
       const newConversation = cloneDeep(currentConversation);
       newConversation?.messages.push(payload);
       dispatch(setCurrentConversation(newConversation));
+      dispatch(getConversationByUserId(userInfo.account_id || 0));
+    });
+    socket.addedToConversation(() => {
+      console.log('first');
+      dispatch(getNotificationListByUserId(userInfo.account_id || 0));
       dispatch(getConversationByUserId(userInfo.account_id || 0));
     });
   }, [currentConversation]);
@@ -56,6 +62,7 @@ export default function ConversationContent() {
 
     try {
       const message = await dispatch(createMessage(payload)).unwrap();
+      setInputMessage('');
       socket.createMessage(message);
       const newConversation = cloneDeep(currentConversation);
       newConversation?.messages.push(message);
@@ -95,6 +102,7 @@ export default function ConversationContent() {
             onChange={(event) => {
               setInputMessage(event.target.value);
             }}
+            value={inputMessage}
             placeholder="Write your message"
             className="flex-1"
           />

@@ -26,7 +26,7 @@ const News = () => {
 
   const [page, setPage] = useState(0);
   const [posts, setPosts] = useState<Post.Post[]>([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [openModalFilter, setOpenModalFilter] = useState(false);
   const [skillSelected, setSkillSelected] = useState<CheckboxValueType[]>([]);
   const [optionSkills, setOptionSkills] = useState<any>([]);
@@ -43,7 +43,7 @@ const News = () => {
     const payload = {
       limit: 10,
       page_number: 0,
-      content: search && search.length ? search : null
+      content: search && search.length ? search : null,
     };
     dispatch(actionFilterPost(payload)).unwrap();
     dispatch(actionGetSkills()).unwrap();
@@ -52,7 +52,7 @@ const News = () => {
 
   useEffect(() => {
     setPosts(listNews);
-  }, [listNews])
+  }, [listNews]);
 
   const fetchPosts = () => {
     const payload = {
@@ -169,7 +169,7 @@ const News = () => {
         >
           <Text>Select skills</Text>
           <Checkbox.Group
-            className="flex flex-wrap"
+            className="grid grid-cols-3 gap-3 [&>*:first-child]:ml-2"
             options={optionSkills}
             defaultValue={optionProfileSkills}
             onChange={onChangeSkill}

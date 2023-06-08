@@ -125,7 +125,13 @@ const Post = (props: IProps) => {
           </Col>
         </Row>
       </div>
-      <Modal open={isOpenModalCreatePost} title="Create a post" onCancel={handleCancel} footer={null} destroyOnClose={true}>
+      <Modal
+        open={isOpenModalCreatePost}
+        title="Create a post"
+        onCancel={handleCancel}
+        footer={null}
+        destroyOnClose={true}
+      >
         <div>
           <TextArea
             placeholder="What do you want to talk about?"
@@ -143,7 +149,7 @@ const Post = (props: IProps) => {
           </div>
           <Text>Select skills</Text>
           <Checkbox.Group
-            className="flex flex-wrap"
+            className="grid grid-cols-3 gap-3 [&>*:first-child]:ml-2"
             options={optionSkills}
             defaultValue={optionProfileSkills}
             onChange={onChangeSkill}
@@ -151,7 +157,7 @@ const Post = (props: IProps) => {
           <div>
             <Text>GPA</Text>
           </div>
-          <Input.Group compact className='mb-5'>
+          <Input.Group compact className="mb-5">
             <InputNumber
               style={{ width: 100, textAlign: 'center' }}
               placeholder="Minimum"
