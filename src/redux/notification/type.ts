@@ -9,6 +9,7 @@ export interface INotification {
   account_id: number;
   is_read: boolean;
   type: string;
+  create_time?: string;
 }
 
 export interface NotificationListResponse {
