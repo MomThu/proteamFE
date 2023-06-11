@@ -29,8 +29,8 @@ const StatisticPage = () => {
   const onChangeSelect1 = async (value: string) => {
     if (value) {
       const payload = {
-        school: value
-      }
+        school: value,
+      };
       await dispatch(actionGetStatsSchool(payload)).unwrap();
     } else {
       dispatch(actionGetStatsSchool({})).unwrap();
@@ -86,7 +86,9 @@ const StatisticPage = () => {
       schoolStats && schoolStats.length
         ? schoolStats.map((school: any) => {
             return {
-              type: get(school, 'account_school', '') ? get(school, 'account_school', '') : get(school, 'account_major', ''),
+              type: get(school, 'account_school', '')
+                ? get(school, 'account_school', '')
+                : get(school, 'account_major', ''),
               value: toNumber(school.count),
             };
           })
@@ -163,7 +165,7 @@ const StatisticPage = () => {
   };
 
   const listSchools1 = !isEmpty(allStats)
-    ? allStats?.schools.map((school: any) => {        
+    ? allStats?.schools.map((school: any) => {
         return {
           value: school.school_name,
           title: school.school_name,
@@ -195,17 +197,20 @@ const StatisticPage = () => {
       <Row className="flex flex-row justify-between mt-10">
         <Col xs={15}>
           <div className="mb-10 font-bold">Số sinh viên theo từng trường/ngành</div>
-          <TreeSelect
-            showSearch
-            style={{ width: '50%' }}
-            value={value1}
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-            placeholder="Chọn trường cần thống kê"
-            allowClear
-            // treeDefaultExpandAll
-            onChange={onChangeSelect1}
-            treeData={listSchools1}
-          />
+          <div className="mb-10">
+            <TreeSelect
+              showSearch
+              style={{ width: '75%' }}
+              value={value1}
+              dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+              placeholder="Chọn trường cần thống kê"
+              allowClear
+              // treeDefaultExpandAll
+              onChange={onChangeSelect1}
+              treeData={listSchools1}
+            />
+          </div>
+
           <Column {...configSchool} />
         </Col>
         <Col span={24} className="mt-20 mb-10">
