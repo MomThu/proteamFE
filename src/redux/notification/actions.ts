@@ -5,7 +5,7 @@ import url from 'api/url';
 import { getMessageError } from 'utils/common';
 import { NotificationListResponse } from './type';
 
-export const getNotificationListByUserId = createAsyncThunk('notification/getNotificationList', async (id: number) => {
+export const getNotificationListByUserId = createAsyncThunk('notification/getNotificationList', async (id?: number) => {
   try {
     const { data } = await api.get<BaseResponse<NotificationListResponse>>(`${url.allNotification}/${id}`);
     return data.data;
