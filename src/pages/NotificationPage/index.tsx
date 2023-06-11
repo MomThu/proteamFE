@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { Empty } from 'antd';
 import React, { useEffect } from 'react';
 import { selectorUserInfo } from 'redux/auth/selectors';
 import { getNotificationListByUserId } from 'redux/notification/actions';
@@ -18,9 +19,11 @@ const Notification: React.FC = () => {
   }, [dispatch, userInfo]);
   return (
     <div>
-      {notifications?.map((notification, index) => (
-        <NotificationItem key={index} data={notification} />
-      ))}
+      {notifications && notifications.length ? (
+        notifications?.map((notification, index) => <NotificationItem key={index} data={notification} />)
+      ) : (
+        <Empty />
+      )}
     </div>
   );
 };
