@@ -21,9 +21,22 @@ const StatisticPage = () => {
   const schoolStats = useAppSelector(selectorSchoolStats);
 
   const [value, setValue] = useState<string>();
+  const [value1, setValue1] = useState<string>();
   const [dataStatsGpa, setDataStatGpa] = useState<any>([]);
   const [dataSkillStat, setDataSkillStat] = useState<any>([]);
   const [dataSchoolStat, setDataSchoolStat] = useState<any>([]);
+
+  const onChangeSelect1 = async (value: string) => {
+    if (value) {
+      const payload = {
+        school: value
+      }
+      await dispatch(actionGetStatsSchool(payload)).unwrap();
+    } else {
+      dispatch(actionGetStatsSchool({})).unwrap();
+    }
+    setValue1(value);
+  };
 
   const onChangeSelect = async (newValue: string) => {
     if (newValue) {
@@ -73,7 +86,7 @@ const StatisticPage = () => {
       schoolStats && schoolStats.length
         ? schoolStats.map((school: any) => {
             return {
-              type: school.account_school,
+              type: get(school, 'account_school', '') ? get(school, 'account_school', '') : get(school, 'account_major', ''),
               value: toNumber(school.count),
             };
           })
@@ -149,6 +162,15 @@ const StatisticPage = () => {
     },
   };
 
+  const listSchools1 = !isEmpty(allStats)
+    ? allStats?.schools.map((school: any) => {        
+        return {
+          value: school.school_name,
+          title: school.school_name,
+        };
+      })
+    : [];
+
   const listSchools = !isEmpty(allStats)
     ? allStats?.schools.map((school: any) => {
         const majorBySchool = [];
@@ -172,7 +194,18 @@ const StatisticPage = () => {
     <div>
       <Row className="flex flex-row justify-between mt-10">
         <Col xs={15}>
-          <div className="mb-10 font-bold">Số sinh viên theo từng trường</div>
+          <div className="mb-10 font-bold">Số sinh viên theo từng trường/ngành</div>
+          <TreeSelect
+            showSearch
+            style={{ width: '50%' }}
+            value={value1}
+            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            placeholder="Chọn trường cần thống kê"
+            allowClear
+            // treeDefaultExpandAll
+            onChange={onChangeSelect1}
+            treeData={listSchools1}
+          />
           <Column {...configSchool} />
         </Col>
         <Col span={24} className="mt-20 mb-10">
